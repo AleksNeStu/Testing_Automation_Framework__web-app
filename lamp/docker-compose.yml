@@ -1,0 +1,32 @@
+version: '2'
+services:
+  mariadb:
+    image: 'bitnami/mariadb:latest'
+    volumes:
+      - './www/mariadb:/bitnami/mariadb'
+  selenium:
+    image: 'selenium/standalone-firefox'
+    ports:
+      - "4444:4444"
+    links:
+      - "application"
+  application:
+    image: 'bitnami/joomla:latest'
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - './www/joomla:/bitnami/joomla'
+      - './www/apache:/bitnami/apache'
+      - './www/php:/bitnami/php'
+    depends_on:
+      - mariadb
+volumes:
+  mariadb_data:
+    driver: local
+  joomla_data:
+    driver: local
+  apache_data:
+    driver: local
+  php_data:
+    driver: local
