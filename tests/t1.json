@@ -5,7 +5,7 @@
   "steps": [
     {
       "type": "get",
-      "url": "http://lamp/addressbook/index.php"
+      "url": "http://lamp/addressbook/group.php"
     },
     {
       "type": "setElementText",
@@ -26,15 +26,8 @@
     {
       "type": "clickElement",
       "locator": {
-        "type": "xpath",
-        "value": "//form[@id='LoginForm']/input[3]"
-      }
-    },
-    {
-      "type": "clickElement",
-      "locator": {
-        "type": "link text",
-        "value": "groups"
+        "type": "css selector",
+        "value": "input[type=\"submit\"]"
       }
     },
     {
@@ -50,7 +43,7 @@
         "type": "name",
         "value": "group_name"
       },
-      "text": "n1"
+      "text": "b1"
     },
     {
       "type": "setElementText",
@@ -58,7 +51,7 @@
         "type": "name",
         "value": "group_header"
       },
-      "text": "n1"
+      "text": "sdgf"
     },
     {
       "type": "setElementText",
@@ -66,13 +59,20 @@
         "type": "name",
         "value": "group_footer"
       },
-      "text": "n1"
+      "text": "sdf"
     },
     {
       "type": "clickElement",
       "locator": {
         "type": "name",
         "value": "submit"
+      }
+    },
+    {
+      "type": "clickElement",
+      "locator": {
+        "type": "css selector",
+        "value": "div.msgbox"
       }
     },
     {
