@@ -2,8 +2,6 @@ version: '2'
 services:
   mariadb:
     image: 'bitnami/mariadb:latest'
-    volumes:
-      - './www/mariadb:/bitnami/mariadb'
   selenium:
     image: 'selenium/standalone-firefox'
     ports:

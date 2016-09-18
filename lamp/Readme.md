@@ -39,3 +39,10 @@ chmod -R a+w /www/joomla/cache
 #RUN
 
 docker-compose up
+
+
+#FIX TROUBLES
+Recreate containers even if their configuration and image haven't changed:
+
+docker-compose up -d --force-recreate mariadb  // for mariadb
+docker-compose up -d --force-recreate  // for  all
