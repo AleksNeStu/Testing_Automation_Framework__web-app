@@ -17,7 +17,7 @@ mysql -u root -h 172.18.0.2 test < addressbook.sql<br />
 http://lamp/addressbook/diag.php<br />
 config/cfg.db.php » according to your providers information.<br />
  $dbname = "test"; <br />
- $dbserver = ""; <br />
+ $dbserver = "172.18.0.2"; <br />
  $dbuser = "root"; <br />
  $dbpass = "";<br />
  
