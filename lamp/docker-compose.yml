@@ -14,9 +14,7 @@ services:
       - '80:80'
       - '443:443'
     volumes:
-      - './www/joomla:/bitnami/joomla'
-      - './www/apache:/bitnami/apache'
-      - './www/php:/bitnami/php'
+      - './www/joomla/addressbook:/bitnami/joomla/addressbook'
     depends_on:
       - mariadb
 volumes:

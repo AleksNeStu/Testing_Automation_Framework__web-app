@@ -11,7 +11,8 @@ bitnami<br />
 
 2) Database:<br />
 mysql -u root -h 172.18.0.2<br />
-CREATE DATABASE test;<br />
+MariaDB [(none)]> CREATE DATABASE test;<br />
+MariaDB [(none)]> exit;
 mysql -u root -h 172.18.0.2 test < addressbook.sql<br />
 http://lamp/addressbook/diag.php<br />
 config/cfg.db.php » according to your providers information.<br />
@@ -21,9 +22,10 @@ config/cfg.db.php » according to your providers information.<br />
  $dbpass = "";<br />
  
 3) IP:<br />
-172.18.0.3 lamp (web-app)<br />
-172.18.0.2 mysql<br />
 172.18.0.1 bridge (host)<br />
+172.18.0.2 mysql<br />
+172.18.0.3 lamp (web-app)<br />
+172.18.0.4 selenium-server (firefox)<br />
 
 4) Selenium server:<br />
 https://hub.docker.com/r/selenium/standalone-firefox/<br />
