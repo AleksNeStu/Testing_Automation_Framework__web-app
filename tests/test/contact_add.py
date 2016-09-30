@@ -26,9 +26,7 @@ class contact_add_data(unittest.TestCase):
     
     def test_add_contact(self):
         wd = self.wd
-        self.open_home_page(wd)
         self.login(wd, **self.login_data)
-        self.open_contacts_page(wd)
         self.create_contact(wd, self.contact_data)
         self.logout(wd)
 
@@ -36,6 +34,7 @@ class contact_add_data(unittest.TestCase):
         wd.get("http://lamp/addressbook/index.php")
 
     def login(self, wd, username, password):
+        self.open_home_page(wd)
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys(username)
@@ -48,6 +47,7 @@ class contact_add_data(unittest.TestCase):
         wd.find_element_by_link_text("add new").click()
 
     def create_contact(self, wd, contact):
+        self.open_contacts_page(wd)
         wd.find_element_by_name("address").click()
         wd.find_element_by_name("address").clear()
         wd.find_element_by_name("address").send_keys(contact.name)
