@@ -15,12 +15,9 @@ class Application():
     def __init__(self):
         self.wd = WebDriver()
         self.wd.implicitly_wait(60)
-        self.login_data = {"username": "admin",
-                           "password": "secret"}
-        self.group_data = Group(name=r_data("name_", 5),
-                                header=r_data("header_", 5),
-                                footer=r_data("footer_", 5))
-        self.group_data_empty = Group(name="", header="", footer="")
+        # login_data = {"login": "admin", "password": "secret"}
+        # group_data = Group(name=r_data("name_", 5), header=r_data("header_", 5),
+        #                    footer=r_data("footer_", 5))
 
     def open_home_page(self):
         wd = self.wd

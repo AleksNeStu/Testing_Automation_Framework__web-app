@@ -8,7 +8,8 @@ __copyright__ = "The GNU General Public License v3.0"
 
 import pytest
 from tests.fixtures.application import Application
-
+from tests.generator.generic import random_data as r_data
+from tests.data.group import Group
 
 @pytest.fixture
 def app(request):
@@ -18,12 +19,13 @@ def app(request):
 
 
 def test_add_group(app):
-    app.login(app.login_data)
-    app.create_group(app.group_data)
+    app.login(username="admin", password="secret")
+    app.create_group(Group(name=r_data("name_", 5), header=r_data("header_", 5),
+                           footer=r_data("footer_", 5)))
     app.logout()
 
 
-def test_add_group_empty(app):
-    app.login(app.login_data)
-    app.create_group(app.group_data_empty)
-    app.logout()
+# def test_add_group_empty(app):
+#     app.login(app.login_data)
+#     app.create_group(app.group_data_empty)
+#     app.logout()
