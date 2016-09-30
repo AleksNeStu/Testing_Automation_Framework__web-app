@@ -31,18 +31,25 @@ class group_add_data(unittest.TestCase):
         self.group_data = Group(name=r_data("name_", 5),
                                 header=r_data("header_", 5),
                                 footer=r_data("footer_", 5))
+        self.group_data_empty = Group(name="", header="", footer="")
 
     def test_add_group(self):
-        wd = self.wd
-        self.login(wd, **self.login_data)
-        self.create_group(wd, self.group_data)
-        self.logout(wd)
+        self.login(**self.login_data)
+        self.create_group(self.group_data)
+        self.logout()
 
-    def open_home_page(self, wd):
+    def test_add_group_empty(self):
+        self.login(**self.login_data)
+        self.create_group(self.group_data_empty)
+        self.logout()
+
+    def open_home_page(self):
+        wd = self.wd
         wd.get("http://lamp/addressbook/group.php")
 
-    def login(self, wd, username, password):
-        self.open_home_page(wd)
+    def login(self, username, password):
+        wd = self.wd
+        self.open_home_page()
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys(username)
@@ -51,11 +58,13 @@ class group_add_data(unittest.TestCase):
         wd.find_element_by_name("pass").send_keys(password)
         wd.find_element_by_css_selector("input[type=\"submit\"]").click()
 
-    def open_groups_page(self, wd):
+    def open_groups_page(self):
+        wd = self.wd
         wd.find_element_by_link_text("groups").click()
 
-    def create_group(self, wd, group):
-        self.open_groups_page(wd)
+    def create_group(self, group):
+        wd = self.wd
+        self.open_groups_page()
         # init group creation
         wd.find_element_by_name("new").click()
         # fill group forms
@@ -70,13 +79,15 @@ class group_add_data(unittest.TestCase):
         wd.find_element_by_name("group_footer").send_keys(group.footer)
         # submit group creation
         wd.find_element_by_name("submit").click()
-        self.return_to_groups_page(wd)
+        self.return_to_groups_page()
 
-    def return_to_groups_page(self, wd):
+    def return_to_groups_page(self):
+        wd = self.wd
         # wd.find_element_by_css_selector("div.msgbox").click()
         wd.find_element_by_link_text("group page").click()
 
-    def logout(self, wd):
+    def logout(self):
+        wd = self.wd
         wd.find_element_by_link_text("Logout").click()
 
     def tearDown(self):

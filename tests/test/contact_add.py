@@ -23,18 +23,25 @@ class contact_add_data(unittest.TestCase):
                            "password": "secret"}
         self.contact_data = Contact(name=r_data("name_", 5),
                                     email=r_email(5, "@gmail.com"))
+        self.contact_data_empty = Contact(name="", email="")
     
     def test_add_contact(self):
-        wd = self.wd
-        self.login(wd, **self.login_data)
-        self.create_contact(wd, self.contact_data)
-        self.logout(wd)
+        self.login(**self.login_data)
+        self.create_contact(self.contact_data)
+        self.logout()
 
-    def open_home_page(self, wd):
+    def test_add_contact_empty(self):
+        self.login(**self.login_data)
+        self.create_contact(self.contact_data_empty)
+        self.logout()
+
+    def open_home_page(self):
+        wd = self.wd
         wd.get("http://lamp/addressbook/index.php")
 
-    def login(self, wd, username, password):
-        self.open_home_page(wd)
+    def login(self, username, password):
+        wd = self.wd
+        self.open_home_page()
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys(username)
@@ -43,11 +50,13 @@ class contact_add_data(unittest.TestCase):
         wd.find_element_by_name("pass").send_keys(password)
         wd.find_element_by_css_selector("input[type=\"submit\"]").click()
 
-    def open_contacts_page(self, wd):
+    def open_contacts_page(self):
+        wd = self.wd
         wd.find_element_by_link_text("add new").click()
 
-    def create_contact(self, wd, contact):
-        self.open_contacts_page(wd)
+    def create_contact(self, contact):
+        wd = self.wd
+        self.open_contacts_page()
         wd.find_element_by_name("address").click()
         wd.find_element_by_name("address").clear()
         wd.find_element_by_name("address").send_keys(contact.name)
@@ -57,7 +66,8 @@ class contact_add_data(unittest.TestCase):
         wd.find_element_by_name("email").send_keys(contact.email)
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
 
-    def logout(self, wd):
+    def logout(self):
+        wd = self.wd
         wd.find_element_by_link_text("Logout").click()
 
     def tearDown(self):
