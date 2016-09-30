@@ -9,7 +9,8 @@ __copyright__ = "The GNU General Public License v3.0"
 import unittest
 from selenium.webdriver.firefox.webdriver import WebDriver
 from tests.data.group import Group
-from tests.generator.generic import random_data as rd
+from tests.generator.generic import random_data as r_data
+
 
 def is_alert_present(wd):
     try:
@@ -25,11 +26,13 @@ class group_add_data(unittest.TestCase):
     def setUp(self):
         self.wd = WebDriver()
         self.wd.implicitly_wait(60)
-        self.group_data = Group(name=rd("name_",5), header=rd("header_",5),
-                                footer=rd("footer_",5))
-        self.login_data = {"username": "admin", "password": "secret"}
+        self.login_data = {"username": "admin",
+                           "password": "secret"}
+        self.group_data = Group(name=r_data("name_", 5),
+                                header=r_data("header_", 5),
+                                footer=r_data("footer_", 5))
 
-    def test_add_Group(self):
+    def test_add_group(self):
         wd = self.wd
         self.open_home_page(wd)
         self.login(wd, **self.login_data)
