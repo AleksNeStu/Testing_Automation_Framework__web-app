@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
-from selenium.webdriver.firefox.webdriver import WebDriver
 import unittest
-from group import Group
+
+from selenium.webdriver.firefox.webdriver import WebDriver
+from tests.tasks.group import Group
+from random import randint
 
 def is_alert_present(wd):
     try:
@@ -18,11 +20,12 @@ class t1_unit(unittest.TestCase):
         self.wd = WebDriver()
         self.wd.implicitly_wait(60)
 
-    def test_t1_unit(self):
+    def test_add_Group(self):
         wd = self.wd
         self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
         self.open_groups_page(wd)
+        print type(Group(name="gr_name1", header="gr_header1", footer="gr_footer1"))
         self.create_group(wd, Group(name="gr_name1", header="gr_header1", footer="gr_footer1"))
         self.return_to_groups_page(wd)
         self.logout(wd)
