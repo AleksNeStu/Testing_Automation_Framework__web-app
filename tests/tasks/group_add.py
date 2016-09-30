@@ -1,9 +1,15 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
-import unittest
 
+"""Group add module"""
+
+__author__ = 'AleksNeStu'
+__copyright__ = "The GNU General Public License v3.0"
+
+import unittest
 from selenium.webdriver.firefox.webdriver import WebDriver
-from tests.tasks.group import Group
-from random import randint
+from data.group import Group
+from generator.generic import random_data as rd
 
 def is_alert_present(wd):
     try:
@@ -14,19 +20,21 @@ def is_alert_present(wd):
         return False
 
 
-class t1_unit(unittest.TestCase):
+class group_add_data(unittest.TestCase):
 
     def setUp(self):
         self.wd = WebDriver()
         self.wd.implicitly_wait(60)
+        self.group_data = Group(name=rd("name_",5), header=rd("header_",5),
+                                footer=rd("footer_",5))
+        self.login_data = {"username": "admin", "password": "secret"}
 
     def test_add_Group(self):
         wd = self.wd
         self.open_home_page(wd)
-        self.login(wd, username="admin", password="secret")
+        self.login(wd, **self.login_data)
         self.open_groups_page(wd)
-        print type(Group(name="gr_name1", header="gr_header1", footer="gr_footer1"))
-        self.create_group(wd, Group(name="gr_name1", header="gr_header1", footer="gr_footer1"))
+        self.create_group(wd, self.group_data)
         self.return_to_groups_page(wd)
         self.logout(wd)
 
