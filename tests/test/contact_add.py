@@ -20,9 +20,9 @@ def app(request):
 
 
 def test_add_contact(app):
-    app.login(username="admin", password="secret")
-    app.create_contact(Contact(name=r_data("name_", 5), email=r_email(5, "@gmail.com")))
-    app.logout()
+    app.session.login(username="admin", password="secret")
+    app.contact.create(Contact(name=r_data("name_", 5), email=r_email(5, "@gmail.com")))
+    app.session.logout()
 
 
 # def test_add_group_empty(app):

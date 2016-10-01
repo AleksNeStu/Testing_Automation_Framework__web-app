@@ -20,7 +20,7 @@ def app(request):
 
 def test_add_group(app):
     app.session.login(username="admin", password="secret")
-    app.create_group(Group(name=r_data("name_", 5), header=r_data("header_", 5),
+    app.group.create(Group(name=r_data("name_", 5), header=r_data("header_", 5),
                            footer=r_data("footer_", 5)))
     app.session.logout()
 
