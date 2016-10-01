@@ -1,5 +1,5 @@
 --
--- Creation script with sample data for "php-addressbook"
+-- Creation script with sample model for "php-addressbook"
 --
 -- * You may add table prefixes, if the "$table_prefix"
 --   parameter is set in "config.php".
