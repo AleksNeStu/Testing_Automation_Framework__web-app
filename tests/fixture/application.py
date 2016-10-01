@@ -1,13 +1,13 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""Application fixtures"""
+"""Application fixture"""
 
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
 from selenium.webdriver.firefox.webdriver import WebDriver
-from tests.data.group import Group
+from tests.model.group import Group
 from tests.generator.generic import random_data as r_data
 
 class Application():

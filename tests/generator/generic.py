@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""Universal test data generator"""
+"""Universal test model generator"""
 
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"

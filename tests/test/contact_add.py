@@ -7,10 +7,10 @@ __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
 import pytest
-from tests.fixtures.application import Application
+from tests.fixture.application import Application
 from tests.generator.generic import random_data as r_data
 from tests.generator.generic import random_email as r_email
-from tests.data.contact import Contact
+from tests.model.contact import Contact
 
 @pytest.fixture
 def app(request):
