@@ -47,3 +47,18 @@ class GroupHelper:
         # submit deletion
         wd.find_element_by_name("delete").click()
         self.return_to_groups_page()
+
+    def delete_all_groups(self):
+        wd = self.app.wd
+        self.open_groups_page()
+        # check that the group's list is not empty and check group elements
+        if len(wd.find_elements_by_css_selector("#content input")) == 6:
+            pass
+        else:
+            # check group's elements
+            elements = wd.find_elements_by_name("selected[]")
+            for i in range(1, len(elements)+1):
+                wd.find_element_by_css_selector("#content input:nth-of-type({})".
+                                                format(i+3)).click()
+        wd.find_element_by_name("delete").click()
+        self.return_to_groups_page()
