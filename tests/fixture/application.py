@@ -10,6 +10,7 @@ from selenium.webdriver.firefox.webdriver import WebDriver
 from session import SessionHelper
 from group import GroupHelper
 from contact import ContactHelper
+from open import OpenHelper
 # from tests.model.group import Group
 # from tests.generator.generic import random_data as r_data
 
@@ -21,13 +22,10 @@ class Application():
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
+        self.open = OpenHelper(self)
         # login_data = {"login": "admin", "password": "secret"}
         # group_data = Group(name=r_data("name_", 5), header=r_data("header_", 5),
         #                    footer=r_data("footer_", 5))
-
-    def open_home_page(self):
-        wd = self.wd
-        wd.get("http://lamp/addressbook/group.php")
 
     def destroy(self):
         self.wd.quit()
