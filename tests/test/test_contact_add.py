@@ -10,7 +10,6 @@ from tests.generator.generic import random_data as r_data
 from tests.generator.generic import random_email as r_email
 from tests.model.contact import Contact
 
-
 def test_add_contact(app):
     app.session.login(username="admin", password="secret")
     app.contact.create(Contact(name=r_data("name_", 5), email=r_email(5, "@gmail.com")))
