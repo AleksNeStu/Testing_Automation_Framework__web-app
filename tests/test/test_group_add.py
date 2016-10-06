@@ -9,6 +9,7 @@ __copyright__ = "The GNU General Public License v3.0"
 from tests.generator.generic import random_data as r_data
 from tests.model.group import Group
 
+
 def test_add_group(app):
     app.session.login(username="admin", password="secret")
     app.group.create(Group(name=r_data("name_", 5), header=r_data("header_", 5),

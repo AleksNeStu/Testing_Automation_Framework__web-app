@@ -6,6 +6,7 @@
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
+
 class Contact:
     """Parameters for contact model"""
     def __init__(self, name, email):

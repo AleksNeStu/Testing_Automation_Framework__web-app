@@ -6,6 +6,7 @@
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
+
 class OpenHelper:
 
     def __init__(self, app):

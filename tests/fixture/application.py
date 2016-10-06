@@ -14,6 +14,7 @@ from open import OpenHelper
 # from tests.model.group import Group
 # from tests.generator.generic import random_data as r_data
 
+
 class Application():
 
     def __init__(self):
@@ -29,3 +30,10 @@ class Application():
 
     def destroy(self):
         self.wd.quit()
+
+    def check_fixture_valid(self):
+        try:
+            self.wd.current_window_handle
+            return True
+        except:
+            return False
