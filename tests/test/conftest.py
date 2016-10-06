@@ -10,9 +10,16 @@ import pytest
 from tests.fixture.application import Application
 
 
+fixture = None
+
 @pytest.fixture()
 def app(request):
-    fixture = Application()
-    fixture.check_fixture_valid()
+    global fixture
+    try:
+        fixture = Application()
+        assert fixture != None and fixture.check_fixture_valid() == True
+    except:
+        request.addfinalizer(fixture.destroy)
+        raise NameError("Error: {}".format("Fixture isn't available"))
     request.addfinalizer(fixture.destroy)
     return fixture
