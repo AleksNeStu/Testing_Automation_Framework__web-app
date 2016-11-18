@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from selenium.webdriver.firefox.webdriver import WebDriver
+from tests.webdriver.firefox.webdriver import WebDriver
 
 from tests.tasks.data.group import Group
 

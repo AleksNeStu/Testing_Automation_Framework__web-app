@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from selenium.webdriver.firefox.webdriver import WebDriver
+from tests.webdriver.firefox.webdriver import WebDriver
 
 success = True
 wd = WebDriver()

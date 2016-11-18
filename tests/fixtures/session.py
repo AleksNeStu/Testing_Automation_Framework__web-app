@@ -1,18 +1,19 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""Session fixture"""
+"""Session fixtures."""
 
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
 
 class SessionHelper:
-
+    """Class for represent Session."""
     def __init__(self, app):
         self.app = app
 
     def login(self, username, password):
+        """Login to the web-app used admin credentials."""
         wd = self.app.wd
         self.app.open.open_group_page()
         wd.find_element_by_name("user").click()
@@ -24,10 +25,12 @@ class SessionHelper:
         wd.find_element_by_css_selector("input[type=\"submit\"]").click()
 
     def logout(self):
+        """Logout from the web-app."""
         wd = self.app.wd
         wd.find_element_by_link_text("Logout").click()
 
     def check_session(self):
+        """Check the actual session status."""
         wd = self.app.wd
         self.app.open.open_home_page()
         if len(wd.find_elements_by_link_text("Logout")) == 1:

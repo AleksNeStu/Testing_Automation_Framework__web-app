@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""Group add module"""
+"""Groups test."""
 
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
@@ -11,6 +11,7 @@ from tests.model.group import Group
 
 
 def test_add_group(app):
+    """Check the possibility of add filling group."""
     app.session.login(username="admin", password="secret")
     app.group.create(Group(name=r_data("name_", 5), header=r_data("header_", 5),
                            footer=r_data("footer_", 5)))
@@ -18,6 +19,7 @@ def test_add_group(app):
 
 
 def test_add_group_empty(app):
+    """Check the possibility of add empty group."""
     app.session.login(username="admin", password="secret")
     app.group.create(Group(name="", header="", footer=""))
     app.session.logout()

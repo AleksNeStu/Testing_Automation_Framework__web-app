@@ -1,22 +1,24 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""Contact fixture"""
+"""Contact fixtures."""
 
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
 
 class ContactHelper:
-
+    """Class for represent Contact."""
     def __init__(self, app):
         self.app = app
 
     def open_contacts_page(self):
+        """Open contact page."""
         wd = self.app.wd
         wd.find_element_by_link_text("add new").click()
 
     def create(self, contact):
+        """Create contact filling requirements fields."""
         wd = self.app.wd
         self.open_contacts_page()
         wd.find_element_by_name("address").click()
