@@ -13,7 +13,7 @@ from tests.model.contact import Contact
 
 def test_add_contact(app):
     """Check the possibility of add contact."""
-    app.session.login(username="admin", password="secret")
-    app.contact.create(Contact(name=r_data("name_", 5),
+    app.session.login_admin()
+    app.contact.create(Contact(name=r_data("Contact_", 5),
                                email=r_email(5, "@gmail.com")))
     app.session.logout()

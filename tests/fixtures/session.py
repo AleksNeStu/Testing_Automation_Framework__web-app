@@ -6,6 +6,7 @@
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
+from tests.constants import data
 
 class SessionHelper:
     """Class for represent Session."""
@@ -13,7 +14,7 @@ class SessionHelper:
         self.app = app
 
     def login(self, username, password):
-        """Login to the web-app used admin credentials."""
+        """Login to the web-app used credentials."""
         wd = self.app.wd
         self.app.open.open_group_page()
         wd.find_element_by_name("user").click()
@@ -23,6 +24,11 @@ class SessionHelper:
         wd.find_element_by_name("pass").clear()
         wd.find_element_by_name("pass").send_keys(password)
         wd.find_element_by_css_selector("input[type=\"submit\"]").click()
+
+    def login_admin(self):
+        """Login to the web-app used admin credentials."""
+        self.login(data.LOGIN, data.PASSWORD)
+
 
     def logout(self):
         """Logout from the web-app."""
