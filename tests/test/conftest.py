@@ -18,11 +18,10 @@ def app(request):
     global fixture
     if fixture is None:
         fixture = Application()
-        fixture.session.login_admin()
     else:
         if not fixture.check_fixture_valid():
             fixture = Application()
-            fixture.session.login_admin()
+    fixture.session.ensure_login_as_admin()
     return fixture
 
 
@@ -30,6 +29,6 @@ def app(request):
 def stop(request):
     """Destroy fixture."""
     def fin():
-        fixture.session.logout()
+        fixture.session.ensure_logout()
         fixture.destroy()
     request.addfinalizer(fin)

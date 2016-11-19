@@ -6,7 +6,7 @@
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
-from selenium.webdriver.firefox.webdriver import WebDriver
+from selenium.webdriver.chrome.webdriver import WebDriver
 from session import SessionHelper
 from group import GroupHelper
 from contact import ContactHelper
@@ -17,7 +17,7 @@ class Application():
     """Class for represent Application."""
     def __init__(self):
         self.wd = WebDriver()
-        self.wd.implicitly_wait(60)
+        self.wd.implicitly_wait(5)
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
