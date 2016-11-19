@@ -30,7 +30,7 @@ class Application():
     def check_fixture_valid(self):
         """Fixture validation."""
         try:
-            self.wd.current_window_handle
+            self.wd.current_url
             return True
         except:
             return False

@@ -12,13 +12,9 @@ from tests.model.group import Group
 
 def test_modify_group_name(app):
     """Check the possibility of modifying group name."""
-    app.session.login_admin()
     app.group.modify_first_group(Group(name=r_data("new_Group_", 5)))
-    app.session.logout()
 
 
 def test_modify_group_header(app):
     """Check the possibility of modifying group header."""
-    app.session.login_admin()
     app.group.modify_first_group(Group(header=r_data("new_Group_", 5)))
-    app.session.logout()

@@ -12,15 +12,24 @@ from tests.fixtures.application import Application
 
 fixture = None
 
-@pytest.fixture()
+@pytest.fixture
 def app(request):
-    """Check (validate) that app fixtures is exist."""
+    """Init fixture with validation."""
     global fixture
-    try:
+    if fixture is None:
         fixture = Application()
-        assert fixture != None and fixture.check_fixture_valid() == True
-    except:
-        request.addfinalizer(fixture.destroy)
-        raise NameError("Error: {}".format("Fixture isn't available"))
-    request.addfinalizer(fixture.destroy)
+        fixture.session.login_admin()
+    else:
+        if not fixture.check_fixture_valid():
+            fixture = Application()
+            fixture.session.login_admin()
     return fixture
+
+
+@pytest.fixture(scope="session", autouse=True)
+def stop(request):
+    """Destroy fixture."""
+    def fin():
+        fixture.session.logout()
+        fixture.destroy()
+    request.addfinalizer(fin)
