@@ -7,6 +7,7 @@ __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
 from tests.constants import data
+from tests.constants import url
 
 class SessionHelper:
     """Class for represent Session."""
@@ -25,7 +26,7 @@ class SessionHelper:
     def login(self, username, password):
         """Login to the web-app used credentials."""
         wd = self.app.wd
-        self.app.open.open_group_page()
+        self.app.open.open_url(url.HOME_URL)
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys(username)
@@ -60,7 +61,7 @@ class SessionHelper:
     def check_session(self):
         """Check the actual session status."""
         wd = self.app.wd
-        self.app.open.open_home_page()
+        self.app.open.open_url(url.HOME_URL)
         if len(wd.find_elements_by_link_text("Logout")) == 1:
             return True
         else:

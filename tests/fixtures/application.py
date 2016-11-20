@@ -24,7 +24,7 @@ class Application():
         self.open = OpenHelper(self)
 
     def destroy(self):
-        """Quit method."""
+        """Web driver quit method."""
         self.wd.quit()
 
     def check_fixture_valid(self):

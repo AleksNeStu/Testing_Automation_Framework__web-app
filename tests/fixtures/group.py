@@ -6,6 +6,8 @@
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
+from tests.constants import url
+
 
 class GroupHelper:
     """Class for represent Group."""
@@ -14,18 +16,15 @@ class GroupHelper:
 
     def open_groups_page(self):
         """Open group page."""
-        wd = self.app.wd
-        wd.find_element_by_link_text("groups").click()
+        self.app.open.open_link(url._GROUPS)
 
     def return_to_groups_page(self):
         """Return to group page from another tab."""
-        wd = self.app.wd
-        # wd.find_element_by_css_selector("div.msgbox").click()
-        wd.find_element_by_link_text("group page").click()
+        self.app.open.open_link(url._GROUPS_)
 
     def change_field_value(self, field_name, text):
         wd = self.app.wd
-        if text :
+        if text:
             wd.find_element_by_name(field_name).click()
             wd.find_element_by_name(field_name).clear()
             wd.find_element_by_name(field_name).send_keys(text)
@@ -44,7 +43,7 @@ class GroupHelper:
     def create(self, group):
         """Create group filling requirements fields."""
         wd = self.app.wd
-        self.open_groups_page()
+        self.app.open.open_link(url._GROUPS)
         # init group creation
         wd.find_element_by_name("new").click()
         self.fill_group_form(group)
@@ -55,7 +54,7 @@ class GroupHelper:
     def modify_first_group(self, new_group_data):
         """Modify group editing requirements fields."""
         wd = self.app.wd
-        self.open_groups_page()
+        self.app.open.open_link(url._GROUPS)
         self.select_first_group()
         # open modification form
         wd.find_element_by_name("edit").click()
@@ -68,7 +67,7 @@ class GroupHelper:
     def delete_first_group(self):
         """Delete first group on the group page."""
         wd = self.app.wd
-        self.open_groups_page()
+        self.app.open.open_link(url._GROUPS)
         self.select_first_group()
         # submit deletion
         wd.find_element_by_name("delete").click()
@@ -77,7 +76,7 @@ class GroupHelper:
     def delete_all_groups(self):
         """Delete all groups on the group page."""
         wd = self.app.wd
-        self.open_groups_page()
+        self.app.open.open_link(url._GROUPS)
         # check that the group's list is not empty and check group elements
         if len(wd.find_elements_by_css_selector("#content input")) == 6:
             pass
@@ -85,7 +84,13 @@ class GroupHelper:
             # check group's elements
             elements = wd.find_elements_by_name("selected[]")
             for i in range(1, len(elements)+1):
-                wd.find_element_by_css_selector("#content input:nth-of-type({})".
-                                                format(i+3)).click()
+                wd.find_element_by_css_selector(
+                    "#content input:nth-of-type({})".format(i+3)).click()
         wd.find_element_by_name("delete").click()
         self.return_to_groups_page()
+
+    def count(self):
+        """Get the count of existing groups."""
+        wd = self.app.wd
+        self.app.open.open_link(url._GROUPS)
+        return len(wd.find_elements_by_name("selected[]"))

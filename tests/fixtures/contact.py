@@ -6,6 +6,8 @@
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
+from tests.constants import url
+
 
 class ContactHelper:
     """Class for represent Contact."""
@@ -14,8 +16,7 @@ class ContactHelper:
 
     def open_contacts_page(self):
         """Open contact page."""
-        wd = self.app.wd
-        wd.find_element_by_link_text("add new").click()
+        self.app.open.open_link(url._ADD_NEW)
 
     def create(self, contact):
         """Create contact filling requirements fields."""

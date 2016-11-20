@@ -15,7 +15,6 @@ def test_add_group(app):
     app.group.create(Group(name=r_data("Group_", 5), header=r_data("Header_", 5),
                            footer=r_data("Footer_", 5)))
 
-
 def test_add_group_empty(app):
     """Check the possibility of add empty group."""
     app.group.create(Group(name="", header="", footer=""))
