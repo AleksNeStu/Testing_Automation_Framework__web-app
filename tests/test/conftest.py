@@ -19,7 +19,7 @@ def app(request):
     if fixture is None:
         fixture = Application()
     else:
-        if not fixture.check_fixture_valid():
+        if not fixture.is_valid():
             fixture = Application()
     fixture.session.ensure_login_as_admin()
     return fixture

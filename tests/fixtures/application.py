@@ -18,7 +18,7 @@ class Application():
     """Class for represent Application."""
     def __init__(self):
         self.wd = WebDriver()
-        # self.wd.implicitly_wait(5)
+        # self.wd.implicitly_wait(3)
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
@@ -28,7 +28,7 @@ class Application():
         """Web driver quit method."""
         self.wd.quit()
 
-    def check_fixture_valid(self):
+    def is_valid(self):
         """Fixture validation."""
         self.wd = WebDriver()
         try:

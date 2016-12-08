@@ -23,6 +23,7 @@ class GroupHelper:
         self.app.open.open_link(url._GROUPS_)
 
     def change_field_value(self, field_name, text):
+        """Change field value if test exist (is not None)."""
         wd = self.app.wd
         if text:
             wd.find_element_by_name(field_name).click()
@@ -46,12 +47,13 @@ class GroupHelper:
         self.app.open.open_link(url._GROUPS)
         # init group creation
         wd.find_element_by_name("new").click()
+        # fill data
         self.fill_group_form(group)
         # submit group creation
         wd.find_element_by_name("submit").click()
         self.return_to_groups_page()
 
-    def modify_first_group(self, new_group_data):
+    def  modify_first_group(self, new_group_data):
         """Modify group editing requirements fields."""
         wd = self.app.wd
         self.app.open.open_link(url._GROUPS)
