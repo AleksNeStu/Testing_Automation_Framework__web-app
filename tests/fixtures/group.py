@@ -15,14 +15,14 @@ class GroupHelper:
         self.app = app
 
     def open_groups_page(self):
-        """Open group page."""
+        """Open groups page."""
         self.app.open.open_link(url._GROUPS)
 
     def return_to_groups_page(self):
-        """Return to group page from another tab."""
+        """Return to groups page from another tab."""
         self.app.open.open_link(url._GROUPS_)
 
-    def change_field_value(self, field_name, text):
+    def _change_field_value(self, field_name, text):
         """Change field value if test exist (is not None)."""
         wd = self.app.wd
         if text:
@@ -32,9 +32,9 @@ class GroupHelper:
 
     def fill_group_form(self, group):
         """Fill group forms of new data or modify exist data."""
-        self.change_field_value("group_name", group.name)
-        self.change_field_value("group_header", group.header)
-        self.change_field_value("group_footer", group.footer)
+        self._change_field_value("group_name", group.name)
+        self._change_field_value("group_header", group.header)
+        self._change_field_value("group_footer", group.footer)
 
     def select_first_group(self):
         """Select first group."""
@@ -44,7 +44,7 @@ class GroupHelper:
     def create(self, group):
         """Create group filling requirements fields."""
         wd = self.app.wd
-        self.app.open.open_link(url._GROUPS)
+        self.open_groups_page()
         # init group creation
         wd.find_element_by_name("new").click()
         # fill data
@@ -56,7 +56,7 @@ class GroupHelper:
     def  modify_first_group(self, new_group_data):
         """Modify group editing requirements fields."""
         wd = self.app.wd
-        self.app.open.open_link(url._GROUPS)
+        self.open_groups_page()
         self.select_first_group()
         # open modification form
         wd.find_element_by_name("edit").click()
@@ -69,7 +69,7 @@ class GroupHelper:
     def delete_first_group(self):
         """Delete first group on the group page."""
         wd = self.app.wd
-        self.app.open.open_link(url._GROUPS)
+        self.open_groups_page()
         self.select_first_group()
         # submit deletion
         wd.find_element_by_name("delete").click()
@@ -78,7 +78,7 @@ class GroupHelper:
     def delete_all_groups(self):
         """Delete all groups on the group page."""
         wd = self.app.wd
-        self.app.open.open_link(url._GROUPS)
+        self.open_groups_page()
         # check that the group's list is not empty and check group elements
         if len(wd.find_elements_by_css_selector("#content input")) == 6:
             pass
@@ -94,5 +94,10 @@ class GroupHelper:
     def count(self):
         """Get the count of existing groups."""
         wd = self.app.wd
-        self.app.open.open_link(url._GROUPS)
+        self.open_groups_page()
         return len(wd.find_elements_by_name("selected[]"))
+
+    # def get_list_of_groups(self):
+    #     """Get list of groups from """
+    #     wd = self.app.wd
+    #     self.open_groups_page()

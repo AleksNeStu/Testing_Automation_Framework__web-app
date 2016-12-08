@@ -32,14 +32,16 @@ class OpenHelper:
 
     def is_obj_link_opened(self, link_text):
         wd = self.app.wd
-        if url.form_second_part_url(link_text) == url.check_second_part_url(wd.current_url):
+        if url.form_second_part_url(link_text) == (
+                url.check_second_part_url(wd.current_url)):
             return True
         else:
             return False
 
     def is_obj_url_opened(self, full_url):
         wd = self.app.wd
-        if url.check_second_part_url(full_url) == url.check_second_part_url(wd.current_url):
+        if url.check_second_part_url(full_url) == (
+                url.check_second_part_url(wd.current_url)):
             return True
         else:
             return False
