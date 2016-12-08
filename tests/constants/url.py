@@ -7,7 +7,9 @@ __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
 import urlparse
+
 import os
+
 
 def form_second_part_url(url_part):
     return url_part + ".php"

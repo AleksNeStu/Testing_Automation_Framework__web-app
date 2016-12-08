@@ -61,8 +61,8 @@ class SessionHelper:
     def check_session(self):
         """Check the actual session status."""
         wd = self.app.wd
-        self.app.open.open_url(url.HOME_URL)
-        if len(wd.find_elements_by_link_text("Logout")) == 1:
+        if wd.current_url is not None and len(
+                wd.find_elements_by_link_text("Logout")) == 1:
             return True
         else:
             return False

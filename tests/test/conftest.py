@@ -7,8 +7,8 @@ __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
 import pytest
-from tests.fixtures.application import Application
 
+from tests.fixtures.application import Application
 
 fixture = None
 

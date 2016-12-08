@@ -6,8 +6,8 @@
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
-import string
 import random
+import string
 
 
 def random_data(prefix, maxlen):
