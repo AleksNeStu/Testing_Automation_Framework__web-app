@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""Session test."""
+"""Tests for check sessions."""
 
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"

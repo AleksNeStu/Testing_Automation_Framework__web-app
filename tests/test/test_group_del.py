@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""Groups test"""
+"""Tests for deletion groups."""
 
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
@@ -21,7 +21,6 @@ def test_del_first_group(app):
 
 def test_del_all_groups(app):
     """Check the possibility of del all groups."""
-    old_groups = app.group.get_list_of_groups()
     if app.group.count() == 0:
         [app.group.create(Group()) for _ in xrange(3)]
     app.group.delete_all_groups()

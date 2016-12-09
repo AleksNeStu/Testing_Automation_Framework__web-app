@@ -12,7 +12,7 @@ from tests.fixtures.application import Application
 
 fixture = None
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def app(request):
     """Init fixture with validation."""
     global fixture

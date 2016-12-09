@@ -69,6 +69,31 @@ class ContactHelper:
         wd.find_element_by_name("update").click()
         self.open_contacts_page()
 
+    def delete_first_contact(self):
+        """Delete first contact on the contact page."""
+        wd = self.app.wd
+        self.open_contacts_page()
+        self.select_first_contact()
+        # submit deletion
+        wd.find_element_by_css_selector('[value="Delete"]').click()
+        wd.switch_to_alert().accept()
+        self.open_contacts_page()
+
+    def delete_all_contacts(self):
+        """Delete all contacts on the contact page."""
+        wd = self.app.wd
+        self.open_contacts_page()
+        # check that the contact's list is not empty and check contact elements
+        if len(wd.find_elements_by_css_selector("#content input")) == 5:
+            pass
+        else:
+            # check contact's elements
+            elements = wd.find_elements_by_name("selected[]")
+            [el.click() for el in elements]
+        wd.find_element_by_css_selector('[value="Delete"]').click()
+        wd.switch_to_alert().accept()
+        self.open_contacts_page()
+
     def count(self):
         """Get the count of existing contacts."""
         wd = self.app.wd
