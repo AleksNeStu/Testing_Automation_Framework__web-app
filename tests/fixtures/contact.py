@@ -8,6 +8,7 @@ __copyright__ = "The GNU General Public License v3.0"
 
 from tests.constants import url
 from tests.model.contact import Contact
+from tests.utils import strs
 
 
 class ContactHelper:
@@ -100,7 +101,7 @@ class ContactHelper:
         self.open_contacts_page()
         return len(wd.find_elements_by_name("selected[]"))
 
-    def get_list_of_contacts(self):
+    def get_list_of_contacts_depricated(self):
         """Get list of contacts from groups page."""
         wd = self.app.wd
         self.open_contacts_page()
@@ -115,4 +116,17 @@ class ContactHelper:
             if len(full_name) == 2:
                 ls_contacts.append(Contact(name=full_name[0],
                                           last_name=full_name[1]))
+        return ls_contacts
+
+    def get_list_of_contacts(self):
+        """Get list of contacts from groups page."""
+        wd = self.app.wd
+        self.open_contacts_page()
+        ls_contacts = []
+        for el in wd.find_elements_by_name("selected[]"):
+            id = el.get_attribute("value")
+            ext_text = el.get_attribute("title")
+            text = strs.normal_select_title(ext_text)
+            email = el.get_attribute("accept")
+            ls_contacts.append(Contact(id=id, name=text, email=email))
         return ls_contacts

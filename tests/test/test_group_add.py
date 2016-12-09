@@ -6,8 +6,7 @@
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
-from tests.constants import data
-from tests.constants import messages
+from tests.constants import data, messages
 from tests.generator.generic import random_data as r_data
 from tests.model.group import Group
 
@@ -34,6 +33,7 @@ def test_add_empty_group(app):
     group = Group()
     app.group.create(group)
     actual_groups = app.group.get_list_of_groups()
+    group.id = actual_groups[-1].id
     assert len(first_groups) + 1 == len(actual_groups)
     expected_groups = first_groups + [group]
     assert (

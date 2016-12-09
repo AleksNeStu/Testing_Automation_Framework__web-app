@@ -104,8 +104,8 @@ class GroupHelper:
         self.open_groups_page()
         ls_groups = []
         for el in wd.find_elements_by_name("selected[]"):
+            id = el.get_attribute("value")
             ext_text = el.get_attribute("title")
             text = strs.normal_select_title(ext_text)
-            id = el.get_attribute("value")
-            ls_groups.append(Group(name=text, id=id))
+            ls_groups.append(Group(id=id, name=text))
         return ls_groups

@@ -7,6 +7,7 @@ __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
 from tests.model.contact import Contact
+from tests.constants import messages
 
 
 def test_del_first_contact(app):
@@ -17,7 +18,9 @@ def test_del_first_contact(app):
     app.contact.delete_first_contact()
     actual_contacts = app.contact.get_list_of_contacts()
     assert len(first_contacts) - 1 == len(actual_contacts)
-
+    expected_contacts= first_contacts[1:]
+    assert expected_contacts == actual_contacts, messages.ERR_MSG_FORMAT.format(
+        expected_contacts, actual_contacts)
 
 def test_del_all_contacts(app):
     """Check the possibility of del all contacts."""

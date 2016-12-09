@@ -32,9 +32,15 @@ def test_modify_first_group(app):
     if app.group.count() == 0:
         app.group.create(Group())
     first_groups = app.group.get_list_of_groups()
-    new_group = Group(name=r_data(data.GROUP_NAME_NEW),
+    group = Group(name=r_data(data.GROUP_NAME_NEW),
                       header=r_data(data.GROUP_HEADER_NEW),
                       footer=r_data(data.GROUP_FOOTER_NEW))
-    app.group.modify_first_group(new_group)
+    group.id = first_groups[0].id
+    app.group.modify_first_group(group)
     actual_groups = app.group.get_list_of_groups()
     assert len(first_groups) == len(actual_groups)
+    expected_groups = [group] + first_groups[1:]
+    assert (
+        sorted(expected_groups, key=Group.id_or_max) ==
+        sorted(actual_groups, key=Group.id_or_max),
+        messages.ERR_MSG_FORMAT.format(expected_groups, actual_groups))
