@@ -108,9 +108,11 @@ class ContactHelper:
         for el in wd.find_elements_by_css_selector(
                 "#maintable>tbody>tr>td:nth-child(3)"):
             full_name = el.text.split()
+            if len(full_name) == 0:
+                ls_contacts.append(Contact(name=None))
+            if len(full_name) == 1:
+                ls_contacts.append(Contact(name=full_name[0]))
             if len(full_name) == 2:
                 ls_contacts.append(Contact(name=full_name[0],
                                           last_name=full_name[1]))
-            if len(full_name) == 1:
-                ls_contacts.append(Contact(name=full_name[0]))
         return ls_contacts
