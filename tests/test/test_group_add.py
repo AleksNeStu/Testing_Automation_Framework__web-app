@@ -20,6 +20,7 @@ def test_add_group(app):
                   footer=r_data(data.GROUP_FOOTER))
     app.group.create(group)
     actual_groups = app.group.get_list_of_groups()
+    group.id = actual_groups[-1].id
     assert len(first_groups) + 1 == len(actual_groups)
     expected_groups = first_groups + [group]
     assert (

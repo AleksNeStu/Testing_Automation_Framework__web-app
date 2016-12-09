@@ -6,21 +6,26 @@
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
+from tests.constants import data, messages
 from tests.generator.generic import random_data as r_data
 from tests.model.group import Group
-from tests.constants import data
 
 
 def test_modify_name_of_first_group(app):
     """Check the possibility of modifying group's name."""
     if app.group.count() == 0:
         app.group.create(Group())
-    new_group_name = Group(name=r_data(data.GROUP_NAME_NEW))
+    group_name = Group(name=r_data(data.GROUP_NAME_NEW))
     first_groups = app.group.get_list_of_groups()
-    app.group.modify_first_group(new_group_name)
+    group_name.id = first_groups[0].id
+    app.group.modify_first_group(group_name)
     actual_groups = app.group.get_list_of_groups()
     assert len(first_groups) == len(actual_groups)
-
+    expected_groups = [group_name] + first_groups[1:]
+    assert (
+        sorted(expected_groups, key=Group.id_or_max) ==
+        sorted(actual_groups, key=Group.id_or_max),
+        messages.ERR_MSG_FORMAT.format(expected_groups, actual_groups))
 
 def test_modify_first_group(app):
     """Check the possibility of modifying group's name, header, footer."""
