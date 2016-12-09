@@ -24,5 +24,6 @@ def test_modify_first_contact(app):
     if app.contact.count() == 0:
         app.contact.create(Contact())
     new_contact = Contact(name=r_data(data.CONTACT_NAME_NEW),
+                          last_name=r_data(data.CONTACT_NAME_LAST_NEW),
                           email=r_data(data.CONTACT_EMAIL_NEW))
     app.contact.modify_first_contact(new_contact)

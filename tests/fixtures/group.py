@@ -7,7 +7,8 @@ __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
 from tests.constants import url
-
+from model.group import Group
+from tests.utils import strs
 
 class GroupHelper:
     """Class for represent Group."""
@@ -97,7 +98,14 @@ class GroupHelper:
         self.open_groups_page()
         return len(wd.find_elements_by_name("selected[]"))
 
-    # def get_list_of_groups(self):
-    #     """Get list of groups from """
-    #     wd = self.app.wd
-    #     self.open_groups_page()
+    def get_list_of_groups(self):
+        """Get list of groups from groups page."""
+        wd = self.app.wd
+        self.open_groups_page()
+        ls_groups = []
+        for el in wd.find_elements_by_name("selected[]"):
+            ext_text = el.get_attribute("title")
+            text = strs.normal_select_title(ext_text)
+            id = el.get_attribute("value")
+            ls_groups.append(Group(name=text, id=id))
+        return ls_groups

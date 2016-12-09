@@ -6,7 +6,7 @@
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
-from selenium.webdriver.chrome.webdriver import WebDriver
+from selenium.webdriver.firefox.webdriver import WebDriver
 
 from contact import ContactHelper
 from group import GroupHelper

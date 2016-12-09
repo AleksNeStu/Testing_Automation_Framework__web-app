@@ -14,6 +14,10 @@ from tests.model.contact import Contact
 
 def test_add_contact(app):
     """Check the possibility of add contact."""
+    old_contacts = app.contact.get_list_of_contacts()
     contact = Contact(name=r_data(data.CONTACT_NAME),
+                      last_name=r_data(data.CONTACT_NAME_LAST),
                       email=r_email(data.CONTACT_EMAIL))
     app.contact.create(contact)
+    new_contacts = app.contact.get_list_of_contacts()
+    assert len(old_contacts) + 1 == len(new_contacts)

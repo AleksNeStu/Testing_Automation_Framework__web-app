@@ -7,6 +7,7 @@ __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
 from tests.constants import url
+from tests.model.contact import Contact
 
 
 class ContactHelper:
@@ -33,6 +34,7 @@ class ContactHelper:
     def fill_contact_form(self, contact):
         """Fill contact forms of new data or modify exist data."""
         self._change_field_value("firstname", contact.name)
+        self._change_field_value("lastname", contact.last_name)
         self._change_field_value("email", contact.email)
 
     def select_first_contact(self):
@@ -48,6 +50,7 @@ class ContactHelper:
         # fill data
         self._change_field_value("address", contact.name)
         wd.find_element_by_css_selector("input[name=quickadd]").click()
+        self._change_field_value("lastname", contact.last_name)
         self._change_field_value("email", contact.email)
         # submit contact creation
         wd.find_element_by_name("submit").click()
@@ -71,3 +74,18 @@ class ContactHelper:
         wd = self.app.wd
         self.open_contacts_page()
         return len(wd.find_elements_by_name("selected[]"))
+
+    def get_list_of_contacts(self):
+        """Get list of contacts from groups page."""
+        wd = self.app.wd
+        self.open_contacts_page()
+        ls_contacts = []
+        for el in wd.find_elements_by_css_selector(
+                "#maintable>tbody>tr>td:nth-child(3)"):
+            full_name = el.text.split()
+            if len(full_name) == 2:
+                ls_contacts.append(Contact(name=full_name[0],
+                                          last_name=full_name[1]))
+            if len(full_name) == 1:
+                ls_contacts.append(Contact(name=full_name[0]))
+        return ls_contacts
