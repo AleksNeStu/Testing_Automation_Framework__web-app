@@ -19,5 +19,5 @@ def test_add_contact(app):
                       last_name=r_data(data.CONTACT_NAME_LAST),
                       email=r_email(data.CONTACT_EMAIL))
     app.contact.create(contact)
-    new_contacts = app.contact.get_list_of_contacts()
-    assert len(old_contacts) + 1 == len(new_contacts)
+    actual_contacts = app.contact.get_list_of_contacts()
+    assert len(old_contacts) + 1 == len(actual_contacts)

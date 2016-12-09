@@ -15,21 +15,21 @@ def test_modify_name_of_first_contact(app):
     """Check the possibility of modifying contact's name."""
     if app.contact.count() == 0:
         app.contact.create(Contact())
-    old_contacts = app.contact.get_list_of_contacts()
+    first_contacts = app.contact.get_list_of_contacts()
     new_contact_name = Contact(name=r_data(data.CONTACT_NAME_NEW))
     app.contact.modify_first_contact(new_contact_name)
-    new_contacts = app.contact.get_list_of_contacts()
-    assert len(old_contacts) == len(new_contacts)
+    actual_contacts = app.contact.get_list_of_contacts()
+    assert len(first_contacts) == len(actual_contacts)
 
 
 def test_modify_first_contact(app):
     """Check the possibility of modifying contact's name, email."""
     if app.contact.count() == 0:
         app.contact.create(Contact())
-    old_contacts = app.contact.get_list_of_contacts()
+    first_contacts = app.contact.get_list_of_contacts()
     new_contact = Contact(name=r_data(data.CONTACT_NAME_NEW),
                           last_name=r_data(data.CONTACT_NAME_LAST_NEW),
                           email=r_data(data.CONTACT_EMAIL_NEW))
     app.contact.modify_first_contact(new_contact)
-    new_contacts = app.contact.get_list_of_contacts()
-    assert len(old_contacts) == len(new_contacts)
+    actual_contacts = app.contact.get_list_of_contacts()
+    assert len(first_contacts) == len(actual_contacts)

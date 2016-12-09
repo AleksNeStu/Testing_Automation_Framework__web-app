@@ -13,10 +13,10 @@ def test_del_first_contact(app):
     """Check the possibility of del first contact."""
     if app.contact.count() == 0:
         app.contact.create(Contact())
-    old_contacts = app.contact.get_list_of_contacts()
+    first_contacts = app.contact.get_list_of_contacts()
     app.contact.delete_first_contact()
-    new_contacts = app.contact.get_list_of_contacts()
-    assert len(old_contacts) - 1 == len(new_contacts)
+    actual_contacts = app.contact.get_list_of_contacts()
+    assert len(first_contacts) - 1 == len(actual_contacts)
 
 
 def test_del_all_contacts(app):

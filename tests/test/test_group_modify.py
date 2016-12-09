@@ -16,20 +16,20 @@ def test_modify_name_of_first_group(app):
     if app.group.count() == 0:
         app.group.create(Group())
     new_group_name = Group(name=r_data(data.GROUP_NAME_NEW))
-    old_groups = app.group.get_list_of_groups()
+    first_groups = app.group.get_list_of_groups()
     app.group.modify_first_group(new_group_name)
-    new_groups = app.group.get_list_of_groups()
-    assert len(old_groups) == len(new_groups)
+    actual_groups = app.group.get_list_of_groups()
+    assert len(first_groups) == len(actual_groups)
 
 
 def test_modify_first_group(app):
     """Check the possibility of modifying group's name, header, footer."""
     if app.group.count() == 0:
         app.group.create(Group())
-    old_groups = app.group.get_list_of_groups()
+    first_groups = app.group.get_list_of_groups()
     new_group = Group(name=r_data(data.GROUP_NAME_NEW),
                       header=r_data(data.GROUP_HEADER_NEW),
                       footer=r_data(data.GROUP_FOOTER_NEW))
     app.group.modify_first_group(new_group)
-    new_groups = app.group.get_list_of_groups()
-    assert len(old_groups) == len(new_groups)
+    actual_groups = app.group.get_list_of_groups()
+    assert len(first_groups) == len(actual_groups)
