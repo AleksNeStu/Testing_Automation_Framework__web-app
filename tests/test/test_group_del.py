@@ -16,8 +16,8 @@ def test_del_first_group(app):
         app.group.create(Group())
     first_groups = app.group.get_list_of_groups()
     app.group.delete_first_group()
+    assert len(first_groups) - 1 == app.group.count()
     actual_groups = app.group.get_list_of_groups()
-    assert len(first_groups) - 1 == len(actual_groups)
     expected_groups = first_groups[1:]
     assert expected_groups == actual_groups, messages.ERR_MSG_FORMAT.format(
         expected_groups, actual_groups)
@@ -28,4 +28,4 @@ def test_del_all_groups(app):
         [app.group.create(Group()) for _ in xrange(3)]
     app.group.delete_all_groups()
     actual_groups = app.group.get_list_of_groups()
-    assert len(actual_groups) == 0
+    assert len(actual_groups) == app.group.count() == 0

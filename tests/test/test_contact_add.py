@@ -19,9 +19,9 @@ def test_add_contact(app):
                       last_name=r_data(data.CONTACT_NAME_LAST),
                       email=r_email(data.CONTACT_EMAIL))
     app.contact.create(contact)
+    assert len(old_contacts) + 1 == app.contact.count()
     actual_contacts = app.contact.get_list_of_contacts()
     contact.id = actual_contacts[-1].id
-    assert len(old_contacts) + 1 == len(actual_contacts)
     expected_contacts = old_contacts + [contact]
     assert (
         sorted(expected_contacts, key=Contact.id_or_max) ==

@@ -19,8 +19,8 @@ def test_modify_name_of_first_group(app):
     first_groups = app.group.get_list_of_groups()
     group_name.id = first_groups[0].id
     app.group.modify_first_group(group_name)
+    assert len(first_groups) == app.group.count()
     actual_groups = app.group.get_list_of_groups()
-    assert len(first_groups) == len(actual_groups)
     expected_groups = [group_name] + first_groups[1:]
     assert (
         sorted(expected_groups, key=Group.id_or_max) ==
@@ -37,8 +37,8 @@ def test_modify_first_group(app):
                       footer=r_data(data.GROUP_FOOTER_NEW))
     group.id = first_groups[0].id
     app.group.modify_first_group(group)
+    assert len(first_groups) == app.group.count()
     actual_groups = app.group.get_list_of_groups()
-    assert len(first_groups) == len(actual_groups)
     expected_groups = [group] + first_groups[1:]
     assert (
         sorted(expected_groups, key=Group.id_or_max) ==

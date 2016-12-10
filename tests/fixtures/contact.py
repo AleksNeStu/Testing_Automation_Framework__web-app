@@ -16,6 +16,8 @@ class ContactHelper:
     def __init__(self, app):
         self.app = app
 
+    contact_cache = None
+
     def open_contacts_page(self):
         """Open contacts page."""
         self.app.open.open_link(url._HOME)
@@ -56,6 +58,7 @@ class ContactHelper:
         # submit contact creation
         wd.find_element_by_name("submit").click()
         self.open_contacts_page()
+        self.contact_cache = None
 
     def  modify_first_contact(self, new_contact_data):
         """Modify contact editing requirements fields."""
@@ -69,6 +72,7 @@ class ContactHelper:
         # submit modification
         wd.find_element_by_name("update").click()
         self.open_contacts_page()
+        self.contact_cache = None
 
     def delete_first_contact(self):
         """Delete first contact on the contact page."""
@@ -79,6 +83,7 @@ class ContactHelper:
         wd.find_element_by_css_selector('[value="Delete"]').click()
         wd.switch_to_alert().accept()
         self.open_contacts_page()
+        self.contact_cache = None
 
     def delete_all_contacts(self):
         """Delete all contacts on the contact page."""
@@ -94,6 +99,7 @@ class ContactHelper:
         wd.find_element_by_css_selector('[value="Delete"]').click()
         wd.switch_to_alert().accept()
         self.open_contacts_page()
+        self.contact_cache = None
 
     def count(self):
         """Get the count of existing contacts."""
@@ -122,11 +128,11 @@ class ContactHelper:
         """Get list of contacts from groups page."""
         wd = self.app.wd
         self.open_contacts_page()
-        ls_contacts = []
+        self.contact_cache = []
         for el in wd.find_elements_by_name("selected[]"):
             id = el.get_attribute("value")
             ext_text = el.get_attribute("title")
             text = strs.normal_select_title(ext_text)
             email = el.get_attribute("accept")
-            ls_contacts.append(Contact(id=id, name=text, email=email))
-        return ls_contacts
+            self.contact_cache.append(Contact(id=id, name=text, email=email))
+        return self.contact_cache

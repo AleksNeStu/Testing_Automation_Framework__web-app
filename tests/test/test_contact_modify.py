@@ -19,8 +19,8 @@ def test_modify_name_of_first_contact(app):
     first_contacts = app.contact.get_list_of_contacts()
     contact_name.id = first_contacts[0].id
     app.contact.modify_first_contact(contact_name)
+    assert len(first_contacts) == app.contact.count()
     actual_contacts = app.contact.get_list_of_contacts()
-    assert len(first_contacts) == len(actual_contacts)
     expected_contacts = [contact_name] + first_contacts[1:]
     assert (
         sorted(expected_contacts, key=Contact.id_or_max) ==
@@ -37,8 +37,8 @@ def test_modify_first_contact(app):
                           email=r_data(data.CONTACT_EMAIL_NEW))
     app.contact.modify_first_contact(contact)
     contact.id = first_contacts[0].id
+    assert len(first_contacts) == app.contact.count()
     actual_contacts = app.contact.get_list_of_contacts()
-    assert len(first_contacts) == len(actual_contacts)
     expected_contacts = [contact] + first_contacts[1:]
     assert (
         sorted(expected_contacts, key=Contact.id_or_max) ==

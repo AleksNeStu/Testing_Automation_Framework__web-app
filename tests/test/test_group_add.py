@@ -18,9 +18,9 @@ def test_add_group(app):
                   header=r_data(data.GROUP_HEADER),
                   footer=r_data(data.GROUP_FOOTER))
     app.group.create(group)
+    assert len(first_groups) + 1 == app.group.count()
     actual_groups = app.group.get_list_of_groups()
     group.id = actual_groups[-1].id
-    assert len(first_groups) + 1 == len(actual_groups)
     expected_groups = first_groups + [group]
     assert (
         sorted(expected_groups, key=Group.id_or_max) ==
@@ -32,9 +32,9 @@ def test_add_empty_group(app):
     first_groups = app.group.get_list_of_groups()
     group = Group()
     app.group.create(group)
+    assert len(first_groups) + 1 == app.group.count()
     actual_groups = app.group.get_list_of_groups()
     group.id = actual_groups[-1].id
-    assert len(first_groups) + 1 == len(actual_groups)
     expected_groups = first_groups + [group]
     assert (
         sorted(expected_groups, key=Group.id_or_max) ==

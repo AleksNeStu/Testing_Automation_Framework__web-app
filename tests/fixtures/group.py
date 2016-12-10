@@ -15,6 +15,8 @@ class GroupHelper:
     def __init__(self, app):
         self.app = app
 
+    group_cache = None
+
     def open_groups_page(self):
         """Open groups page."""
         self.app.open.open_link(url._GROUPS)
@@ -53,6 +55,7 @@ class GroupHelper:
         # submit group creation
         wd.find_element_by_name("submit").click()
         self.return_to_groups_page()
+        self.group_cache = None
 
     def  modify_first_group(self, new_group_data):
         """Modify group editing requirements fields."""
@@ -66,6 +69,7 @@ class GroupHelper:
         # submit modification
         wd.find_element_by_name("update").click()
         self.return_to_groups_page()
+        self.group_cache = None
 
     def delete_first_group(self):
         """Delete first group on the group page."""
@@ -75,6 +79,7 @@ class GroupHelper:
         # submit deletion
         wd.find_element_by_name("delete").click()
         self.return_to_groups_page()
+        self.group_cache = None
 
     def delete_all_groups(self):
         """Delete all groups on the group page."""
@@ -91,6 +96,7 @@ class GroupHelper:
                     "#content input:nth-of-type({})".format(i+3)).click()
         wd.find_element_by_name("delete").click()
         self.return_to_groups_page()
+        self.group_cache = None
 
     def count(self):
         """Get the count of existing groups."""
@@ -100,12 +106,13 @@ class GroupHelper:
 
     def get_list_of_groups(self):
         """Get list of groups from groups page."""
-        wd = self.app.wd
-        self.open_groups_page()
-        ls_groups = []
-        for el in wd.find_elements_by_name("selected[]"):
-            id = el.get_attribute("value")
-            ext_text = el.get_attribute("title")
-            text = strs.normal_select_title(ext_text)
-            ls_groups.append(Group(id=id, name=text))
-        return ls_groups
+        if self.group_cache is None:
+            wd = self.app.wd
+            self.open_groups_page()
+            self.group_cache = []
+            for el in wd.find_elements_by_name("selected[]"):
+                id = el.get_attribute("value")
+                ext_text = el.get_attribute("title")
+                text = strs.normal_select_title(ext_text)
+                self.group_cache.append(Group(id=id, name=text))
+        return self.group_cache
