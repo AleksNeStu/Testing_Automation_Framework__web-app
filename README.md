@@ -1,4 +1,4 @@
-# Test automation framework for web-app "Address book"<br />
+# Testing automation framework for web-app "Address book"<br />
 # Technologies stack: docker, pytest, python, selenium<br />
 
 # Structure:<br />
