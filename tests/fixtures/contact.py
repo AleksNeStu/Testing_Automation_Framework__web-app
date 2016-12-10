@@ -20,7 +20,7 @@ class ContactHelper:
 
     def open_contacts_page(self):
         """Open contacts page."""
-        self.app.open.open_link(url._HOME)
+        self.app.open.open_url(url.HOME_URL)
 
     def open_contacts_add_page(self):
         """Open contacts add page."""
@@ -40,10 +40,14 @@ class ContactHelper:
         self._change_field_value("lastname", contact.last_name)
         self._change_field_value("email", contact.email)
 
+    def select_contact_by_index(self, index):
+        """Select contact by index."""
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]")[index].click()
+
     def select_first_contact(self):
         """Select first contact."""
-        wd = self.app.wd
-        wd.find_element_by_name("selected[]").click()
+        self.select_contact_by_index(0)
 
     def create(self, contact):
         """Create contact filling requirements fields."""
@@ -57,36 +61,41 @@ class ContactHelper:
         self._change_field_value("email", contact.email)
         # submit contact creation
         wd.find_element_by_name("submit").click()
-        self.open_contacts_page()
         self.contact_cache = None
 
-    def  modify_first_contact(self, new_contact_data):
-        """Modify contact editing requirements fields."""
+    def modify_first_contact(self, new_contact_data):
+        """Modify first contact editing requirements fields."""
+        self.modify_contact_by_index(0, new_contact_data)
+
+    def  modify_contact_by_index(self, index, new_contact_data):
+        """Modify contact by index editing requirements fields."""
         wd = self.app.wd
         self.open_contacts_page()
-        self.select_first_contact()
+        self.select_contact_by_index(index)
         # open modification form
         wd.find_element_by_css_selector('[title="Edit"]').click()
         # fill contact form
         self.fill_contact_form(new_contact_data)
         # submit modification
         wd.find_element_by_name("update").click()
-        self.open_contacts_page()
         self.contact_cache = None
 
-    def delete_first_contact(self):
-        """Delete first contact on the contact page."""
+    def delete_contact_by_index(self, index):
+        """Delete contact by index."""
         wd = self.app.wd
         self.open_contacts_page()
-        self.select_first_contact()
+        self.select_contact_by_index(index)
         # submit deletion
         wd.find_element_by_css_selector('[value="Delete"]').click()
         wd.switch_to_alert().accept()
-        self.open_contacts_page()
         self.contact_cache = None
 
+    def delete_first_contact(self):
+        """Delete first contact."""
+        self.delete_contact_by_index(0)
+
     def delete_all_contacts(self):
-        """Delete all contacts on the contact page."""
+        """Delete all contacts."""
         wd = self.app.wd
         self.open_contacts_page()
         # check that the contact's list is not empty and check contact elements
@@ -98,7 +107,6 @@ class ContactHelper:
             [el.click() for el in elements]
         wd.find_element_by_css_selector('[value="Delete"]').click()
         wd.switch_to_alert().accept()
-        self.open_contacts_page()
         self.contact_cache = None
 
     def count(self):
@@ -107,25 +115,8 @@ class ContactHelper:
         self.open_contacts_page()
         return len(wd.find_elements_by_name("selected[]"))
 
-    def get_list_of_contacts_depricated(self):
-        """Get list of contacts from groups page."""
-        wd = self.app.wd
-        self.open_contacts_page()
-        ls_contacts = []
-        for el in wd.find_elements_by_css_selector(
-                "#maintable>tbody>tr>td:nth-child(3)"):
-            full_name = el.text.split()
-            if len(full_name) == 0:
-                ls_contacts.append(Contact(name=None))
-            if len(full_name) == 1:
-                ls_contacts.append(Contact(name=full_name[0]))
-            if len(full_name) == 2:
-                ls_contacts.append(Contact(name=full_name[0],
-                                          last_name=full_name[1]))
-        return ls_contacts
-
     def get_list_of_contacts(self):
-        """Get list of contacts from groups page."""
+        """Get list of contacts."""
         wd = self.app.wd
         self.open_contacts_page()
         self.contact_cache = []
