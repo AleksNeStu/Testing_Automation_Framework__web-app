@@ -17,7 +17,7 @@ def test_modify_name_of_some_contact(app):
     """Check the possibility of modifying contact's name."""
     if app.contact.count() == 0:
         app.contact.create(Contact())
-    contact_name = Contact(name=r_data(data.CONTACT_NAME_NEW))
+    contact_name = Contact(first_name=r_data(data.CONTACT_FIRST_NAME_NEW))
     first_contacts = app.contact.get_list_of_contacts()
     contact_name.id = first_contacts[0].id
     index = randrange(len(first_contacts))
@@ -35,9 +35,9 @@ def test_modify_some_contact(app):
     if app.contact.count() == 0:
         app.contact.create(Contact())
     first_contacts = app.contact.get_list_of_contacts()
-    contact = Contact(name=r_data(data.CONTACT_NAME_NEW),
-                          last_name=r_data(data.CONTACT_NAME_LAST_NEW),
-                          email=r_data(data.CONTACT_EMAIL_NEW))
+    contact = Contact(first_name=r_data(data.CONTACT_FIRST_NAME_NEW),
+                      last_name=r_data(data.CONTACT_LAST_NAME_NEW),
+                      email=r_data(data.CONTACT_EMAIL_NEW))
     index = randrange(len(first_contacts))
     app.contact.modify_contact_by_index(index, contact)
     contact.id = first_contacts[0].id

@@ -14,15 +14,23 @@ class SessionHelper:
     def __init__(self, app):
         self.app = app
 
-    def is_logged_in(self):
-        """Check if somebody logged."""
-        wd = self.app.wd
-        return len(wd.find_elements_by_link_text("Logout")) > 0
-
     def _get_loged_user(self):
         """Get username of logged user."""
         wd = self.app.wd
         return wd.find_element_by_css_selector("#top b").text[1:-1]
+
+    def _change_field_value(self, field_name, text):
+        """Change field value if test exist (is not None)."""
+        wd = self.app.wd
+        if text:
+            wd.find_element_by_name(field_name).click()
+            wd.find_element_by_name(field_name).clear()
+            wd.find_element_by_name(field_name).send_keys(text)
+
+    def is_logged_in(self):
+        """Check if somebody logged."""
+        wd = self.app.wd
+        return len(wd.find_elements_by_link_text("Logout")) > 0
 
     def is_logged_in_as(self, username):
         """Check if user with username logged."""
@@ -32,12 +40,8 @@ class SessionHelper:
         """Login to the web-app used credentials."""
         wd = self.app.wd
         self.app.open.open_url(url.HOME_URL)
-        wd.find_element_by_name("user").click()
-        wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys(username)
-        wd.find_element_by_name("pass").click()
-        wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys(password)
+        self._change_field_value("user", username)
+        self._change_field_value("pass", password)
         wd.find_element_by_css_selector("input[type=submit]").click()
 
     def ensure_login(self, username, password):
@@ -60,14 +64,11 @@ class SessionHelper:
 
     def ensure_logout(self):
         """Intellectual logout from the web-app."""
-        if self.is_logged_in():
-            self.logout()
+        if self.is_logged_in(): self.logout()
 
     def check_session(self):
         """Check the actual session status."""
         wd = self.app.wd
         if wd.current_url is not None and len(
-                wd.find_elements_by_link_text("Logout")) == 1:
-            return True
-        else:
-            return False
+                wd.find_elements_by_link_text("Logout")) == 1: return True
+        else: return False

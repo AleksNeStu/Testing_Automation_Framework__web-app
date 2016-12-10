@@ -15,11 +15,11 @@ PASSWORD = "secret"
 _NEW = "New_"
 
 # data for creation (modification) contacts
-CONTACT_NAME = "Contact_name_"
-CONTACT_NAME_LAST = "Contact_lastname_"
+CONTACT_FIRST_NAME = "Contact_firstname_"
+CONTACT_LAST_NAME = "Contact_lastname_"
 CONTACT_EMAIL = "@gmail.com"
-CONTACT_NAME_NEW = _NEW + CONTACT_NAME
-CONTACT_NAME_LAST_NEW = _NEW + CONTACT_NAME_LAST
+CONTACT_FIRST_NAME_NEW = _NEW + CONTACT_FIRST_NAME
+CONTACT_LAST_NAME_NEW = _NEW + CONTACT_LAST_NAME
 CONTACT_EMAIL_NEW = _NEW + CONTACT_EMAIL
 
 # data for creation (modification) groups

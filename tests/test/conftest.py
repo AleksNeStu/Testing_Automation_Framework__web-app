@@ -16,11 +16,9 @@ fixture = None
 def app(request):
     """Init fixture with validation."""
     global fixture
-    if fixture is None:
-        fixture = Application()
+    if fixture is None: fixture = Application()
     else:
-        if not fixture.is_valid():
-            fixture = Application()
+        if not fixture.is_valid(): fixture = Application()
     fixture.session.ensure_login_as_admin()
     return fixture
 

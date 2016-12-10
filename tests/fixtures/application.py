@@ -31,8 +31,5 @@ class Application():
     def is_valid(self):
         """Fixture validation."""
         self.wd = WebDriver()
-        try:
-            self.wd.current_url
-            return True
-        except:
-            return False
+        try: self.wd.current_url; return True
+        except: return False

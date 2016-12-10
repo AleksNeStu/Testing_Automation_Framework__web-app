@@ -36,7 +36,7 @@ class ContactHelper:
 
     def fill_contact_form(self, contact):
         """Fill contact forms of new data or modify exist data."""
-        self._change_field_value("firstname", contact.name)
+        self._change_field_value("firstname", contact.first_name)
         self._change_field_value("lastname", contact.last_name)
         self._change_field_value("email", contact.email)
 
@@ -55,7 +55,7 @@ class ContactHelper:
         # init contact creation
         self.open_contacts_add_page()
         # fill data
-        self._change_field_value("address", contact.name)
+        self._change_field_value("address", contact.first_name)
         wd.find_element_by_css_selector("input[name=quickadd]").click()
         self._change_field_value("lastname", contact.last_name)
         self._change_field_value("email", contact.email)
@@ -99,12 +99,8 @@ class ContactHelper:
         wd = self.app.wd
         self.open_contacts_page()
         # check that the contact's list is not empty and check contact elements
-        if len(wd.find_elements_by_css_selector("#content input")) == 5:
-            pass
-        else:
-            # check contact's elements
-            elements = wd.find_elements_by_name("selected[]")
-            [el.click() for el in elements]
+        if len(wd.find_elements_by_id("content input")) == 5: pass
+        else: wd.find_element_by_id("MassCB").click()
         wd.find_element_by_css_selector("[value=Delete]").click()
         wd.switch_to_alert().accept()
         self.contact_cache = None
@@ -115,7 +111,7 @@ class ContactHelper:
         self.open_contacts_page()
         return len(wd.find_elements_by_name("selected[]"))
 
-    def get_list_of_contacts(self):
+    def get_list_of_contacts_(self):
         """Get list of contacts."""
         wd = self.app.wd
         self.open_contacts_page()
@@ -125,5 +121,22 @@ class ContactHelper:
             ext_text = el.get_attribute("title")
             text = strs.normal_select_title(ext_text)
             email = el.get_attribute("accept")
-            self.contact_cache.append(Contact(id=id, name=text, email=email))
+            self.contact_cache.append(Contact(
+                id=id, first_name=text, email=email))
+        return self.contact_cache
+
+    def get_list_of_contacts(self):
+        """Get list of contacts."""
+        wd = self.app.wd
+        self.open_contacts_page()
+        self.contact_cache = []
+        for row in wd.find_elements_by_name("entry"):
+            cells = row.find_elements_by_tag_name("td")
+            id = cells[0].find_element_by_tag_name("input").get_attribute("value")
+            fullname = cells[2].text
+            firstname = strs.split_full_name_to_tuple(fullname)[1]
+            lastname = strs.split_full_name_to_tuple(fullname)[0]
+            email = cells[4].text
+            self.contact_cache.append(Contact(
+                id=id, first_name=firstname, last_name=lastname, email=email))
         return self.contact_cache

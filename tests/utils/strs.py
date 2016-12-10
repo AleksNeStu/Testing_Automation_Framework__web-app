@@ -16,8 +16,9 @@ def normal_select_title(ext_title):
 def split_full_name_to_tuple(full_name):
     """Split full name to parts.
     Example:
-        "Selenium Driver" to ("Selenium", "Driver")
+        "Lastname Firstname" to ("Lastname", "Firstname")
     """
-    return (full_name.split())
-
-
+    _full_name = full_name.split()
+    if len(_full_name) == 2: return _full_name
+    if len(_full_name) == 1: return _full_name * 2
+    if len(_full_name) == 0 or len(_full_name) >= 3: return [None, None]
