@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""Tests for add groups."""
+"""Tests for creating groups."""
 
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
@@ -12,7 +12,7 @@ from tests.model.group import Group
 
 
 def test_add_group(app):
-    """Check the possibility of add filling group."""
+    """Check the possibility to create new group."""
     first_groups = app.group.get_list_of_groups()
     group = Group(name=r_data(data.GROUP_NAME),
                   header=r_data(data.GROUP_HEADER),
@@ -28,7 +28,7 @@ def test_add_group(app):
         messages.ERR_MSG_FORMAT.format(expected_groups, actual_groups))
 
 def test_add_empty_group(app):
-    """Check the possibility of add empty group."""
+    """Check the possibility to create new empty group."""
     first_groups = app.group.get_list_of_groups()
     group = Group()
     app.group.create(group)

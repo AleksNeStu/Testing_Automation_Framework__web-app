@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""Tests for modification groups."""
+"""Tests for modifying groups."""
 
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
@@ -14,7 +14,7 @@ from tests.model.group import Group
 
 
 def test_modify_name_of_some_group(app):
-    """Check the possibility of modifying group's name."""
+    """Check the possibility to modify some group's name."""
     if app.group.count() == 0:
         app.group.create(Group())
     group_name = Group(name=r_data(data.GROUP_NAME_NEW))
@@ -31,7 +31,7 @@ def test_modify_name_of_some_group(app):
         messages.ERR_MSG_FORMAT.format(expected_groups, actual_groups))
 
 def test_modify_some_group(app):
-    """Check the possibility of modifying group's name, header, footer."""
+    """Check the possibility to modify some group."""
     if app.group.count() == 0:
         app.group.create(Group())
     first_groups = app.group.get_list_of_groups()

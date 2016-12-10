@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""Tests for modification contacts."""
+"""Tests for modifying contacts."""
 
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
@@ -14,7 +14,7 @@ from tests.model.contact import Contact
 
 
 def test_modify_name_of_some_contact(app):
-    """Check the possibility of modifying contact's name."""
+    """Check the possibility to modify some contact's name."""
     if app.contact.get_count_of_contacts_via_home() == 0:
         app.contact.create_contact(Contact())
     contact_name = Contact(first_name=r_data(data.CONTACT_FIRST_NAME_NEW))
@@ -31,7 +31,7 @@ def test_modify_name_of_some_contact(app):
         messages.ERR_MSG_FORMAT.format(expected_contacts, actual_contacts))
 
 def test_modify_some_contact(app):
-    """Check the possibility of modifying contact's name, email."""
+    """Check the possibility to modify some contact."""
     if app.contact.get_count_of_contacts_via_home() == 0:
         app.contact.create_contact(Contact())
     first_contacts = app.contact.get_list_of_contacts_via_home()

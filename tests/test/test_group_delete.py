@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""Tests for deletion groups."""
+"""Tests for deleting groups."""
 
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
@@ -13,7 +13,7 @@ from tests.model.group import Group
 
 
 def test_del_some_group(app):
-    """Check the possibility of del first group."""
+    """Check the possibility to delete some group via home (contacts) page."""
     if app.group.count() == 0:
         app.group.create(Group())
     first_groups = app.group.get_list_of_groups()
@@ -26,7 +26,7 @@ def test_del_some_group(app):
         expected_groups, actual_groups)
 
 def test_del_all_groups(app):
-    """Check the possibility of del all groups."""
+    """Check the possibility to delete all groups via home (contacts) page."""
     if app.group.count() == 0:
         [app.group.create(Group()) for _ in xrange(3)]
     app.group.delete_all_groups()

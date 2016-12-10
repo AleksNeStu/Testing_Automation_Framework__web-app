@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""Tests for deletion contacts."""
+"""Tests for deleting contacts."""
 
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
@@ -13,7 +13,7 @@ from tests.model.contact import Contact
 
 
 def test_del_some_contact(app):
-    """Check the possibility of del first contact."""
+    """Check the possibility to delete some contact via home (contacts) page."""
     if app.contact.get_count_of_contacts_via_home() == 0:
         app.contact.create_contact(Contact())
     first_contacts = app.contact.get_list_of_contacts_via_home()
@@ -26,7 +26,7 @@ def test_del_some_contact(app):
         expected_contacts, actual_contacts)
 
 def test_del_all_contacts(app):
-    """Check the possibility of del all contacts."""
+    """Check the possibility to delete all contacts via home (contacts) page."""
     if app.contact.get_count_of_contacts_via_home() == 0:
         [app.contact.create_contact(Contact()) for _ in xrange(3)]
     app.contact.delete_all_contacts_via_home()
