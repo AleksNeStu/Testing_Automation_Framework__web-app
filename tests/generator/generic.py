@@ -14,11 +14,11 @@ def random_data(prefix, maxlen=5):
     """Random str generator for common strs."""
     symbols = string.ascii_letters + string.digits
     return prefix + "".join(
-        [random.choice(symbols) for i in range(random.randint(1, maxlen))])
+        [random.choice(symbols) for _ in range(random.randint(1, maxlen))])
 
 
 def random_email(domain="@gmail.com", maxlen=5):
     """Random str generator for mail."""
     symbols = string.ascii_letters + string.digits
     return "".join(
-        [random.choice(symbols) for i in range(random.randint(1, maxlen))]) + domain
+        [random.choice(symbols) for _ in range(random.randint(1, maxlen))]) + domain

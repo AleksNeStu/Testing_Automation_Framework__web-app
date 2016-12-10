@@ -15,13 +15,18 @@ class SessionHelper:
         self.app = app
 
     def is_logged_in(self):
+        """Check if somebody logged."""
         wd = self.app.wd
         return len(wd.find_elements_by_link_text("Logout")) > 0
 
-    def is_logged_in_as(self, username):
+    def _get_loged_user(self):
+        """Get username of logged user."""
         wd = self.app.wd
-        return wd.find_element_by_css_selector("#top b").text == "("+username+")"
+        return wd.find_element_by_css_selector("#top b").text[1:-1]
 
+    def is_logged_in_as(self, username):
+        """Check if user with username logged."""
+        return self._get_loged_user() == username
 
     def login(self, username, password):
         """Login to the web-app used credentials."""
@@ -33,7 +38,7 @@ class SessionHelper:
         wd.find_element_by_name("pass").click()
         wd.find_element_by_name("pass").clear()
         wd.find_element_by_name("pass").send_keys(password)
-        wd.find_element_by_css_selector("input[type=\"submit\"]").click()
+        wd.find_element_by_css_selector("input[type=submit]").click()
 
     def ensure_login(self, username, password):
         """Intellectual login to the web-app used credentials."""

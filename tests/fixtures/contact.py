@@ -73,7 +73,7 @@ class ContactHelper:
         self.open_contacts_page()
         self.select_contact_by_index(index)
         # open modification form
-        wd.find_element_by_css_selector('[title="Edit"]').click()
+        wd.find_element_by_css_selector("[title=Edit]").click()
         # fill contact form
         self.fill_contact_form(new_contact_data)
         # submit modification
@@ -86,7 +86,7 @@ class ContactHelper:
         self.open_contacts_page()
         self.select_contact_by_index(index)
         # submit deletion
-        wd.find_element_by_css_selector('[value="Delete"]').click()
+        wd.find_element_by_css_selector("[value=Delete]").click()
         wd.switch_to_alert().accept()
         self.contact_cache = None
 
@@ -105,7 +105,7 @@ class ContactHelper:
             # check contact's elements
             elements = wd.find_elements_by_name("selected[]")
             [el.click() for el in elements]
-        wd.find_element_by_css_selector('[value="Delete"]').click()
+        wd.find_element_by_css_selector("[value=Delete]").click()
         wd.switch_to_alert().accept()
         self.contact_cache = None
 
