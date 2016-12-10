@@ -34,75 +34,106 @@ class ContactHelper:
             wd.find_element_by_name(field_name).clear()
             wd.find_element_by_name(field_name).send_keys(text)
 
+    def _select_contact_by_index(self, index):
+        """Select contact by index."""
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]")[index].click()
+
+    def _select_next(self):
+        """Select Next button to continue actions."""
+        wd = self.app.wd
+        wd.find_element_by_css_selector("input[name=quickadd]").click()
+
+    def _select_submit(self):
+        """Select submit button to submit action."""
+        wd = self.app.wd
+        wd.find_element_by_name("submit").click()
+
+    def _select_edit(self):
+        """Select edit element to open modification form."""
+        wd = self.app.wd
+        wd.find_element_by_css_selector("[title=Edit]").click()
+
+    def _select_details(self):
+        """Select details element to open details form."""
+        wd = self.app.wd
+        wd.find_element_by_css_selector("[title=Details]").click()
+
+    def _select_update(self):
+        """Select update button to update entered data."""
+        wd = self.app.wd
+        wd.find_element_by_name("update").click()
+
+    def _select_delete(self):
+        """Select delete button to delete contact(s)."""
+        wd = self.app.wd
+        wd.find_element_by_css_selector("[value=Delete]").click()
+
+    def _push_accept(self):
+        """Push OK button accept action raised by js."""
+        wd = self.app.wd
+        wd.switch_to_alert().accept()
+
+    def _select_select_all(self):
+        """Select all button to select all checkboxes."""
+        wd = self.app.wd
+        if len(wd.find_elements_by_id("content input")) == 5: pass
+        else: wd.find_element_by_id("MassCB").click()
+
+    def open_edit_form(self, index):
+        """Open contact's edit form."""
+        self._select_contact_by_index(index)
+        self._select_edit()
+
+    def open_details_form(self, index):
+        """Open contact's details form."""
+        self._select_contact_by_index(index)
+        self._select_details()
+
     def fill_contact_form(self, contact):
         """Fill contact forms of new data or modify exist data."""
         self._change_field_value("firstname", contact.first_name)
         self._change_field_value("lastname", contact.last_name)
         self._change_field_value("email", contact.email)
 
-    def select_contact_by_index(self, index):
-        """Select contact by index."""
-        wd = self.app.wd
-        wd.find_elements_by_name("selected[]")[index].click()
-
-    def select_first_contact(self):
-        """Select first contact."""
-        self.select_contact_by_index(0)
+    def fill_data(self, contact):
+        """Fill contact data."""
+        self._change_field_value("address", contact.first_name)
+        self._select_next()
+        self._change_field_value("lastname", contact.last_name)
+        self._change_field_value("email", contact.email)
 
     def create(self, contact):
         """Create contact filling requirements fields."""
-        wd = self.app.wd
-        # init contact creation
         self.open_contacts_add_page()
-        # fill data
-        self._change_field_value("address", contact.first_name)
-        wd.find_element_by_css_selector("input[name=quickadd]").click()
-        self._change_field_value("lastname", contact.last_name)
-        self._change_field_value("email", contact.email)
-        # submit contact creation
-        wd.find_element_by_name("submit").click()
+        self.fill_data(contact)
+        self._select_submit()
         self.contact_cache = None
 
-    def modify_first_contact(self, new_contact_data):
-        """Modify first contact editing requirements fields."""
-        self.modify_contact_by_index(0, new_contact_data)
-
-    def  modify_contact_by_index(self, index, new_contact_data):
+    def modify_contact_by_index(self, index, new_contact_data):
         """Modify contact by index editing requirements fields."""
-        wd = self.app.wd
         self.open_contacts_page()
-        self.select_contact_by_index(index)
-        # open modification form
-        wd.find_element_by_css_selector("[title=Edit]").click()
-        # fill contact form
+        self.open_edit_form(index)
         self.fill_contact_form(new_contact_data)
-        # submit modification
-        wd.find_element_by_name("update").click()
+        self._select_update()
         self.contact_cache = None
 
     def delete_contact_by_index(self, index):
         """Delete contact by index."""
-        wd = self.app.wd
         self.open_contacts_page()
-        self.select_contact_by_index(index)
-        # submit deletion
-        wd.find_element_by_css_selector("[value=Delete]").click()
-        wd.switch_to_alert().accept()
+        self._select_contact_by_index(index)
+        self._select_delete()
+        self._push_accept()
         self.contact_cache = None
-
-    def delete_first_contact(self):
-        """Delete first contact."""
-        self.delete_contact_by_index(0)
 
     def delete_all_contacts(self):
         """Delete all contacts."""
         wd = self.app.wd
         self.open_contacts_page()
         # check that the contact's list is not empty and check contact elements
-        if len(wd.find_elements_by_id("content input")) == 5: pass
-        else: wd.find_element_by_id("MassCB").click()
-        wd.find_element_by_css_selector("[value=Delete]").click()
-        wd.switch_to_alert().accept()
+        self._select_select_all()
+        self._select_delete()
+        self._push_accept()
         self.contact_cache = None
 
     def count(self):
@@ -110,20 +141,6 @@ class ContactHelper:
         wd = self.app.wd
         self.open_contacts_page()
         return len(wd.find_elements_by_name("selected[]"))
-
-    def get_list_of_contacts_(self):
-        """Get list of contacts."""
-        wd = self.app.wd
-        self.open_contacts_page()
-        self.contact_cache = []
-        for el in wd.find_elements_by_name("selected[]"):
-            id = el.get_attribute("value")
-            ext_text = el.get_attribute("title")
-            text = strs.normal_select_title(ext_text)
-            email = el.get_attribute("accept")
-            self.contact_cache.append(Contact(
-                id=id, first_name=text, email=email))
-        return self.contact_cache
 
     def get_list_of_contacts(self):
         """Get list of contacts."""
