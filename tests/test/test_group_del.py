@@ -6,19 +6,22 @@
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
+from random import randrange
+
 from tests.constants import messages
 from tests.model.group import Group
 
 
-def test_del_first_group(app):
+def test_del_some_group(app):
     """Check the possibility of del first group."""
     if app.group.count() == 0:
         app.group.create(Group())
     first_groups = app.group.get_list_of_groups()
-    app.group.delete_first_group()
+    index = randrange(len(first_groups))
+    app.group.delete_group_by_index(index)
     assert len(first_groups) - 1 == app.group.count()
     actual_groups = app.group.get_list_of_groups()
-    expected_groups = first_groups[1:]
+    expected_groups = first_groups[:index] + first_groups[(index + 1):]
     assert expected_groups == actual_groups, messages.ERR_MSG_FORMAT.format(
         expected_groups, actual_groups)
 

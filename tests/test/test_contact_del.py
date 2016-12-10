@@ -6,19 +6,22 @@
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
-from tests.model.contact import Contact
+from random import randrange
+
 from tests.constants import messages
+from tests.model.contact import Contact
 
 
-def test_del_first_contact(app):
+def test_del_some_contact(app):
     """Check the possibility of del first contact."""
     if app.contact.count() == 0:
         app.contact.create(Contact())
     first_contacts = app.contact.get_list_of_contacts()
-    app.contact.delete_first_contact()
+    index = randrange(len(first_contacts))
+    app.contact.delete_contact_by_index(index)
     assert len(first_contacts) - 1 == app.contact.count()
     actual_contacts = app.contact.get_list_of_contacts()
-    expected_contacts= first_contacts[1:]
+    expected_contacts = first_contacts[:index] + first_contacts[(index + 1):]
     assert expected_contacts == actual_contacts, messages.ERR_MSG_FORMAT.format(
         expected_contacts, actual_contacts)
 
