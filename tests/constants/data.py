@@ -16,9 +16,11 @@ _NEW = "New_"
 
 # data for creation (modification) contacts
 CONTACT_FIRST_NAME = "Contact_firstname_"
+CONTACT_MIDDLE_NAME = "Contact_middlename_"
 CONTACT_LAST_NAME = "Contact_lastname_"
 CONTACT_EMAIL = "@gmail.com"
 CONTACT_FIRST_NAME_NEW = _NEW + CONTACT_FIRST_NAME
+CONTACT_MIDDLE_NAME_NEW = _NEW + CONTACT_MIDDLE_NAME
 CONTACT_LAST_NAME_NEW = _NEW + CONTACT_LAST_NAME
 CONTACT_EMAIL_NEW = _NEW + CONTACT_EMAIL
 
