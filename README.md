@@ -1,8 +1,7 @@
 # Testing automation framework for web-app "Address book"<br />
 # Technologies stack: docker, pytest, python, selenium<br />
 
-# Open test-cases (tests methods):
-[a link](https://github.com/AleksNeStu/Test_Automation_Framework_WEB-APP/tree/master/tests/test)
+# [Open test-cases](https://github.com/AleksNeStu/Test_Automation_Framework_WEB-APP/tree/master/tests/test) <br />
 
 # Structure:<br />
 /lamp - web-app with lamp stack and selenium-server-firefox used docker approach<br />
