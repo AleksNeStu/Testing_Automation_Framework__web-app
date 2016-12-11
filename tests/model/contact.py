@@ -25,16 +25,18 @@ class Contact:
 
     def __repr__(self):
         return (
-            "id:{id}, first_name:{first_name}, "
-            "last_name:{last_name}, email:{email}").format(
-            id=self.id, first_name=self.first_name,
-            last_name=self.last_name, email=self.email)
+            "id:{id}, first_name:{first_name}, last_name:{last_name}, "
+            "home_phone:{home_phone}, mobile_phone:{mobile_phone}, "
+            "work_phone:{work_phone}, secondary_phone:{secondary_phone}, "
+            "email:{email}").format(
+            id=self.id, first_name=self.first_name, last_name=self.last_name,
+            home_phone=self.home_phone, mobile_phone=self.mobile_phone,
+            work_phone=self.work_phone, secondary_phone=self.secondary_phone,
+            email=self.email)
 
     def __eq__(self, other):
-        return (
-            self.id is None or other.id is None or self.id == other.id) and (
-            self.first_name == other.first_name and
-            self.last_name == other.last_name)
+        return (self.id == other.id and self.first_name == other.first_name and
+                self.last_name == other.last_name)
 
     @staticmethod
     def id_or_max(contact):
