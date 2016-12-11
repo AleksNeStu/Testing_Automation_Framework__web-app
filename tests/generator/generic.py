@@ -6,6 +6,7 @@
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
+import functools
 import random
 import string
 
@@ -22,9 +23,12 @@ def random_email(domain="@gmail.com", maxlen=5):
     return "".join(
         [random.choice(symbols) for _ in range(random.randint(1, maxlen))]) + domain
 
-def random_phone():
-    """Generate random phone like 844-751-8951"""
-    n = '0000000000'
-    while '9' in n[3:6] or n[3:6]=='000' or n[6]==n[7]==n[8]==n[9]:
-        n = str(random.randint(10**9, 10**10-1))
-    return n[:3] + '-' + n[3:6] + '-' + n[6:]
+def random_phone(code=1):
+    """Generate random phone number (default for USA: code=1)
+       Example:
+       +1-844-751-8951
+    """
+    d = functools.partial(random.randint, 0, 9)
+    phone = lambda: "+{}-{}{}{}-{}{}{}-{}{}{}{}".format(
+        code, d(), d(), d(), d(), d(), d(), d(), d(), d(), d())
+    return phone()
