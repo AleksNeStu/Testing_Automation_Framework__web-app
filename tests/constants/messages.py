@@ -7,4 +7,5 @@ __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
 
-ERR_MSG_FORMAT = "Expected: '{}', Got: '{}'\n"
+COMPARE_EXP_VS_GOT = "Expected: '{}', Got: '{}'\n"
+COMPARE_HOME_VS_EDIT = "From home page: '{}', From edit form: '{}'\n"
