@@ -6,9 +6,10 @@
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
-from tests.constants import url
 from model.group import Group
-from tests.utils import strs
+from tests.constants import url
+from tests.utils import strings
+
 
 class GroupHelper:
     """Class for represent Group."""
@@ -121,6 +122,6 @@ class GroupHelper:
             for el in wd.find_elements_by_name("selected[]"):
                 id = el.get_attribute("value")
                 ext_text = el.get_attribute("title")
-                text = strs.normal_select_title(ext_text)
+                text = strings.normal_select_title(ext_text)
                 self.group_cache.append(Group(id=id, name=text))
         return self.group_cache
