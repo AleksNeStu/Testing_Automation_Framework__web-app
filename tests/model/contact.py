@@ -11,11 +11,12 @@ from sys import maxsize
 
 class Contact:
     """Contact model entity."""
-    def __init__(self, id=None, first_name=None, last_name=None,
+    def __init__(self, id=None, first_name=None, middle_name=None, last_name=None,
                  home_phone=None, mobile_phone=None, work_phone=None,
                  secondary_phone=None, email=None):
         self.id = id
         self.first_name = first_name
+        self.middle_name = middle_name
         self.last_name = last_name
         self.home_phone = home_phone
         self.mobile_phone = mobile_phone
@@ -25,17 +26,18 @@ class Contact:
 
     def __repr__(self):
         return (
-            "id:{id}, first_name:{first_name}, last_name:{last_name}, "
-            "home_phone:{home_phone}, mobile_phone:{mobile_phone}, "
-            "work_phone:{work_phone}, secondary_phone:{secondary_phone}, "
-            "email:{email}").format(
+            "id:{id}, first_name:{first_name}, middle_name:{middle_name},"
+            "last_name:{last_name}, home_phone:{home_phone},"
+            "mobile_phone:{mobile_phone}, work_phone:{work_phone}, "
+            "secondary_phone:{secondary_phone}, email:{email}").format(
             id=self.id, first_name=self.first_name, last_name=self.last_name,
-            home_phone=self.home_phone, mobile_phone=self.mobile_phone,
-            work_phone=self.work_phone, secondary_phone=self.secondary_phone,
-            email=self.email)
+            middle_name=self.middle_name, home_phone=self.home_phone,
+            mobile_phone=self.mobile_phone, work_phone=self.work_phone,
+            secondary_phone=self.secondary_phone, email=self.email)
 
     def __eq__(self, other):
         return (self.id == other.id and self.first_name == other.first_name and
+                self.middle_name == other.middle_name,
                 self.last_name == other.last_name)
 
     @staticmethod
