@@ -45,6 +45,7 @@ _IMPORT = IMPORT
 HOME_URL = urlparse.urljoin(APP_URL, form_second_part_url(HOME))
 ADD_NEW_URL = urlparse.urljoin(APP_URL, form_second_part_url(ADD_NEW))
 GROUPS_URL = urlparse.urljoin(APP_URL, form_second_part_url(GROUPS))
-NEXT_BIRTHDAYS_URL = urlparse.urljoin(APP_URL, form_second_part_url(NEXT_BIRTHDAYS))
+NEXT_BIRTHDAYS_URL = urlparse.urljoin(
+    APP_URL, form_second_part_url(NEXT_BIRTHDAYS))
 EXPORT_URL = (APP_URL, form_second_part_url(EXPORT))
 IMPORT_URL = (APP_URL, form_second_part_url(IMPORT))
