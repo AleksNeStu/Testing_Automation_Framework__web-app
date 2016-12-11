@@ -6,9 +6,11 @@
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
-from tests.constants import url
+import re
+
+from tests.constants import url, keys
 from tests.model.contact import Contact
-from tests.utils import strs
+from tests.utils import strings
 
 
 class ContactHelper:
@@ -17,7 +19,7 @@ class ContactHelper:
         self.app = app
 
     # Common
-    contact_cache = None
+    contacts_cache = None
 
     def _change_field_value(self, field_name, text):
         """Change field value (text)."""
@@ -42,46 +44,58 @@ class ContactHelper:
         self.app.open.open_link(url._ADD_NEW)
 
     # Contacts (home) page
-    def _select_by_index_via_home(self, index):
-        """Select checkbox for contact by index on contacts page to make actions."""
+    def _select_checkbox_by_index_via_home(self, index):
+        """Select checkbox for contact by index on contacts page to make
+        actions.
+        """
         wd = self.app.wd
         wd.find_elements_by_name("selected[]")[index].click()
 
-    def _select_edit_via_home(self):
-        """Select 'Edit' element (link) on contacts page to open modification form."""
+    def _select_edit_by_index_via_home(self, index):
+        """Select 'Edit' element (link) for contact by index on contacts page
+        to open modification form.
+        """
         wd = self.app.wd
-        wd.find_element_by_css_selector("[title=Edit]").click()
+        wd.find_elements_by_css_selector("[title=Edit]")[index].click()
+
+    def _select_details_by_index_via_home(self, index):
+        """Select 'Details' element (link) on contacts page to open details
+        form.
+        """
+        wd = self.app.wd
+        wd.find_elements_by_css_selector("[title=Details]")[index].click()
 
     def _select_select_all_via_home(self):
-        """Select "Select all" checkbox on contacts page to select all contacts checkboxes."""
+        """Select "Select all" checkbox on contacts page to select all contacts
+        checkboxes.
+        """
         wd = self.app.wd
         if len(wd.find_elements_by_id("content input")) == 5: pass
         else: wd.find_element_by_id("MassCB").click()
 
-    def _select_details_via_home(self):
-        """Select 'Details' element (link) on contacts page to open details form."""
-        wd = self.app.wd
-        wd.find_element_by_css_selector("[title=Details]").click()
-
     def _select_delete_via_home(self):
-        """Select 'Delete' button on contacts page to delete selected contact(s)."""
+        """Select 'Delete' button on contacts page to delete selected
+        contact(s).
+        """
         wd = self.app.wd
         wd.find_element_by_css_selector("[value=Delete]").click()
 
     def _push_ok_js(self):
-        """Push 'OK' button on appeared js window on contacts page to accept action."""
+        """Push 'OK' button on appeared js window on contacts page to
+        accept action.
+        """
         wd = self.app.wd
         wd.switch_to_alert().accept()
 
     def open_edit_form_via_home(self, index):
         """Open contact's editing form on contacts page."""
-        self._select_by_index_via_home(index)
-        self._select_edit_via_home()
+        self._select_checkbox_by_index_via_home(index)
+        self._select_edit_by_index_via_home(index)
 
     def open_details_form_via_home(self, index):
         """Open contact's details form on contacts page."""
-        self._select_by_index_via_home(index)
-        self._select_details_via_home()
+        self._select_checkbox_by_index_via_home(index)
+        self._select_details_by_index_via_home(index)
 
     # Create form
     def _create_select_next(self):
@@ -99,6 +113,7 @@ class ContactHelper:
         self._change_field_value("address", contact.first_name)
         self._create_select_next()
         self._change_field_value("lastname", contact.last_name)
+        self._change_field_value("middlename", contact.middle_name)
         self._change_field_value("home", contact.home_phone)
         self._change_field_value("mobile", contact.mobile_phone)
         self._change_field_value("work", contact.work_phone)
@@ -123,7 +138,7 @@ class ContactHelper:
         self.open_add_form()
         self.fill_form_via_create(contact)
         self._select_enter_via_create()
-        self.contact_cache = None
+        self.contacts_cache = None
 
     def modify_contact(self, index, new_contact):
         """Modify contact by 'index' according object's data 'new_contact'."""
@@ -131,15 +146,15 @@ class ContactHelper:
         self.open_edit_form_via_home(index)
         self._fill_form_via_edit(new_contact)
         self._select_update_via_edit()
-        self.contact_cache = None
+        self.contacts_cache = None
 
     def delete_contact_via_home(self, index):
         """Delete contact by index via home (contacts) page."""
         self.open_contacts_page()
-        self._select_by_index_via_home(index)
+        self._select_checkbox_by_index_via_home(index)
         self._select_delete_via_home()
         self._push_ok_js()
-        self.contact_cache = None
+        self.contacts_cache = None
 
     def delete_all_contacts_via_home(self):
         """Delete all contact via home (contacts) page."""
@@ -147,7 +162,7 @@ class ContactHelper:
         self._select_select_all_via_home()
         self._select_delete_via_home()
         self._push_ok_js()
-        self.contact_cache = None
+        self.contacts_cache = None
 
     def count_of_contacts_via_home(self):
         """Get the count of contacts objects via home (contacts) page."""
@@ -159,40 +174,65 @@ class ContactHelper:
         """Get list of contacts objects via home (contacts) page."""
         wd = self.app.wd
         self.open_contacts_page()
-        self.contact_cache = []
+        self.contacts_cache = []
         for row in wd.find_elements_by_name("entry"):
             cells = row.find_elements_by_tag_name("td")
-            id = cells[0].find_element_by_tag_name("input").get_attribute("value")
+            id = (cells[0].find_element_by_tag_name("input").
+                  get_attribute("value"))
             full_name = cells[2].text
-            firstname = strs.full_name_to_list_of_parts(full_name)[1]
-            lastname = strs.full_name_to_list_of_parts(full_name)[0]
+            _full_name_dict = strings.home_full_name_to_dict(full_name)
+            firstname = _full_name_dict.get(keys.FIRST_NAME)
+            middlename = _full_name_dict.get(keys.MIDDLE_NAME)
+            lastname = _full_name_dict.get(keys.LAST_NAME)
             all_phones = cells[5].text
-            homephone = strs.all_phones_to_list_of_parts(all_phones)[0]
-            mobilephone = strs.all_phones_to_list_of_parts(all_phones)[1]
-            workphone = strs.all_phones_to_list_of_parts(all_phones)[2]
-            secondaryphone = strs.all_phones_to_list_of_parts(all_phones)[3]
+            homephone = strings.home_all_phones_to_list(all_phones)[0]
+            mobilephone = strings.home_all_phones_to_list(all_phones)[1]
+            workphone = strings.home_all_phones_to_list(all_phones)[2]
+            secondaryphone = strings.home_all_phones_to_list(all_phones)[3]
             email = cells[4].text
-            self.contact_cache.append(Contact(
-                id=id, first_name=firstname, last_name=lastname,
-                home_phone=homephone, mobile_phone=mobilephone,
-                work_phone=workphone, secondary_phone=secondaryphone,
-                email=email))
-        return self.contact_cache
+            self.contacts_cache.append(Contact(
+                id=id, first_name=firstname, middle_name=middlename,
+                last_name=lastname, home_phone=homephone,
+                mobile_phone=mobilephone, work_phone=workphone,
+                secondary_phone=secondaryphone, email=email))
+        return self.contacts_cache
 
     def contact_info_via_edit(self, index):
-        """Get by index contact info via edit form."""
+        """Get by index on home page contact info via edit form."""
         self.open_contacts_page()
         self.open_edit_form_via_home(index)
         id = self._get_field_value("id")
         firstname = self._get_field_value("firstname")
+        middlename = self._get_field_value("middlename")
         lastname = self._get_field_value("lastname")
         homephone = self._get_field_value("home")
         mobilephone = self._get_field_value("mobile")
         workphone = self._get_field_value("work")
         secondaryphone = self._get_field_value("phone2")
         email = self._get_field_value("email")
-        return Contact(
-            id=id, first_name=firstname, last_name=lastname,
-            home_phone=homephone, mobile_phone=mobilephone,
-            work_phone=workphone, secondary_phone=secondaryphone,
-            email=email)
+        return Contact(id=id, first_name=firstname, middle_name=middlename,
+                       last_name=lastname, home_phone=homephone,
+                       mobile_phone=mobilephone, work_phone=workphone,
+                       secondary_phone=secondaryphone, email=email)
+
+    def contact_info_via_details(self, index):
+        """Get by index on home page contact info via details form."""
+        wd = self.app.wd
+        self.open_contacts_page()
+        self.open_details_form_via_home(index)
+        full_info = wd.find_element_by_id("content").text
+        id = self._get_field_value("id")
+        full_name = re.search(r"[\w]+ [\w]+ [\w]+\n", full_info).group(0)
+        _full_name_dict = strings.home_full_name_to_dict(full_name)
+        firstname = _full_name_dict.get(keys.FIRST_NAME)
+        middlename = _full_name_dict.get(keys.MIDDLE_NAME)
+        lastname = _full_name_dict.get(keys.LAST_NAME)
+        homephone = re.search(r"H: (.*)", full_info).group(1)
+        mobilephone = re.search(r"M: (.*)", full_info).group(1)
+        workphone = re.search(r"W: (.*)", full_info).group(1)
+        secondaryphone = re.search(r"P: (.*)", full_info).group(1)
+        email = re.search(r"[\w\.-]+@[\w\.-]+", full_info).group(0)
+        return Contact(id=id, first_name=firstname, middle_name=middlename,
+                       last_name=lastname, home_phone=homephone,
+                       mobile_phone=mobilephone, work_phone=workphone,
+                       secondary_phone=secondaryphone, email=email)
