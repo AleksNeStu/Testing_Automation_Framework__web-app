@@ -22,7 +22,7 @@ def test_del_some_group(app):
     assert len(first_groups) - 1 == app.group.count()
     actual_groups = app.group.get_list_of_groups()
     expected_groups = first_groups[:index] + first_groups[(index + 1):]
-    assert expected_groups == actual_groups, messages.ERR_MSG_FORMAT.format(
+    assert expected_groups == actual_groups, messages.COMPARE_EXP_VS_GOT.format(
         expected_groups, actual_groups)
 
 def test_del_all_groups(app):

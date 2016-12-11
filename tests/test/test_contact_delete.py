@@ -22,7 +22,7 @@ def test_del_some_contact(app):
     assert len(first_contacts) - 1 == app.contact.count_of_contacts_via_home()
     actual_contacts = app.contact.list_of_contacts_via_home()
     expected_contacts = first_contacts[:index] + first_contacts[(index + 1):]
-    assert expected_contacts == actual_contacts, messages.ERR_MSG_FORMAT.format(
+    assert expected_contacts == actual_contacts, messages.COMPARE_EXP_VS_GOT.format(
         expected_contacts, actual_contacts)
 
 def test_del_all_contacts(app):

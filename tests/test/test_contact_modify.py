@@ -28,7 +28,7 @@ def test_modify_name_of_some_contact(app):
     assert (
         sorted(expected_contacts, key=Contact.id_or_max) ==
         sorted(actual_contacts, key=Contact.id_or_max),
-        messages.ERR_MSG_FORMAT.format(expected_contacts, actual_contacts))
+        messages.COMPARE_EXP_VS_GOT.format(expected_contacts, actual_contacts))
 
 def test_modify_some_contact(app):
     """Check the possibility to modify some contact."""
@@ -36,6 +36,7 @@ def test_modify_some_contact(app):
         app.contact.create_contact(Contact())
     first_contacts = app.contact.list_of_contacts_via_home()
     contact = Contact(first_name=r_data(data.CONTACT_FIRST_NAME_NEW),
+                      middle_name=r_data(data.CONTACT_MIDDLE_NAME),
                       last_name=r_data(data.CONTACT_LAST_NAME_NEW),
                       email=r_data(data.CONTACT_EMAIL_NEW))
     index = randrange(len(first_contacts))
@@ -47,4 +48,4 @@ def test_modify_some_contact(app):
     assert (
         sorted(expected_contacts, key=Contact.id_or_max) ==
         sorted(actual_contacts, key=Contact.id_or_max),
-        messages.ERR_MSG_FORMAT.format(expected_contacts, actual_contacts))
+        messages.COMPARE_EXP_VS_GOT.format(expected_contacts, actual_contacts))

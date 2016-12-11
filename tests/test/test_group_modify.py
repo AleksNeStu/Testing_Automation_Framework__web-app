@@ -28,7 +28,7 @@ def test_modify_name_of_some_group(app):
     assert (
         sorted(expected_groups, key=Group.id_or_max) ==
         sorted(actual_groups, key=Group.id_or_max),
-        messages.ERR_MSG_FORMAT.format(expected_groups, actual_groups))
+        messages.COMPARE_EXP_VS_GOT.format(expected_groups, actual_groups))
 
 def test_modify_some_group(app):
     """Check the possibility to modify some group."""
@@ -47,4 +47,4 @@ def test_modify_some_group(app):
     assert (
         sorted(expected_groups, key=Group.id_or_max) ==
         sorted(actual_groups, key=Group.id_or_max),
-        messages.ERR_MSG_FORMAT.format(expected_groups, actual_groups))
+        messages.COMPARE_EXP_VS_GOT.format(expected_groups, actual_groups))

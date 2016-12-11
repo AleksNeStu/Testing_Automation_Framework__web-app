@@ -25,7 +25,7 @@ def test_add_group(app):
     assert (
         sorted(expected_groups, key=Group.id_or_max) ==
         sorted(actual_groups, key=Group.id_or_max),
-        messages.ERR_MSG_FORMAT.format(expected_groups, actual_groups))
+        messages.COMPARE_EXP_VS_GOT.format(expected_groups, actual_groups))
 
 def test_add_empty_group(app):
     """Check the possibility to create new empty group."""
@@ -39,4 +39,4 @@ def test_add_empty_group(app):
     assert (
         sorted(expected_groups, key=Group.id_or_max) ==
         sorted(actual_groups, key=Group.id_or_max),
-        messages.ERR_MSG_FORMAT.format(expected_groups, actual_groups))
+        messages.COMPARE_EXP_VS_GOT.format(expected_groups, actual_groups))

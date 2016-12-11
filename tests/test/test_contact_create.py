@@ -16,6 +16,7 @@ def test_add_contact(app):
     """Check the possibility to create new contact."""
     old_contacts = app.contact.list_of_contacts_via_home()
     contact = Contact(first_name=r_data(data.CONTACT_FIRST_NAME),
+                      middle_name=r_data(data.CONTACT_MIDDLE_NAME),
                       last_name=r_data(data.CONTACT_LAST_NAME),
                       home_phone=r_phone(), mobile_phone=r_phone(),
                       work_phone=r_phone(), secondary_phone=r_phone(),
@@ -25,7 +26,7 @@ def test_add_contact(app):
     actual_contacts = app.contact.list_of_contacts_via_home()
     contact.id = actual_contacts[-1].id
     expected_contacts = old_contacts + [contact]
-    assert (
-        sorted(expected_contacts, key=Contact.id_or_max) ==
-        sorted(actual_contacts, key=Contact.id_or_max),
-        messages.ERR_MSG_FORMAT.format(expected_contacts, actual_contacts))
+    assert (sorted(expected_contacts, key=Contact.id_or_max) ==
+            sorted(actual_contacts, key=Contact.id_or_max),
+            messages.COMPARE_EXP_VS_GOT.format(expected_contacts,
+                                               actual_contacts))
