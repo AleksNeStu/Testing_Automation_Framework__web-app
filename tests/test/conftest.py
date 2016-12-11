@@ -12,21 +12,19 @@ from tests.fixtures.application import Application
 
 fixture = None
 
-@pytest.fixture(scope="session")
+@pytest.fixture()
 def app(request):
     """Init fixture with validation."""
     global fixture
-    if fixture is None: fixture = Application()
-    else:
-        if not fixture.is_valid(): fixture = Application()
+    if fixture is None or not fixture.is_valid(): fixture = Application()
     fixture.session.ensure_login_as_admin()
     return fixture
 
-
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="function", autouse=True)
 def stop(request):
     """Destroy fixture."""
     def fin():
         fixture.session.ensure_logout()
         fixture.destroy()
     request.addfinalizer(fin)
+    return fixture
