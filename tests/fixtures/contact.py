@@ -188,16 +188,18 @@ class ContactHelper:
         self.open_details_form_via_home(index)
         full_info = wd.find_element_by_id("content").text
         id = self._get_field_value("id")
-        full_name = re.search(r"[\w]+ [\w]+ [\w]+\n", full_info).group(0)
+        full_name = wd.find_element_by_css_selector("#content b").text
         _full_name_dict = strings.home_full_name_to_dict(full_name)
         firstname = _full_name_dict.get(keys.FIRST_NAME)
         middlename = _full_name_dict.get(keys.MIDDLE_NAME)
         lastname = _full_name_dict.get(keys.LAST_NAME)
-        homephone = re.search(r"H: (.*)", full_info).group(1)
-        mobilephone = re.search(r"M: (.*)", full_info).group(1)
-        workphone = re.search(r"W: (.*)", full_info).group(1)
-        secondaryphone = re.search(r"P: (.*)", full_info).group(1)
-        email = re.search(r"[\w\.-]+@[\w\.-]+", full_info).group(0)
+        homephone = strings.search_string_in_raw_text(full_name, r"H: (.*)")
+        mobilephone = strings.search_string_in_raw_text(full_name, r"M: (.*)")
+        workphone = strings.search_string_in_raw_text(full_name, r"W: (.*)")
+        secondaryphone = strings.search_string_in_raw_text(
+            full_name, r"P: (.*)")
+        email = strings.search_string_in_raw_text(
+            full_name, r"[\w\.-]+@[\w\.-]+", gr_number=0)
         return Contact(id=id, first_name=firstname, middle_name=middlename,
                        last_name=lastname, home_phone=homephone,
                        mobile_phone=mobilephone, work_phone=workphone,

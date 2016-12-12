@@ -11,6 +11,18 @@ import re
 from tests.constants import data, keys
 
 
+def search_string_in_raw_text(raw_text, regex, gr_number=1):
+    """Search string in 'raw_text' according 'regex' and return matches for
+    a group number 'gr_number': group(gr_number)
+    Example:
+    Find in raw text 'A: text' and return 'text'
+    """
+    phone_number = ""
+    _reg = re.compile(regex)
+    if _reg.search(raw_text):
+        phone_number = _reg.search(raw_text).group(gr_number)
+    return phone_number
+
 def normal_select_title(ext_title):
     """Normalize extended title (exclude brackets).
     Example:
@@ -48,7 +60,7 @@ def home_all_phones_to_list(all_phones):
     if len(_all_phones) == 4: return _all_phones
     else: return [None, None, None, None]
 
-def edit_merge_phones_like_home(contact):
+def merge_phones_like_home(contact):
     """Merge phones attributes's values of 'contact' object to row (text) view like
     all phones represent on home page.
     Example:
