@@ -30,23 +30,12 @@ def test_check_contact_phones_via_home_and_edit(app):
     index = randrange(len(contacts_via_home))
     contact_via_home = contacts_via_home[index]
     contact_via_edit = app.contact.contact_info_via_edit(index)
-    edit_home_phone = strings.clean_phone(contact_via_edit.home_phone)
-    edit_work_phone = strings.clean_phone(contact_via_edit.work_phone)
-    edit_mobile_phone = strings.clean_phone(contact_via_edit.mobile_phone)
-    edit_secondary_phone = strings.clean_phone(contact_via_edit.secondary_phone)
-    assert (contact_via_home.home_phone == edit_home_phone,
-            messages.COMPARE_HOME_VS_EDIT.format(
-                contact_via_home.home_phone, edit_home_phone))
-    assert (contact_via_home.work_phone == edit_work_phone,
-            messages.COMPARE_HOME_VS_EDIT.format(
-                contact_via_home.work_phone, edit_work_phone))
-    assert (contact_via_home.mobile_phone == edit_mobile_phone,
-            messages.COMPARE_HOME_VS_EDIT.format(
-                contact_via_home.mobile_phone, edit_mobile_phone))
-    assert (contact_via_home.secondary_phone == edit_secondary_phone,
-            messages.COMPARE_HOME_VS_EDIT.format(
-                contact_via_home.secondary_phone, edit_secondary_phone))
-
+    contact_all_phones_via_home = contact_via_home.all_phones_home
+    contact_all_phones_via_edit = strings.edit_merge_phones_like_home(
+        contact_via_edit)
+    assert (contact_all_phones_via_home == contact_all_phones_via_edit,
+            messages.COMPARE_HOME_VS_EDIT.format(contact_all_phones_via_home,
+                                                 contact_all_phones_via_edit))
 
 def test_check_contact_phones_via_home_and_details(app):
     """Check contact's phones via home (contacts) page and details form."""
@@ -69,14 +58,14 @@ def test_check_contact_phones_via_home_and_details(app):
     details_secondary_phone = strings.clean_phone(
         contact_via_details.secondary_phone)
     assert (contact_via_home.home_phone == details_home_phone,
-            messages.COMPARE_HOME_VS_EDIT.format(
+            messages.COMPARE_HOME_VS_DETAILS.format(
                 contact_via_home.home_phone, details_home_phone))
     assert (contact_via_home.work_phone == details_work_phone,
-            messages.COMPARE_HOME_VS_EDIT.format(
+            messages.COMPARE_HOME_VS_DETAILS.format(
                 contact_via_home.work_phone, details_work_phone))
     assert (contact_via_home.mobile_phone == details_mobile_phone,
-            messages.COMPARE_HOME_VS_EDIT.format(
+            messages.COMPARE_HOME_VS_DETAILS.format(
                 contact_via_home.mobile_phone, details_mobile_phone))
     assert (contact_via_home.secondary_phone == details_secondary_phone,
-            messages. COMPARE_HOME_VS_EDIT.format(
+            messages. COMPARE_HOME_VS_DETAILS.format(
                 contact_via_home.secondary_phone, details_secondary_phone))

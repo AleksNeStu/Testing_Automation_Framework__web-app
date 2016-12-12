@@ -13,7 +13,7 @@ class Contact:
     """Contact model entity."""
     def __init__(self, id=None, first_name=None, middle_name=None, last_name=None,
                  home_phone=None, mobile_phone=None, work_phone=None,
-                 secondary_phone=None, email=None):
+                 secondary_phone=None, all_phones_home=None, email=None):
         self.id = id
         self.first_name = first_name
         self.middle_name = middle_name
@@ -22,6 +22,7 @@ class Contact:
         self.mobile_phone = mobile_phone
         self.work_phone = work_phone
         self.secondary_phone = secondary_phone
+        self.all_phones_home = all_phones_home
         self.email = email
 
     def __repr__(self):
@@ -29,11 +30,13 @@ class Contact:
             "id:{id}, first_name:{first_name}, middle_name:{middle_name},"
             "last_name:{last_name}, home_phone:{home_phone},"
             "mobile_phone:{mobile_phone}, work_phone:{work_phone}, "
-            "secondary_phone:{secondary_phone}, email:{email}").format(
+            "secondary_phone:{secondary_phone}, "
+            "all_phones_home: {all_phones_home}, email:{email}").format(
             id=self.id, first_name=self.first_name, last_name=self.last_name,
             middle_name=self.middle_name, home_phone=self.home_phone,
             mobile_phone=self.mobile_phone, work_phone=self.work_phone,
-            secondary_phone=self.secondary_phone, email=self.email)
+            secondary_phone=self.secondary_phone,
+            all_phones_home=self.all_phones_home, email=self.email)
 
     def __eq__(self, other):
         return (self.id == other.id and self.first_name == other.first_name and

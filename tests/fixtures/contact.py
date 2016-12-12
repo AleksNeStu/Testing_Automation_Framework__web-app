@@ -128,16 +128,10 @@ class ContactHelper:
             middlename = _full_name_dict.get(keys.MIDDLE_NAME)
             lastname = _full_name_dict.get(keys.LAST_NAME)
             all_phones = cells[5].text
-            homephone = strings.home_all_phones_to_list(all_phones)[0]
-            mobilephone = strings.home_all_phones_to_list(all_phones)[1]
-            workphone = strings.home_all_phones_to_list(all_phones)[2]
-            secondaryphone = strings.home_all_phones_to_list(all_phones)[3]
             email = cells[4].text
             self.contacts_cache.append(Contact(
                 id=id, first_name=firstname, middle_name=middlename,
-                last_name=lastname, home_phone=homephone,
-                mobile_phone=mobilephone, work_phone=workphone,
-                secondary_phone=secondaryphone, email=email))
+                last_name=lastname, all_phones_home=all_phones, email=email))
         return self.contacts_cache
 
     # Create form
@@ -176,10 +170,12 @@ class ContactHelper:
         firstname = self._get_field_value("firstname")
         middlename = self._get_field_value("middlename")
         lastname = self._get_field_value("lastname")
+
         homephone = self._get_field_value("home")
         mobilephone = self._get_field_value("mobile")
         workphone = self._get_field_value("work")
         secondaryphone = self._get_field_value("phone2")
+
         email = self._get_field_value("email")
         return Contact(id=id, first_name=firstname, middle_name=middlename,
                        last_name=lastname, home_phone=homephone,

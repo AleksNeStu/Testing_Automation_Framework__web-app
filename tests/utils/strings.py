@@ -39,14 +39,34 @@ def home_full_name_to_dict(full_name):
 def home_all_phones_to_list(all_phones):
     """Convert all phones multi lines to list for home page.
     Example:
-    'home\nmobile\nwork\nsecondary\n' to ['home', 'mobile', 'work', 'secondary']
+    'home
+     mobile
+     work
+     secondary' to ['home', 'mobile', 'work', 'secondary']
     """
     _all_phones = all_phones.splitlines()
     if len(_all_phones) == 4: return _all_phones
     else: return [None, None, None, None]
 
+def edit_merge_phones_like_home(contact):
+    """Merge phones attributes of 'contact' object to row (text) view like
+    all phones represent on home page.
+    Example:
+    ['+13620559771', '+18017067538', '+14844346575', '+15480292852']
+    to
+    '+13620559771
+     +18017067538
+     +14844346575
+     +15480292852'
+    """
+    return "\n".join(map(lambda x: clean_phone(x), [contact.home_phone,
+                                                    contact.work_phone,
+                                                    contact.mobile_phone,
+                                                    contact.secondary_phone]))
+
 def clean_phone(phone_number):
-    """Clean unnecessary parts from phone number text (exclude: '-', '(', ')', ' ')
+    """Clean unnecessary parts from phone number text
+    (exclude: '-', '(', ')', ' ')
     Example:
     '+1-377-368-4628' to '+13773684628'
     """
