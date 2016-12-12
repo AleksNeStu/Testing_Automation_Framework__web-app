@@ -59,10 +59,12 @@ def edit_merge_phones_like_home(contact):
      +14844346575
      +15480292852'
     """
-    return "\n".join(map(lambda x: clean_phone(x), [contact.home_phone,
-                                                    contact.work_phone,
-                                                    contact.mobile_phone,
-                                                    contact.secondary_phone]))
+    return "\n".join(
+        filter(lambda x: x != "",
+               map(lambda x: clean_phone(x),
+                   filter(lambda x: x is not None,
+                          [contact.home_phone, contact.work_phone,
+                           contact.mobile_phone, contact.secondary_phone]))))
 
 def clean_phone(phone_number):
     """Clean unnecessary parts from phone number text

@@ -170,12 +170,10 @@ class ContactHelper:
         firstname = self._get_field_value("firstname")
         middlename = self._get_field_value("middlename")
         lastname = self._get_field_value("lastname")
-
         homephone = self._get_field_value("home")
         mobilephone = self._get_field_value("mobile")
         workphone = self._get_field_value("work")
         secondaryphone = self._get_field_value("phone2")
-
         email = self._get_field_value("email")
         return Contact(id=id, first_name=firstname, middle_name=middlename,
                        last_name=lastname, home_phone=homephone,
