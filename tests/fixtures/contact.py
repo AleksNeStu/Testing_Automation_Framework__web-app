@@ -54,28 +54,28 @@ class ContactHelper:
         self.app.open.open_link(url._ADD_NEW)
 
     # Contacts (home) page
-    def _select_checkbox_by_index_via_home(self, index):
+    def select_contact_by_index_via_home(self, index):
         """Select checkbox for contact by index on contacts page to make
         actions.
         """
         wd = self.app.wd
         wd.find_elements_by_name("selected[]")[index].click()
 
-    def _select_edit_by_index_via_home(self, index):
+    def click_edit_contact_by_index_via_home(self, index):
         """Select 'Edit' element (link) for contact by index on contacts page
         to open modification form.
         """
         wd = self.app.wd
         wd.find_elements_by_css_selector("[title=Edit]")[index].click()
 
-    def _select_details_by_index_via_home(self, index):
+    def click_contact_details_by_index_via_home(self, index):
         """Select 'Details' element (link) on contacts page to open details
         form.
         """
         wd = self.app.wd
         wd.find_elements_by_css_selector("[title=Details]")[index].click()
 
-    def _select_select_all_via_home(self):
+    def click_select_all_contacts_via_home(self):
         """Select "Select all" checkbox on contacts page to select all contacts
         checkboxes.
         """
@@ -83,14 +83,14 @@ class ContactHelper:
         if len(wd.find_elements_by_id("content input")) == 5: pass
         else: wd.find_element_by_id("MassCB").click()
 
-    def _select_delete_via_home(self):
+    def click_delete_contacts_via_home(self):
         """Select 'Delete' button on contacts page to delete selected
         contact(s).
         """
         wd = self.app.wd
         wd.find_element_by_css_selector("[value=Delete]").click()
 
-    def _push_ok_js(self):
+    def accept_deletion_action(self):
         """Push 'OK' button on appeared js window on contacts page to
         accept action.
         """
@@ -99,73 +99,13 @@ class ContactHelper:
 
     def open_edit_form_via_home(self, index):
         """Open contact's editing form on contacts page."""
-        self._select_checkbox_by_index_via_home(index)
-        self._select_edit_by_index_via_home(index)
+        self.select_contact_by_index_via_home(index)
+        self.click_edit_contact_by_index_via_home(index)
 
     def open_details_form_via_home(self, index):
         """Open contact's details form on contacts page."""
-        self._select_checkbox_by_index_via_home(index)
-        self._select_details_by_index_via_home(index)
-
-    # Create form
-    def _create_select_next(self):
-        """Select 'Next' button on first create form to continue actions."""
-        wd = self.app.wd
-        wd.find_element_by_css_selector("input[name=quickadd]").click()
-
-    def _select_enter_via_create(self):
-        """Select 'Enter' button on second create form to submit action."""
-        wd = self.app.wd
-        wd.find_element_by_name("submit").click()
-
-    def fill_form_via_create(self, contact):
-        """Fill data on first and second create forms."""
-        self._change_field_value("address", contact.first_name)
-        self._create_select_next()
-        self._fill_form_common(contact)
-
-    # Edit form
-    def _select_update_via_edit(self):
-        """Select 'Update' button on edit form to update entered data."""
-        wd = self.app.wd
-        wd.find_element_by_name("update").click()
-
-    def _fill_form_via_edit(self, contact):
-        """Fill data on edit forms."""
-        self._change_field_value("firstname", contact.first_name)
-        self._fill_form_common(contact)
-
-    # Create, Delete, Modify procedures for contact(s)
-    def create_contact(self, contact):
-        """Create new contact."""
-        self.open_add_form()
-        self.fill_form_via_create(contact)
-        self._select_enter_via_create()
-        self.contacts_cache = None
-
-    def modify_contact(self, index, new_contact):
-        """Modify contact by 'index' according object's data 'new_contact'."""
-        self.open_contacts_page()
-        self.open_edit_form_via_home(index)
-        self._fill_form_via_edit(new_contact)
-        self._select_update_via_edit()
-        self.contacts_cache = None
-
-    def delete_contact_via_home(self, index):
-        """Delete contact by index via home (contacts) page."""
-        self.open_contacts_page()
-        self._select_checkbox_by_index_via_home(index)
-        self._select_delete_via_home()
-        self._push_ok_js()
-        self.contacts_cache = None
-
-    def delete_all_contacts_via_home(self):
-        """Delete all contact via home (contacts) page."""
-        self.open_contacts_page()
-        self._select_select_all_via_home()
-        self._select_delete_via_home()
-        self._push_ok_js()
-        self.contacts_cache = None
+        self.select_contact_by_index_via_home(index)
+        self.click_contact_details_by_index_via_home(index)
 
     def count_of_contacts_via_home(self):
         """Get the count of contacts objects via home (contacts) page."""
@@ -200,6 +140,34 @@ class ContactHelper:
                 secondary_phone=secondaryphone, email=email))
         return self.contacts_cache
 
+    # Create form
+    def click_next_form_via_create(self):
+        """Select 'Next' button on first create form to continue actions."""
+        wd = self.app.wd
+        wd.find_element_by_css_selector("input[name=quickadd]").click()
+
+    def click_enter_data_via_create(self):
+        """Select 'Enter' button on second create form to submit action."""
+        wd = self.app.wd
+        wd.find_element_by_name("submit").click()
+
+    def fill_form_via_create(self, contact):
+        """Fill data on first and second create forms."""
+        self._change_field_value("address", contact.first_name)
+        self.click_next_form_via_create()
+        self._fill_form_common(contact)
+
+    # Edit form
+    def click_update_data_via_edit(self):
+        """Select 'Update' button on edit form to update entered data."""
+        wd = self.app.wd
+        wd.find_element_by_name("update").click()
+
+    def fill_form_via_edit(self, contact):
+        """Fill data on edit forms."""
+        self._change_field_value("firstname", contact.first_name)
+        self._fill_form_common(contact)
+
     def contact_info_via_edit(self, index):
         """Get by index on home page contact info via edit form."""
         self.open_contacts_page()
@@ -218,6 +186,7 @@ class ContactHelper:
                        mobile_phone=mobilephone, work_phone=workphone,
                        secondary_phone=secondaryphone, email=email)
 
+    # Details form
     def contact_info_via_details(self, index):
         """Get by index on home page contact info via details form."""
         wd = self.app.wd
@@ -239,3 +208,35 @@ class ContactHelper:
                        last_name=lastname, home_phone=homephone,
                        mobile_phone=mobilephone, work_phone=workphone,
                        secondary_phone=secondaryphone, email=email)
+
+    # Create, Modify, Delete procedures for contact(s)
+    def create_contact_via_add(self, contact):
+        """Create new contact."""
+        self.open_add_form()
+        self.fill_form_via_create(contact)
+        self.click_enter_data_via_create()
+        self.contacts_cache = None
+
+    def modify_contact_via_home(self, index, new_contact):
+        """Modify contact by 'index' according object's data 'new_contact'."""
+        self.open_contacts_page()
+        self.open_edit_form_via_home(index)
+        self.fill_form_via_edit(new_contact)
+        self.click_update_data_via_edit()
+        self.contacts_cache = None
+
+    def delete_contact_via_home(self, index):
+        """Delete contact by index via home (contacts) page."""
+        self.open_contacts_page()
+        self.select_contact_by_index_via_home(index)
+        self.click_delete_contacts_via_home()
+        self.accept_deletion_action()
+        self.contacts_cache = None
+
+    def delete_all_contacts_via_home(self):
+        """Delete all contact via home (contacts) page."""
+        self.open_contacts_page()
+        self.click_select_all_contacts_via_home()
+        self.click_delete_contacts_via_home()
+        self.accept_deletion_action()
+        self.contacts_cache = None

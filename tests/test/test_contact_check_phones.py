@@ -25,7 +25,7 @@ def test_check_contact_phones_via_home_and_edit(app):
                           home_phone=r_phone(), mobile_phone=r_phone(),
                           work_phone=r_phone(), secondary_phone=r_phone(),
                           email=r_email(data.CONTACT_EMAIL))
-        app.contact.create_contact(contact)
+        app.contact.create_contact_via_add(contact)
     contacts_via_home = app.contact.list_of_contacts_via_home()
     index = randrange(len(contacts_via_home))
     contact_via_home = contacts_via_home[index]
@@ -57,7 +57,7 @@ def test_check_contact_phones_via_home_and_details(app):
                           home_phone=r_phone(), mobile_phone=r_phone(),
                           work_phone=r_phone(), secondary_phone=r_phone(),
                           email=r_email(data.CONTACT_EMAIL))
-        app.contact.create_contact(contact)
+        app.contact.create_contact_via_add(contact)
     contacts_via_home = app.contact.list_of_contacts_via_home()
     index = randrange(len(contacts_via_home))
     contact_via_home = contacts_via_home[index]

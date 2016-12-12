@@ -15,7 +15,7 @@ from tests.model.contact import Contact
 def test_del_some_contact(app):
     """Check the possibility to delete some contact via home (contacts) page."""
     if app.contact.count_of_contacts_via_home() == 0:
-        app.contact.create_contact(Contact())
+        app.contact.create_contact_via_add(Contact())
     first_contacts = app.contact.list_of_contacts_via_home()
     index = randrange(len(first_contacts))
     app.contact.delete_contact_via_home(index)
@@ -28,7 +28,7 @@ def test_del_some_contact(app):
 def test_del_all_contacts(app):
     """Check the possibility to delete all contacts via home (contacts) page."""
     if app.contact.count_of_contacts_via_home() == 0:
-        [app.contact.create_contact(Contact()) for _ in xrange(3)]
+        [app.contact.create_contact_via_add(Contact()) for _ in xrange(3)]
     app.contact.delete_all_contacts_via_home()
     contacts = app.contact.list_of_contacts_via_home()
     assert len(contacts) == app.contact.count_of_contacts_via_home() == 0

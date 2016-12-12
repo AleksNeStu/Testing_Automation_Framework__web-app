@@ -21,7 +21,7 @@ def test_add_contact(app):
                       home_phone=r_phone(), mobile_phone=r_phone(),
                       work_phone=r_phone(), secondary_phone=r_phone(),
                       email=r_email(data.CONTACT_EMAIL))
-    app.contact.create_contact(contact)
+    app.contact.create_contact_via_add(contact)
     assert len(old_contacts) + 1 == app.contact.count_of_contacts_via_home()
     actual_contacts = app.contact.list_of_contacts_via_home()
     contact.id = actual_contacts[-1].id
