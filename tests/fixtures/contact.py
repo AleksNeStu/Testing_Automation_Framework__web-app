@@ -21,6 +21,16 @@ class ContactHelper:
     # Common
     contacts_cache = None
 
+    def _fill_form_common(self, contact):
+        """Common (for create, edit forms) data for filling contact."""
+        self._change_field_value("lastname", contact.last_name)
+        self._change_field_value("middlename", contact.middle_name)
+        self._change_field_value("home", contact.home_phone)
+        self._change_field_value("mobile", contact.mobile_phone)
+        self._change_field_value("work", contact.work_phone)
+        self._change_field_value("phone2", contact.secondary_phone)
+        self._change_field_value("email", contact.email)
+
     def _change_field_value(self, field_name, text):
         """Change field value (text)."""
         wd = self.app.wd
@@ -112,13 +122,7 @@ class ContactHelper:
         """Fill data on first and second create forms."""
         self._change_field_value("address", contact.first_name)
         self._create_select_next()
-        self._change_field_value("lastname", contact.last_name)
-        self._change_field_value("middlename", contact.middle_name)
-        self._change_field_value("home", contact.home_phone)
-        self._change_field_value("mobile", contact.mobile_phone)
-        self._change_field_value("work", contact.work_phone)
-        self._change_field_value("phone2", contact.secondary_phone)
-        self._change_field_value("email", contact.email)
+        self._fill_form_common(contact)
 
     # Edit form
     def _select_update_via_edit(self):
@@ -129,8 +133,7 @@ class ContactHelper:
     def _fill_form_via_edit(self, contact):
         """Fill data on edit forms."""
         self._change_field_value("firstname", contact.first_name)
-        self._change_field_value("lastname", contact.last_name)
-        self._change_field_value("email", contact.email)
+        self._fill_form_common(contact)
 
     # Create, Delete, Modify procedures for contact(s)
     def create_contact(self, contact):

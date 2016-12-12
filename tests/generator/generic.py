@@ -20,8 +20,8 @@ def random_data(prefix, maxlen=5):
 def random_email(domain="@gmail.com", maxlen=5):
     """Generate mail like data@gmail.com."""
     symbols = string.ascii_letters + string.digits
-    return "".join(
-        [random.choice(symbols) for _ in range(random.randint(1, maxlen))]) + domain
+    return "".join([random.choice(symbols) for _ in
+                    range(random.randint(1, maxlen))]) + domain
 
 def random_phone(code=1):
     """Generate random phone number (default for USA: code=1)
