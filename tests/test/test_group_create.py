@@ -13,13 +13,13 @@ from tests.model.group import Group
 
 def test_add_group(app):
     """Check the possibility to create new group."""
-    first_groups = app.group.get_list_of_groups()
+    first_groups = app.group.list_of_groups_via_groups()
     group = Group(name=r_data(data.GROUP_NAME),
                   header=r_data(data.GROUP_HEADER),
                   footer=r_data(data.GROUP_FOOTER))
-    app.group.create(group)
-    assert len(first_groups) + 1 == app.group.count()
-    actual_groups = app.group.get_list_of_groups()
+    app.group.create_group_via_groups(group)
+    assert len(first_groups) + 1 == app.group.count_of_groups_via_groups()
+    actual_groups = app.group.list_of_groups_via_groups()
     group.id = actual_groups[-1].id
     expected_groups = first_groups + [group]
     assert (
@@ -29,11 +29,11 @@ def test_add_group(app):
 
 def test_add_empty_group(app):
     """Check the possibility to create new empty group."""
-    first_groups = app.group.get_list_of_groups()
+    first_groups = app.group.list_of_groups_via_groups()
     group = Group()
-    app.group.create(group)
-    assert len(first_groups) + 1 == app.group.count()
-    actual_groups = app.group.get_list_of_groups()
+    app.group.create_group_via_groups(group)
+    assert len(first_groups) + 1 == app.group.count_of_groups_via_groups()
+    actual_groups = app.group.list_of_groups_via_groups()
     group.id = actual_groups[-1].id
     expected_groups = first_groups + [group]
     assert (

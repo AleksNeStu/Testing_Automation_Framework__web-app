@@ -15,15 +15,15 @@ from tests.model.group import Group
 
 def test_modify_name_of_some_group(app):
     """Check the possibility to modify some group's name."""
-    if app.group.count() == 0:
-        app.group.create(Group())
+    if app.group.count_of_groups_via_groups() == 0:
+        app.group.create_group_via_groups(Group())
     group_name = Group(name=r_data(data.GROUP_NAME_NEW))
-    first_groups = app.group.get_list_of_groups()
+    first_groups = app.group.list_of_groups_via_groups()
     group_name.id = first_groups[0].id
     index = randrange(len(first_groups))
-    app.group.modify_group_by_index(index, group_name)
-    assert len(first_groups) == app.group.count()
-    actual_groups = app.group.get_list_of_groups()
+    app.group.modify_group_via_groups(index, group_name)
+    assert len(first_groups) == app.group.count_of_groups_via_groups()
+    actual_groups = app.group.list_of_groups_via_groups()
     expected_groups = first_groups[:index] + [group_name] + first_groups[index+1:]
     assert (
         sorted(expected_groups, key=Group.id_or_max) ==
@@ -32,17 +32,17 @@ def test_modify_name_of_some_group(app):
 
 def test_modify_some_group(app):
     """Check the possibility to modify some group."""
-    if app.group.count() == 0:
-        app.group.create(Group())
-    first_groups = app.group.get_list_of_groups()
+    if app.group.count_of_groups_via_groups() == 0:
+        app.group.create_group_via_groups(Group())
+    first_groups = app.group.list_of_groups_via_groups()
     group = Group(name=r_data(data.GROUP_NAME_NEW),
                       header=r_data(data.GROUP_HEADER_NEW),
                       footer=r_data(data.GROUP_FOOTER_NEW))
     group.id = first_groups[0].id
     index = randrange(len(first_groups))
-    app.group.modify_group_by_index(index, group)
-    assert len(first_groups) == app.group.count()
-    actual_groups = app.group.get_list_of_groups()
+    app.group.modify_group_via_groups(index, group)
+    assert len(first_groups) == app.group.count_of_groups_via_groups()
+    actual_groups = app.group.list_of_groups_via_groups()
     expected_groups = first_groups[:index] + [group] + first_groups[index+1:]
     assert (
         sorted(expected_groups, key=Group.id_or_max) ==
