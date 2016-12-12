@@ -8,43 +8,34 @@ __copyright__ = "The GNU General Public License v3.0"
 
 from random import randrange
 
+import pytest
+
 from tests.constants import data, messages
 from tests.generator.generic import random_data as r_data
 from tests.model.group import Group
 
 
-def test_modify_name_of_some_group(app):
-    """Check the possibility to modify some group's name."""
-    if app.group.count_of_groups_via_groups() == 0:
-        app.group.create_group_via_groups(Group())
-    group_name = Group(name=r_data(data.GROUP_NAME_NEW))
-    first_groups = app.group.list_of_groups_via_groups()
-    group_name.id = first_groups[0].id
-    index = randrange(len(first_groups))
-    app.group.modify_group_via_groups(index, group_name)
-    assert len(first_groups) == app.group.count_of_groups_via_groups()
-    actual_groups = app.group.list_of_groups_via_groups()
-    expected_groups = first_groups[:index] + [group_name] + first_groups[index+1:]
-    assert (
-        sorted(expected_groups, key=Group.id_or_max) ==
-        sorted(actual_groups, key=Group.id_or_max),
-        messages.COMPARE_EXP_VS_GOT.format(expected_groups, actual_groups))
+test_data = [Group(name=new_name, header=new_header, footer=new_footer)
+             for new_name in ["", r_data(data.GROUP_NAME_NEW)]
+             for new_header in ["", r_data(data.GROUP_HEADER_NEW)]
+             for new_footer in ["", r_data(data.GROUP_FOOTER_NEW)]]
 
-def test_modify_some_group(app):
-    """Check the possibility to modify some group."""
+@pytest.mark.smoke_tests
+@pytest.mark.parametrize("new_group", test_data,
+                         ids=[repr(x) for x in test_data])
+def test_modify_some_group(app, new_group):
+    """Check of a possibility to modify exist group used random attributes of
+    new object 'new_group'.
+    """
     if app.group.count_of_groups_via_groups() == 0:
         app.group.create_group_via_groups(Group())
     first_groups = app.group.list_of_groups_via_groups()
-    group = Group(name=r_data(data.GROUP_NAME_NEW),
-                      header=r_data(data.GROUP_HEADER_NEW),
-                      footer=r_data(data.GROUP_FOOTER_NEW))
-    group.id = first_groups[0].id
-    index = randrange(len(first_groups))
-    app.group.modify_group_via_groups(index, group)
+    new_group.id = first_groups[0].id
+    ind = randrange(len(first_groups))
+    app.group.modify_group_via_groups(ind, new_group)
     assert len(first_groups) == app.group.count_of_groups_via_groups()
     actual_groups = app.group.list_of_groups_via_groups()
-    expected_groups = first_groups[:index] + [group] + first_groups[index+1:]
-    assert (
-        sorted(expected_groups, key=Group.id_or_max) ==
-        sorted(actual_groups, key=Group.id_or_max),
-        messages.COMPARE_EXP_VS_GOT.format(expected_groups, actual_groups))
+    expected_groups = first_groups[:ind] + [new_group] + first_groups[ind+1:]
+    assert (sorted(expected_groups, key=Group.id_or_max) ==
+            sorted(actual_groups, key=Group.id_or_max),
+            messages.COMPARE_EXP_VS_GOT.format(expected_groups, actual_groups))

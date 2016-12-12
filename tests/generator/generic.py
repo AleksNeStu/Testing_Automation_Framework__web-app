@@ -10,20 +10,22 @@ import functools
 import random
 import string
 
+from tests.constants import data, repeat
 
-def random_data(prefix, maxlen=5):
+
+def random_data(prefix, maxlen=repeat.RANDOM_DATA):
     """Random string generator for common strings."""
-    symbols = string.ascii_letters + string.digits
+    symbols = string.ascii_letters + string.digits + string.punctuation
     return prefix + "".join(
         [random.choice(symbols) for _ in range(random.randint(1, maxlen))])
 
-def random_email(domain="@gmail.com", maxlen=5):
+def random_email(domain=data.CONTACT_EMAIL, maxlen=repeat.RANDOM_EMAIL):
     """Generate mail like data@gmail.com."""
     symbols = string.ascii_letters + string.digits
     return "".join([random.choice(symbols) for _ in
                     range(random.randint(1, maxlen))]) + domain
 
-def random_phone(code=1):
+def random_phone(code=data.PHONE_CODE):
     """Generate random phone number (default for USA: code=1)
        Example:
        +1-844-751-8951

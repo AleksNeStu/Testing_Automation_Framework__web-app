@@ -49,7 +49,7 @@ def home_all_phones_to_list(all_phones):
     else: return [None, None, None, None]
 
 def edit_merge_phones_like_home(contact):
-    """Merge phones attributes of 'contact' object to row (text) view like
+    """Merge phones attributes's values of 'contact' object to row (text) view like
     all phones represent on home page.
     Example:
     ['+13620559771', '+18017067538', '+14844346575', '+15480292852']
