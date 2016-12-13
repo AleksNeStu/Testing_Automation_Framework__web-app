@@ -32,14 +32,13 @@ class Contact:
         self.all_phones_home = all_phones_home
 
     def __repr__(self):
-        return (
-            "id:{id}, first_name:{first_name}, middle_name:{middle_name}, "
-            "last_name:{last_name}, address:{address}, email:{email}, "
-            "email2:{email2}, email3:{email3}, home_phone:{home_phone}, "
-            "mobile_phone:{mobile_phone}, work_phone:{work_phone}, "
-            "secondary_phone:{secondary_phone}, "
-            "all_emails_home:{all_emails_home}, "
-            "all_phones_home: {all_phones_home}").format(
+        return ("id:{id}, first_name:{first_name}, middle_name:{middle_name}, "
+                "last_name:{last_name}, address:{address}, email:{email}, "
+                "email2:{email2}, email3:{email3}, home_phone:{home_phone}, "
+                "mobile_phone:{mobile_phone}, work_phone:{work_phone}, "
+                "secondary_phone:{secondary_phone}, "
+                "all_emails_home:{all_emails_home}, "
+                "all_phones_home: {all_phones_home}").format(
             id=self.id, first_name=self.first_name, last_name=self.last_name,
             middle_name=self.middle_name, address=self.address,
             email=self.email, email2=self.email2, email3=self.email3,
@@ -55,11 +54,11 @@ class Contact:
                 self.address == other.address and self.email == other.email and
                 self.email2 == other.email2 and self.email3 == other.email3 and
                 self.home_phone == other.home_phone and
-                self.mobile_phone == self.mobile_phone and
-                self.work_phone == self.work_phone and
-                self.secondary_phone == self.secondary_phone and
-                self.all_emails_home == self.all_emails_home and
-                self.all_phones_home == self.all_phones_home)
+                self.mobile_phone == other.mobile_phone and
+                self.work_phone == other.work_phone and
+                self.secondary_phone == other.secondary_phone and
+                self.all_emails_home == other.all_emails_home and
+                self.all_phones_home == other.all_phones_home)
 
     @staticmethod
     def id_or_max(contact):

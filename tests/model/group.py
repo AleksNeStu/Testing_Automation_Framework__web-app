@@ -18,14 +18,12 @@ class Group:
         self.footer = footer
 
     def __repr__(self):
-        return (
-            "id:{id}, name:{name}, header:{header}, footer:{footer}").format(
+        return ("id:{id}, name:{name}, header:{header}, footer:{footer}").format(
             id=self.id, name=self.name, header=self.header, footer=self.footer)
 
     def __eq__(self, other):
-        return (
-            self.id is None or other.id is None or self.id == other.id) and (
-            self.name == other.name)
+        return (self.id == other.id and self.name == other.name and
+                self.header == other.header, self.footer == other.footer)
 
     @staticmethod
     def id_or_max(group):
