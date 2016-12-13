@@ -22,10 +22,10 @@ test_data = [Group(name=name, header=header, footer=footer)
 @pytest.mark.parametrize("group", test_data, ids=[repr(x) for x in test_data])
 def test_add_some_group(app, group):
     """Check of a possibility to create new random group via groups page."""
-    first_groups = app.group.list_of_groups_via_groups()
-    app.group.create_group_via_groups(group)
-    assert len(first_groups) + 1 == app.group.count_of_groups_via_groups()
-    actual_groups = app.group.list_of_groups_via_groups()
+    first_groups = app.group.list_of_groups_groups()
+    app.group.create_group_groups(group)
+    assert len(first_groups) + 1 == app.group.count_of_groups_groups()
+    actual_groups = app.group.list_of_groups_groups()
     group.id = actual_groups[-1].id
     expected_groups = first_groups + [group]
     assert (sorted(expected_groups, key=Group.id_or_max) ==

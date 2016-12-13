@@ -11,17 +11,55 @@ import re
 from tests.constants import data, keys
 
 
-def search_string_in_raw_text(raw_text, regex, gr_number=1):
+def _list_strings_to_multi_line_text(strings):
+    """Convert list of 'strings' to multi-line text.
+    Example:
+    ['value1', 'value2', 'value3', 'value4']
+    to
+    'value1
+     value2
+     value3
+     value4'
+    """
+    return "\n".join(
+        filter(lambda x: x != "", filter(lambda x: x is not None, strings)))
+
+def _list_strings_to_single_line_text(strings):
+    """Convert list of 'strings' to single-line text separated by a white space.
+    Example:
+    ['value1', 'value2', 'value3', 'value4'] to
+    'value1 value2 value3 value4'
+    """
+    return " ".join(strings)
+
+def _search_string_in_raw_text(raw_text, regex, gr_number=1):
     """Search string in 'raw_text' according 'regex' and return matches for
     a group number 'gr_number': group(gr_number)
     Example:
     Find in raw text 'A: text' and return 'text'
     """
-    phone_number = ""
+    string = ""
     _reg = re.compile(regex)
     if _reg.search(raw_text):
-        phone_number = _reg.search(raw_text).group(gr_number)
-    return phone_number
+        string = _reg.search(raw_text).group(gr_number)
+    return string
+
+def _findall_strings_in_raw_text(raw_text, regex):
+    """Findall strings in 'raw_text' according 'regex' and return list of
+    matches and then to multi-line text
+    Example:
+    Find in raw text
+    'value@1
+     value@2' to
+    ['value@1', 'value@2'] to
+    'value@1
+     value@2'
+    """
+    list_strings = []
+    _reg = re.compile(regex)
+    if len(_reg.findall(raw_text)) > 1:
+        list_strings = _reg.findall(raw_text)
+    return _list_strings_to_multi_line_text(list_strings)
 
 def normal_select_title(ext_title):
     """Normalize extended title (exclude brackets).
@@ -60,24 +98,6 @@ def home_all_phones_to_list(all_phones):
     if len(_all_phones) == 4: return _all_phones
     else: return [None, None, None, None]
 
-def merge_phones_like_home(contact):
-    """Merge phones attributes's values of 'contact' object to row (text) view like
-    all phones represent on home page.
-    Example:
-    ['+13620559771', '+18017067538', '+14844346575', '+15480292852']
-    to
-    '+13620559771
-     +18017067538
-     +14844346575
-     +15480292852'
-    """
-    return "\n".join(
-        filter(lambda x: x != "",
-               map(lambda x: clean_phone(x),
-                   filter(lambda x: x is not None,
-                          [contact.home_phone, contact.work_phone,
-                           contact.mobile_phone, contact.secondary_phone]))))
-
 def clean_phone(phone_number):
     """Clean unnecessary parts from phone number text
     (exclude: '-', '(', ')', ' ')
@@ -85,3 +105,25 @@ def clean_phone(phone_number):
     '+1-377-368-4628' to '+13773684628'
     """
     return re.sub("[() -]","",phone_number)
+
+def merge_name_parts_like_home_from_obj(contact):
+    """Merge name parts attributes's values of 'contact' object to
+    single-line text as on home page.
+    """
+    list_attrs = [contact.first_name, contact.middle_name, contact.last_name]
+    return _list_strings_to_single_line_text(list_attrs)
+
+def merge_emails_like_home_from_obj(contact):
+    """Merge emails attributes's values of 'contact' object to
+    multi-line text as on home page.
+    """
+    list_attrs = [contact.email, contact.email2, contact.email3]
+    return _list_strings_to_multi_line_text(list_attrs)
+
+def merge_phones_like_home_from_obj(contact):
+    """Merge phones attributes's values of 'contact' object to
+    multi-line text as on home page.
+    """
+    list_attrs = [contact.home_phone, contact.work_phone,
+                  contact.mobile_phone, contact.secondary_phone]
+    return clean_phone(_list_strings_to_multi_line_text(list_attrs))

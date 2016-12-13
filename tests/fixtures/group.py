@@ -42,50 +42,50 @@ class GroupHelper:
         self.app.open.open_link(url._GROUPS_)
 
     # Groups page
-    def select_group_by_index_via_groups(self, index):
+    def select_group_by_index_groups(self, index):
         """Select checkbox for group by index on groups page to make
         actions.
         """
         wd = self.app.wd
         wd.find_elements_by_name("selected[]")[index].click()
 
-    def click_new_group_via_groups(self):
+    def click_new_group_groups(self):
         """Select 'New group' button on groups page to open group create form.
         """
         wd = self.app.wd
         wd.find_element_by_name("new").click()
 
-    def click_edit_group_via_groups(self):
+    def click_edit_group_groups(self):
         """Select 'Edit group' button on groups page to open group edit form.
         """
         wd = self.app.wd
         wd.find_element_by_name("edit").click()
 
-    def click_delete_groups_via_groups(self):
+    def click_delete_groups_groups(self):
         """Select 'Delete group' button on groups page to delete
         selected group(s).
         """
         wd = self.app.wd
         wd.find_element_by_name("delete").click()
 
-    def select_all_groups_via_groups(self):
+    def select_all_groups_groups(self):
         """Select all checkboxes on groups page"""
         wd = self.app.wd
         elements = wd.find_elements_by_name("selected[]")
         [el.click() for el in elements]
 
-    def open_edit_form_via_groups(self, index):
+    def open_edit_form_groups(self, index):
         """Open groups's editing form on groups page."""
-        self.select_group_by_index_via_groups(index)
-        self.click_edit_group_via_groups()
+        self.select_group_by_index_groups(index)
+        self.click_edit_group_groups()
 
-    def count_of_groups_via_groups(self):
+    def count_of_groups_groups(self):
         """Get the count of groups objects via groups page."""
         wd = self.app.wd
         self.open_groups_page()
         return len(wd.find_elements_by_name("selected[]"))
 
-    def list_of_groups_via_groups(self):
+    def list_of_groups_groups(self):
         """Get list of groups objects via groups page."""
         wd = self.app.wd
         self.open_groups_page()
@@ -98,52 +98,52 @@ class GroupHelper:
         return self.group_cache
 
     # Create form
-    def click_enter_data_via_create(self):
+    def click_enter_data_create(self):
         """Select 'Enter information' button on create form to submit action.
         """
         wd = self.app.wd
         wd.find_element_by_name("submit").click()
 
-    def fill_form_via_create_or_edit(self, group):
+    def fill_form_create_or_edit(self, group):
         """Fill data on create form."""
         self._change_field_value("group_name", group.name)
         self._change_field_value("group_header", group.header)
         self._change_field_value("group_footer", group.footer)
 
     # Edit form
-    def click_update_data_via_edit(self):
+    def click_update_data_edit(self):
         """Select 'Update' button on edit form to update entered data."""
         wd = self.app.wd
         wd.find_element_by_name("update").click()
 
     # Create, Modify, Delete procedures for groups(s)
-    def create_group_via_groups(self, group):
+    def create_group_groups(self, group):
         """Create new group."""
         self.open_groups_page()
-        self.click_new_group_via_groups()
-        self.fill_form_via_create_or_edit(group)
-        self.click_enter_data_via_create()
+        self.click_new_group_groups()
+        self.fill_form_create_or_edit(group)
+        self.click_enter_data_create()
         self.group_cache = None
 
-    def modify_group_via_groups(self, index, new_group):
+    def modify_group_groups(self, index, new_group):
         """Modify group by 'index' according object's data 'new_group'."""
         self.open_groups_page()
-        self.open_edit_form_via_groups(index)
-        self.fill_form_via_create_or_edit(new_group)
-        self.click_update_data_via_edit()
+        self.open_edit_form_groups(index)
+        self.fill_form_create_or_edit(new_group)
+        self.click_update_data_edit()
         self.group_cache = None
 
-    def delete_group_via_groups(self, index):
+    def delete_group_groups(self, index):
         """Delete group by index via groups page."""
         self.open_groups_page()
-        self.select_group_by_index_via_groups(index)
-        self.click_delete_groups_via_groups()
+        self.select_group_by_index_groups(index)
+        self.click_delete_groups_groups()
         self.return_to_groups_page()
         self.group_cache = None
 
-    def delete_all_groups_via_groups(self):
+    def delete_all_groups_groups(self):
         """Delete all groups via home (contacts) page."""
         self.open_groups_page()
-        self.select_all_groups_via_groups()
-        self.click_delete_groups_via_groups()
+        self.select_all_groups_groups()
+        self.click_delete_groups_groups()
         self.group_cache = None

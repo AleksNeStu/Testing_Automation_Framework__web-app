@@ -27,14 +27,14 @@ def test_modify_some_group(app, new_group):
     """Check of a possibility to modify exist group used random attributes of
     new object 'new_group'.
     """
-    if app.group.count_of_groups_via_groups() == 0:
-        app.group.create_group_via_groups(Group())
-    first_groups = app.group.list_of_groups_via_groups()
+    if app.group.count_of_groups_groups() == 0:
+        app.group.create_group_groups(Group())
+    first_groups = app.group.list_of_groups_groups()
     new_group.id = first_groups[0].id
     ind = randrange(len(first_groups))
-    app.group.modify_group_via_groups(ind, new_group)
-    assert len(first_groups) == app.group.count_of_groups_via_groups()
-    actual_groups = app.group.list_of_groups_via_groups()
+    app.group.modify_group_groups(ind, new_group)
+    assert len(first_groups) == app.group.count_of_groups_groups()
+    actual_groups = app.group.list_of_groups_groups()
     expected_groups = first_groups[:ind] + [new_group] + first_groups[ind+1:]
     assert (sorted(expected_groups, key=Group.id_or_max) ==
             sorted(actual_groups, key=Group.id_or_max),
