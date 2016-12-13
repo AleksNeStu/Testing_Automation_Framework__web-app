@@ -12,7 +12,6 @@ from tests.constants import data, messages
 from tests.generator.generic import (
     random_data as r_data, random_email as r_email, random_phone as r_phone)
 from tests.model.contact import Contact
-import random
 
 test_data = [Contact(
     first_name=r_data(data.CONTACT_FIRST_NAME),

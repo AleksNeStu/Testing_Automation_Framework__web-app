@@ -6,9 +6,6 @@
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
-import re
-
-from tests.constants import url, keys
 from tests.model.contact import Contact
 from tests.utils import strings
 
@@ -50,11 +47,11 @@ class ContactHelper:
     # Open URLs and links
     def open_contacts_page(self):
         """Open contacts page (home page) via get url."""
-        self.app.open.open_url(url.HOME_URL)
+        self.app.open.open_url(self.app.url.HOME_URL)
 
     def open_add_form(self):
         """Open contacts add form via clicked on link."""
-        self.app.open.open_link(url._ADD_NEW)
+        self.app.open.open_link(self.app.url._ADD_NEW)
 
     # Contacts (home) page
     def select_contact_by_index_home(self, index):

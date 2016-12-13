@@ -7,7 +7,6 @@ __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
 from model.group import Group
-from tests.constants import url
 from tests.utils import strings
 
 
@@ -35,11 +34,11 @@ class GroupHelper:
     # Open URLs and links
     def open_groups_page(self):
         """Open groups page via clicked on link."""
-        self.app.open.open_link(url._GROUPS)
+        self.app.open.open_link(self.app.url._GROUPS)
 
     def return_to_groups_page(self):
         """Return to groups page from another tab via clicked on link."""
-        self.app.open.open_link(url._GROUPS_)
+        self.app.open.open_link(self.app.url._GROUPS_)
 
     # Groups page
     def select_group_by_index_groups(self, index):

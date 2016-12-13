@@ -7,7 +7,7 @@ __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
 from tests.constants import data
-from tests.constants import url
+
 
 class SessionHelper:
     """Class for represent Session."""
@@ -39,7 +39,7 @@ class SessionHelper:
     def login(self, username, password):
         """Login to the web-app used credentials."""
         wd = self.app.wd
-        self.app.open.open_url(url.HOME_URL)
+        self.app.open.open_url(self.app.url.HOME_URL)
         self._change_field_value("user", username)
         self._change_field_value("pass", password)
         wd.find_element_by_css_selector("input[type=submit]").click()

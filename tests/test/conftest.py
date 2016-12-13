@@ -16,7 +16,10 @@ fixture = None
 def app(request):
     """Init fixture with validation."""
     global fixture
-    if fixture is None or not fixture.is_valid(): fixture = Application()
+    if fixture is None or not fixture.is_valid():
+        browser = request.config.getoption("--browser")
+        base_url = request.config.getoption("--baseURL")
+        fixture = Application(browser=browser, base_url=base_url)
     fixture.session.ensure_login_as_admin()
     return fixture
 
@@ -28,3 +31,8 @@ def stop(request):
         fixture.destroy()
     request.addfinalizer(fin)
     return fixture
+
+def pytest_addoption(parser):
+    parser.addoption("--browser", action="store", default="firefox")
+    parser.addoption(
+        "--baseURL", action="store", default="http://localhost/addressbook/")

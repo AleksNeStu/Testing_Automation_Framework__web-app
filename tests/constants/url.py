@@ -11,41 +11,45 @@ import urlparse
 import os
 
 
-def form_second_part_url(url_part):
-    return url_part + ".php"
+class URL:
+    """Class for work with URLs."""
+    def __init__(self, base_url):
+        self.APP_URL = base_url
+        # Seconds parts of URLs
+        self.HOME = "index"
+        self.ADD_NEW = "edit"
+        self.GROUPS = "group"
+        self.NEXT_BIRTHDAYS = "birthdays"
+        self.EXPORT = "export"
+        self.IMPORT = "import"
+        # Titles of URLs on web pages
+        self._HOME = "home"
+        self._ADD_NEW = "add new"
+        self._GROUPS = "groups"
+        self._GROUPS_ = "group page"
+        self._NEXT_BIRTHDAYS = "next birthdays"
+        self._PRINT_ALL = "print all"
+        self._PRINT_PHONES = "print phones"
+        self._MAP = "map"
+        self._EXPORT = self.EXPORT
+        self._IMPORT = self.IMPORT
+        # Full URLs
+        self.HOME_URL = urlparse.urljoin(
+            self.APP_URL, self.form_second_part_url(self.HOME))
+        self.ADD_NEW_URL = urlparse.urljoin(
+            self.APP_URL, self.form_second_part_url(self.ADD_NEW))
+        self.GROUPS_URL = urlparse.urljoin(
+            self.APP_URL, self.form_second_part_url(self.GROUPS))
+        self.NEXT_BIRTHDAYS_URL = urlparse.urljoin(
+            self.APP_URL, self.form_second_part_url(self.NEXT_BIRTHDAYS))
+        self.EXPORT_URL = (self.APP_URL, self.form_second_part_url(self.EXPORT))
+        self.IMPORT_URL = (self.APP_URL, self.form_second_part_url(self.IMPORT))
 
-def check_second_part_url(full_url):
-    full_part = urlparse.urlparse(full_url).path
-    return os.path.split(full_part)[1]
+    @staticmethod
+    def form_second_part_url(url_part):
+        return url_part + ".php"
 
-# First part of URLs
-APP_URL = "http://127.0.0.1/addressbook/"
-
-# Seconds parts of URLs
-HOME = "index"
-ADD_NEW = "edit"
-GROUPS = "group"
-NEXT_BIRTHDAYS = "birthdays"
-EXPORT = "export"
-IMPORT = "import"
-
-# Titles of URLs on web pages
-_HOME = "home"
-_ADD_NEW = "add new"
-_GROUPS = "groups"
-_GROUPS_ = "group page"
-_NEXT_BIRTHDAYS = "next birthdays"
-_PRINT_ALL = "print all"
-_PRINT_PHONES = "print phones"
-_MAP = "map"
-_EXPORT = EXPORT
-_IMPORT = IMPORT
-
-# Full URLs
-HOME_URL = urlparse.urljoin(APP_URL, form_second_part_url(HOME))
-ADD_NEW_URL = urlparse.urljoin(APP_URL, form_second_part_url(ADD_NEW))
-GROUPS_URL = urlparse.urljoin(APP_URL, form_second_part_url(GROUPS))
-NEXT_BIRTHDAYS_URL = urlparse.urljoin(
-    APP_URL, form_second_part_url(NEXT_BIRTHDAYS))
-EXPORT_URL = (APP_URL, form_second_part_url(EXPORT))
-IMPORT_URL = (APP_URL, form_second_part_url(IMPORT))
+    @staticmethod
+    def check_second_part_url(full_url):
+        full_part = urlparse.urlparse(full_url).path
+        return os.path.split(full_part)[1]

@@ -37,10 +37,13 @@ def test_compare_contact_info_via_home_and_edit(app, contact):
     ind = randrange(len(contacts_home))
     contact_home = contacts_home[ind]
     contact_edit = app.contact.contact_info_edit(ind)
-    contact_edit_full_name = strings.merge_name_parts_like_home_from_obj(contact_edit)
+    contact_edit_full_name = strings.merge_name_parts_like_home_from_obj(
+        contact_edit)
     contact_edit_address = contact_edit.address
-    contact_edit_all_emails = strings.merge_emails_like_home_from_obj(contact_edit)
-    contact_edit_all_phones = strings.merge_phones_like_home_from_obj(contact_edit)
+    contact_edit_all_emails = strings.merge_emails_like_home_from_obj(
+        contact_edit)
+    contact_edit_all_phones = strings.merge_phones_like_home_from_obj(
+        contact_edit)
     contact_home_full_info = (contact_home.full_name_home, contact_home.address,
                               contact_home.all_emails_home,
                               contact_home.all_phones_home)
@@ -63,7 +66,8 @@ def test_compare_contact_phones_via_home_and_details(app, contact):
     contact_details = app.contact.contact_info_details(ind)
     contact_details_full_name = contact_details.full_name_details
     contact_details_all_emails = contact_details.all_emails_details
-    contact_details_all_phones = strings.merge_phones_like_home_from_obj(contact_details)
+    contact_details_all_phones = strings.merge_phones_like_home_from_obj(
+        contact_details)
     contact_home_full_info = (contact_home.full_name_home,
                               contact_home.all_emails_home,
                               contact_home.all_phones_home)
