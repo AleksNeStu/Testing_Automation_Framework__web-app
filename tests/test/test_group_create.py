@@ -8,15 +8,12 @@ __copyright__ = "The GNU General Public License v3.0"
 
 import pytest
 
-from tests.constants import data, messages, repeat
-from tests.generator.generic import random_data as r_data
+from tests.constants import messages
+from tests.generator import data
 from tests.model.group import Group
 
 
-test_data = [Group(name=name, header=header, footer=footer)
-             for name in ["", r_data(data.GROUP_NAME)]
-             for header in ["", r_data(data.GROUP_HEADER)]
-             for footer in ["", r_data(data.GROUP_FOOTER)]]
+test_data = data.test_group_full + data.test_group_empty
 
 @pytest.mark.smoke_tests
 @pytest.mark.parametrize("group", test_data, ids=[repr(x) for x in test_data])

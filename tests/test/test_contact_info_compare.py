@@ -10,25 +10,15 @@ from random import randrange
 
 import pytest
 
-from tests.constants import data, messages
-from tests.generator.generic import (random_data as r_data,
-                                     random_phone as r_phone,
-                                     random_email as r_email)
-from tests.model.contact import Contact
+from tests.constants import messages
+from tests.generator import data
 from tests.utils import strings
 
 
-test_data = [Contact(
-    first_name=r_data(data.CONTACT_FIRST_NAME),
-    middle_name=r_data(data.CONTACT_MIDDLE_NAME),
-    last_name=r_data(data.CONTACT_LAST_NAME),
-    address=r_data(data.CONTACT_ADDRESS), email=r_email(data.CONTACT_EMAIL),
-    email2=r_email(data.CONTACT_EMAIL), email3=r_email(data.CONTACT_EMAIL),
-    home_phone=r_phone(), mobile_phone=r_phone(), work_phone=r_phone(),
-    secondary_phone=r_phone())]
+test_data = data.test_contact_full
 
 @pytest.mark.smoke_tests
-@pytest.mark.parametrize("contact", test_data)
+@pytest.mark.parametrize("contact", test_data, ids=[repr(x) for x in test_data])
 def test_compare_contact_info_via_home_and_edit(app, contact):
     """Comparison contact's full info via home (contacts) page and edit form."""
     if app.contact.count_of_contacts_home() == 0:

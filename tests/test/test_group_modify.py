@@ -10,15 +10,12 @@ from random import randrange
 
 import pytest
 
-from tests.constants import data, messages
-from tests.generator.generic import random_data as r_data
+from tests.constants import messages
+from tests.generator import data
 from tests.model.group import Group
 
 
-test_data = [Group(name=new_name, header=new_header, footer=new_footer)
-             for new_name in ["", r_data(data.GROUP_NAME_NEW)]
-             for new_header in ["", r_data(data.GROUP_HEADER_NEW)]
-             for new_footer in ["", r_data(data.GROUP_FOOTER_NEW)]]
+test_data = data.test_group_full_new + data.test_group_empty
 
 @pytest.mark.smoke_tests
 @pytest.mark.parametrize("new_group", test_data,

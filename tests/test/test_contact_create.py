@@ -8,19 +8,12 @@ __copyright__ = "The GNU General Public License v3.0"
 
 import pytest
 
-from tests.constants import data, messages
-from tests.generator.generic import (
-    random_data as r_data, random_email as r_email, random_phone as r_phone)
+from tests.constants import messages
+from tests.generator import data
 from tests.model.contact import Contact
 
-test_data = [Contact(
-    first_name=r_data(data.CONTACT_FIRST_NAME),
-    middle_name=r_data(data.CONTACT_MIDDLE_NAME),
-    last_name=r_data(data.CONTACT_LAST_NAME),
-    address=r_data(data.CONTACT_ADDRESS), email=r_email(data.CONTACT_EMAIL),
-    email2=r_email(data.CONTACT_EMAIL), email3=r_email(data.CONTACT_EMAIL),
-    home_phone=r_phone(), mobile_phone=r_phone(), work_phone=r_phone(),
-    secondary_phone=r_phone())] + [Contact()]
+
+test_data = data.test_contact_full + data.test_contact_empty
 
 @pytest.mark.smoke_tests
 @pytest.mark.parametrize("contact", test_data, ids=[repr(x) for x in test_data])
