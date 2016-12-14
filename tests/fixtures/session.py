@@ -55,7 +55,8 @@ class SessionHelper:
 
     def ensure_login_as_admin(self):
         """Intellectual login to the web-app used admin credentials."""
-        self.ensure_login(data.LOGIN, data.PASSWORD)
+        self.ensure_login(self.app.config["username"],
+                          self.app.config["password"])
 
     def logout(self):
         """Logout from the web-app."""
