@@ -43,4 +43,4 @@ def stop(request):
 
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="firefox")
-    parser.addoption("--target", action="store", default="config.json")
+    parser.addoption("--config", action="store", default="config.json")
