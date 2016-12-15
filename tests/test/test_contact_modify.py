@@ -11,11 +11,12 @@ from random import randrange
 import pytest
 
 from tests.constants import messages
-from tests.generator import data
+from tests.generator.entities_factory import ContactFactory
 from tests.model.contact import Contact
 
 
-test_data = data.test_contact_full + data.test_contact_empty
+
+test_data = ContactFactory.create() + ContactFactory.create_empty()
 
 @pytest.mark.smoke_tests
 @pytest.mark.parametrize("new_contact", test_data,

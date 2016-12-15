@@ -11,11 +11,11 @@ from random import randrange
 import pytest
 
 from tests.constants import messages
-from tests.generator import data
+from tests.generator.entities_factory import ContactFactory
 from tests.utils import strings
 
 
-test_data = data.test_contact_full
+test_data = ContactFactory.create()
 
 @pytest.mark.smoke_tests
 @pytest.mark.parametrize("contact", test_data, ids=[repr(x) for x in test_data])

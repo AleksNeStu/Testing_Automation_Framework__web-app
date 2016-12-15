@@ -9,11 +9,11 @@ __copyright__ = "The GNU General Public License v3.0"
 import pytest
 
 from tests.constants import messages
-from tests.generator import data
+from tests.generator.entities_factory import GroupFactory
 from tests.model.group import Group
 
 
-test_data = data.test_group_full + data.test_group_empty
+test_data = GroupFactory.create() + GroupFactory.create_empty()
 
 @pytest.mark.smoke_tests
 @pytest.mark.parametrize("group", test_data, ids=[repr(x) for x in test_data])

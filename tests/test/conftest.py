@@ -1,15 +1,14 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
-"""Class for implement fixtures for conftest."""
+"""Pytest fixtures."""
 
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
 import json
 
-import pytest
 import os.path
+import pytest
 
 from tests.fixtures.application import Application
 

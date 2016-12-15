@@ -11,11 +11,11 @@ from random import randrange
 import pytest
 
 from tests.constants import messages
-from tests.generator import data
+from tests.generator.entities_factory import GroupFactory
 from tests.model.group import Group
 
 
-test_data = data.test_group_full_new + data.test_group_empty
+test_data = GroupFactory.create() + GroupFactory.create_empty()
 
 @pytest.mark.smoke_tests
 @pytest.mark.parametrize("new_group", test_data,
