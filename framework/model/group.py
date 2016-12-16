@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
+"""Modules for providing the web-app's entities's (objects's) attributes."""
 """Describing of the Group model."""
 
 __author__ = 'AleksNeStu'

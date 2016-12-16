@@ -10,7 +10,7 @@ from sys import maxsize
 
 
 class Contact:
-    """Contact model entity."""
+    """Class that represent model for Contact."""
     def __init__(self, id=None, first_name=None, middle_name=None,
                  last_name=None, address=None, email=None, email2=None,
                  email3=None, home_phone=None, mobile_phone=None,

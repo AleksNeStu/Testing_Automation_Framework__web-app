@@ -22,8 +22,8 @@ class RandomData(object):
             [random.choice(symbols) for _ in range(random.randint(1, maxlen))])
 
     @staticmethod
-    def email_part(domain=data.CONTACT_EMAIL,
-              maxlen=repeat.RANDOM_EMAIL):
+    def email_part(domain=data.CONTACT_EMAIL_DOMAIN,
+                   maxlen=repeat.RANDOM_EMAIL):
         """Random generator of the email parts.
            Example:
            dosFS@gmail.com.

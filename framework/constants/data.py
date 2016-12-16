@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-"""Modules for providing the web-app's data for filling UI fields."""
+"""Module for providing the web-app's data for filling UI fields."""
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
