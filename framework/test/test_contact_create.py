@@ -12,7 +12,7 @@ from constants import messages
 from generator.entities_factory import ContactFactory
 from model.contact import Contact
 
-test_data = ContactFactory.create() + ContactFactory.create_empty()
+test_data = ContactFactory.generate(ContactFactory.create_mixed())
 
 @pytest.mark.smoke_tests
 @pytest.mark.parametrize("contact", test_data, ids=[repr(x) for x in test_data])
