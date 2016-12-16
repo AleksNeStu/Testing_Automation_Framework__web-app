@@ -8,9 +8,9 @@ __copyright__ = "The GNU General Public License v3.0"
 
 import pytest
 
-from tests.constants import messages
-from tests.generator.entities_factory import ContactFactory
-from tests.model.contact import Contact
+from constants import messages
+from generator.entities_factory import ContactFactory
+from model.contact import Contact
 
 test_data = ContactFactory.create() + ContactFactory.create_empty()
 

@@ -10,9 +10,9 @@ from random import randrange
 
 import pytest
 
-from tests.constants import messages
-from tests.generator.entities_factory import ContactFactory
-from tests.utils import strings
+from constants import messages
+from generator.entities_factory import ContactFactory
+from utils import strings
 
 
 test_data = ContactFactory.create()

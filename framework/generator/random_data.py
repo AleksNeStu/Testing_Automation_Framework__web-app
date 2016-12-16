@@ -8,7 +8,7 @@ import functools
 import random
 import string
 
-from tests.constants import data, repeat
+from constants import data, repeat
 
 
 class RandomData(object):

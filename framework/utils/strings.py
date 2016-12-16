@@ -8,7 +8,7 @@ __copyright__ = "The GNU General Public License v3.0"
 
 import re
 
-from tests.constants import data, keys
+from constants import data, keys
 
 
 def _list_strings_to_multi_line_text(strings):

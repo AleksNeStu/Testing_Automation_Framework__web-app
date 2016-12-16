@@ -6,8 +6,6 @@
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
-from tests.constants import data
-
 
 class SessionHelper:
     """Class for represent Session."""

@@ -4,13 +4,13 @@
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
-from selenium import  webdriver
+from selenium import webdriver
 
 from contact import ContactHelper
 from group import GroupHelper
 from open import OpenHelper
 from session import SessionHelper
-from tests.constants.url import URL
+from constants.url import URL
 
 
 class Application():

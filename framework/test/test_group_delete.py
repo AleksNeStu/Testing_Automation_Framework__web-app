@@ -10,8 +10,8 @@ from random import randrange
 
 import pytest
 
-from tests.constants import messages, repeat
-from tests.model.group import Group
+from constants import messages, repeat
+from model.group import Group
 
 
 @pytest.mark.smoke_tests

@@ -4,10 +4,10 @@
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
-from tests.constants import data
-from tests.model.contact import Contact
-from tests.model.group import Group
-from tests.generator.random_data import RandomData as r_data
+from constants import data
+from model.contact import Contact
+from model.group import Group
+from generator.random_data import RandomData as r_data
 
 class EntitiesFactory(object):
     """Common factory class for entities."""

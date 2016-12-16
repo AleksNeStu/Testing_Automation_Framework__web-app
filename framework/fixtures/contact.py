@@ -6,8 +6,8 @@
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
-from tests.model.contact import Contact
-from tests.utils import strings
+from model.contact import Contact
+from utils import strings
 
 
 class ContactHelper:

@@ -10,7 +10,7 @@ import json
 import os.path
 import pytest
 
-from tests.fixtures.application import Application
+from fixtures.application import Application
 
 fixture = None
 config = None

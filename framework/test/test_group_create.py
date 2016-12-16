@@ -8,9 +8,9 @@ __copyright__ = "The GNU General Public License v3.0"
 
 import pytest
 
-from tests.constants import messages
-from tests.generator.entities_factory import GroupFactory
-from tests.model.group import Group
+from constants import messages
+from generator.entities_factory import GroupFactory
+from model.group import Group
 
 
 test_data = GroupFactory.create() + GroupFactory.create_empty()

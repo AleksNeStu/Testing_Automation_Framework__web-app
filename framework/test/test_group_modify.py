@@ -10,9 +10,9 @@ from random import randrange
 
 import pytest
 
-from tests.constants import messages
-from tests.generator.entities_factory import GroupFactory
-from tests.model.group import Group
+from constants import messages
+from generator.entities_factory import GroupFactory
+from model.group import Group
 
 
 test_data = GroupFactory.create() + GroupFactory.create_empty()

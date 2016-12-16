@@ -10,8 +10,8 @@ from random import randrange
 
 import pytest
 
-from tests.constants import messages
-from tests.model.contact import Contact
+from constants import messages
+from model.contact import Contact
 
 @pytest.mark.smoke_tests
 def test_del_some_contact(app):
