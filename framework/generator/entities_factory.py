@@ -4,24 +4,30 @@
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
-from constants import data
+import json
+import random
+from optparse import OptionParser
+
+import os
+
+from constants import data, repeat
 from generator.random_data import RandomData as r_data
 from model.contact import Contact
 from model.group import Group
-import json
-import random
-# import getopt
-# import sys
-import os
 
 
-# n = 5
-# o = "generate"
-# try:
-#     opts, args = getopt.getopt(sys.argv[1:], "n:o:", ["number of objects", "operation (type)"])
-# except getopt.GetoptError as err:
-#     getopt.usage()
-#     sys.exit(2)
+def opt_parser():
+    """To do implementation for work with module parametrization."""
+    parser = OptionParser()
+    parser.add_option("-f", "--factory", dest="factory", default=None,
+                      help="entity factory")
+    parser.add_option("-m", "--method", dest="method", default=None,
+                      help="factory method")
+    (options, args) = parser.parse_args()
+    if options.factory and options.method:
+        getattr(options.factory, options.method)()
+    else:
+        assert False, "Unhandled options"
 
 
 class EntitiesFactory(object):
@@ -34,6 +40,7 @@ class EntitiesFactory(object):
         with open(obj_file, "w") as obj_f:
             obj_f.write(json.dumps(test_data, default=lambda x: x.__dict__,
                                    indent=2))
+
 
 class ContactFactory(EntitiesFactory):
     """Factory class for Contact entity."""
@@ -64,9 +71,10 @@ class ContactFactory(EntitiesFactory):
         return contact
 
     @classmethod
-    def create_mixed(cls, n=5):
+    def create_mixed(cls, count=repeat.CREATE_OBJS):
         """Create Contact entities with mixed filled fields and
-        return list of objects.
+        return list of objects and as a result return list of 'n' randoms
+        entities.
         """
         contacts =  [Contact(
             first_name=first_name, middle_name=middle_name, last_name=last_name,
@@ -95,10 +103,13 @@ class ContactFactory(EntitiesFactory):
                     "", r_data.email_part(data.CONTACT_EMAIL_DOMAIN)]
                 for secondary_phone in [
                     "", r_data.email_part(data.CONTACT_EMAIL_DOMAIN)]]
-        return [random.choice(contacts) for _ in xrange (0, n)]
+        return [random.choice(contacts) for _ in xrange (0, count)]
 
     @classmethod
     def generate(cls, create_type):
+        """Generate 'contact.json' file in JSON format than contain the Contact
+        entities and return the list of Contact entities
+         """
         cls.generate_json(test_data=create_type, file="contact.json")
         return create_type
 
@@ -119,16 +130,22 @@ class GroupFactory(EntitiesFactory):
         return [Group()]
 
     @classmethod
-    def create_mixed(cls):
+    def create_mixed(cls, count=repeat.CREATE_OBJS):
         """Create Group entities with mixed filled fields and
-        return list of objects.
+        return list of objects and as a result return list of 'n' randoms
+        entities.
         """
-        return [Group(name=name, header=header, footer=footer)
-                for name in ["", r_data.common_part(data.GROUP_NAME)]
-                for header in ["", r_data.common_part(data.GROUP_HEADER)]
-                for footer in ["", r_data.common_part(data.GROUP_FOOTER)]]
+        groups = [Group(name=name, header=header, footer=footer)
+                  for name in ["", r_data.common_part(data.GROUP_NAME)]
+                  for header in ["", r_data.common_part(data.GROUP_HEADER)]
+                  for footer in ["", r_data.common_part(data.GROUP_FOOTER)]]
+        return [random.choice(groups) for _ in xrange (0, count)]
+
 
     @classmethod
     def generate(cls, create_type):
+        """Generate 'group.json' file in JSON format than contain the Group
+        entities and return the list of Group entities
+         """
         cls.generate_json(test_data=create_type, file="group.json")
         return create_type
