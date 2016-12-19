@@ -1,8 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
 """Tests for check contacts phones."""
-
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
@@ -11,16 +9,14 @@ from random import randrange
 import pytest
 
 from constants import messages
-from generator.entities_factory import ContactFactory
 from utils import strings
 
 
-test_data = ContactFactory.create()
-
 @pytest.mark.smoke_tests
-@pytest.mark.parametrize("contact", test_data, ids=[repr(x) for x in test_data])
-def test_compare_contact_info_via_home_and_edit(app, contact):
+def test_compare_contact_info_via_home_and_edit(
+        app, generator_entities_ContactFactory_generate_create_empty):
     """Comparison contact's full info via home (contacts) page and edit form."""
+    contact = generator_entities_ContactFactory_generate_create_empty
     if app.contact.count_of_contacts_home() == 0:
         app.contact.create_contact_add(contact)
     contacts_home = app.contact.list_of_contacts_home()
@@ -43,11 +39,13 @@ def test_compare_contact_info_via_home_and_edit(app, contact):
             messages.COMPARE_HOME_VS_EDIT.format(
                 contact_home.all_phones_home, contact_edit_all_phones))
 
+
 @pytest.mark.smoke_tests
-@pytest.mark.parametrize("contact", test_data)
-def test_compare_contact_phones_via_home_and_details(app, contact):
+def test_compare_contact_phones_via_home_and_details(
+        app, generator_entities_ContactFactory_generate_create_empty):
     """Comparison contact's full info via home (contacts) page and
     details form."""
+    contact = generator_entities_ContactFactory_generate_create_empty
     if app.contact.count_of_contacts_home() == 0:
         app.contact.create_contact_add(contact)
     contacts_home = app.contact.list_of_contacts_home()

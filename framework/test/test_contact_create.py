@@ -1,25 +1,22 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
 """Tests for creating contacts."""
-
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
 import pytest
 
 from constants import messages
-from generator.entities_factory import ContactFactory
 from model.contact import Contact
 
-test_data = ContactFactory.generate(ContactFactory.create_mixed())
 
 @pytest.mark.smoke_tests
-@pytest.mark.parametrize("contact", test_data, ids=[repr(x) for x in test_data])
-def test_add_contact(app, contact):
+def test_add_contact(app,
+                     generator_entities_ContactFactory_generate_create_mixed):
     """Check of a possibility to create new random contact via home (contacts)
     page.
     """
+    contact = generator_entities_ContactFactory_generate_create_mixed
     old_contacts = app.contact.list_of_contacts_home()
     app.contact.create_contact_add(contact)
     assert len(old_contacts) + 1 == app.contact.count_of_contacts_home()

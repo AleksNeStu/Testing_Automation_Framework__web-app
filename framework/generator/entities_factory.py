@@ -106,12 +106,13 @@ class ContactFactory(EntitiesFactory):
         return [random.choice(contacts) for _ in xrange (0, count)]
 
     @classmethod
-    def generate(cls, create_type):
-        """Generate 'contact.json' file in JSON format than contain the Contact
-        entities and return the list of Contact entities
+    def generate(cls, list_created_objs):
+        """Generate according the 'list_created_objs' dynamic 'contact.json'
+        file in JSON format than contain the Contact entities and return the
+        list of Contact entities.
          """
-        cls.generate_json(test_data=create_type, file="contact.json")
-        return create_type
+        cls.generate_json(test_data=list_created_objs, file="contact.json")
+        return list_created_objs
 
 
 class GroupFactory(EntitiesFactory):
@@ -143,9 +144,10 @@ class GroupFactory(EntitiesFactory):
 
 
     @classmethod
-    def generate(cls, create_type):
-        """Generate 'group.json' file in JSON format than contain the Group
-        entities and return the list of Group entities
+    def generate(cls, list_created_objs):
+        """Generate according the 'list_created_objs' dynamic 'group.json'
+        file in JSON format than contain the Group entities and return the
+        list of Group entities.
          """
-        cls.generate_json(test_data=create_type, file="group.json")
-        return create_type
+        cls.generate_json(test_data=list_created_objs, file="group.json")
+        return list_created_objs

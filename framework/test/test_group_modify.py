@@ -1,8 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
 """Tests for modifying groups."""
-
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
@@ -11,19 +9,16 @@ from random import randrange
 import pytest
 
 from constants import messages
-from generator.entities_factory import GroupFactory
 from model.group import Group
 
 
-test_data = GroupFactory.create() + GroupFactory.create_empty()
-
 @pytest.mark.smoke_tests
-@pytest.mark.parametrize("new_group", test_data,
-                         ids=[repr(x) for x in test_data])
-def test_modify_some_group(app, new_group):
+def test_modify_some_group(
+        app, generator_entities_GroupFactory_generate_create_mixed):
     """Check of a possibility to modify exist group used random attributes of
     new object 'new_group'.
     """
+    new_group = generator_entities_GroupFactory_generate_create_mixed
     if app.group.count_of_groups_groups() == 0:
         app.group.create_group_groups(Group())
     first_groups = app.group.list_of_groups_groups()

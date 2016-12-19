@@ -1,8 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
 """Tests for modifying contacts."""
-
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
@@ -11,20 +9,16 @@ from random import randrange
 import pytest
 
 from constants import messages
-from generator.entities_factory import ContactFactory
 from model.contact import Contact
 
 
-
-test_data = ContactFactory.create() + ContactFactory.create_empty()
-
 @pytest.mark.smoke_tests
-@pytest.mark.parametrize("new_contact", test_data,
-                         ids=[repr(x) for x in test_data])
-def test_modify_some_contact(app, new_contact):
+def test_modify_some_contact(
+        app, generator_entities_ContactFactory_generate_create_mixed):
     """Check of a possibility to modify exist contact used random attributes of
     new object 'new_contact'.
     """
+    new_contact = generator_entities_ContactFactory_generate_create_mixed
     if app.contact.count_of_contacts_home() == 0:
         app.contact.create_contact_add(Contact())
     first_contacts = app.contact.list_of_contacts_home()
