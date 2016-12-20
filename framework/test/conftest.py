@@ -26,11 +26,10 @@ def app(request):
     if config is None:
         config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                    request.config.getoption("--config"))
-        with open(config_file) as config_f:
-            config = json.load(config_f)
+        config = load_json(config_file)
     if fixture is None or not fixture.is_valid():
-        fixture = Application(browser=browser, base_url=config["baseURL"])
-    fixture.session.ensure_login(config["username"], config["password"])
+        fixture = Application(browser=browser, base_url=config["app_url"])
+    fixture.session.ensure_login(config["ui_username"], config["ui_password"])
     return fixture
 
 
@@ -62,9 +61,15 @@ def load_and_call_used_getattr(full_path):
         mod = getattr(mod, comp)
     return mod
 
+def load_json(full_path_to_file):
+    """Load data from JSON file (load from JSON dicts items)."""
+    with open(full_path_to_file) as json_f:
+        return json.load(json_f)
+
+
 def decode_json(full_path_to_file):
-    """Load data from JSON file.
-    (Deserialize from JSON dicts items to objects attributes).
+    """Deserialize data from JSON file (deserialize from JSON dicts items
+    to objects attributes).
     """
     with open(full_path_to_file) as json_f:
         return jsonpickle.decode(json_f.read())

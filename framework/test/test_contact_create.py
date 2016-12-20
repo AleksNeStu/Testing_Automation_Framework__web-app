@@ -4,10 +4,13 @@
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
+import pytest
+
 from constants import messages
 from model.contact import Contact
 
 
+@pytest.mark.smoke_tests
 def test_add_contact(
         app, generator_entities_ContactFactory_generate_create_mixed,
         generator_templates_contacts):

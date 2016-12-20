@@ -1,5 +1,9 @@
 {
-  "baseURL": "http://localhost/addressbook/",
-  "username": "admin",
-  "password": "secret"
+  "server_name": "",
+  "app_url": "http://localhost/addressbook/",
+  "ui_username": "admin",
+  "ui_password": "secret",
+  "db_username": "root",
+  "db_password": "",
+  "db_name": "addressbook"
 }

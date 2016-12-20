@@ -26,7 +26,7 @@ Setting IDE (assign this virt env /pysel)
 source /pyweb/bin/activate <br />
 pip install http://cdn.mysql.com/Downloads/Connector-Python/mysql-connector-python-2.0.4.zip\#md5\=3df394d89300db95163f17c843ef49df<br />
 deactivate<br />
-
+pip install mysql-connector
 *** https://pypi.python.org/pypi/mysql-connector-python/<br />
 
 
