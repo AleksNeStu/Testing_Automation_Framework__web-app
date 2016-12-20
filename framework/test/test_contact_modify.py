@@ -14,11 +14,12 @@ from model.contact import Contact
 
 @pytest.mark.smoke_tests
 def test_modify_some_contact(
-        app, generator_entities_ContactFactory_generate_create_mixed):
+        app, generator_entities_ContactFactory_generate_create_mixed,
+        generator_templates_contacts):
     """Check of a possibility to modify exist contact used random attributes of
     new object 'new_contact'.
     """
-    new_contact = generator_entities_ContactFactory_generate_create_mixed
+    new_contact = generator_templates_contacts
     if app.contact.count_of_contacts_home() == 0:
         app.contact.create_contact_add(Contact())
     first_contacts = app.contact.list_of_contacts_home()

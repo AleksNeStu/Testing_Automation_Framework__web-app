@@ -8,9 +8,10 @@ import json
 
 import os.path
 import pytest
+
 from fixtures.application import Application
 import generator.entities_factory
-
+import jsonpickle
 
 fixture = None
 config = None
@@ -25,8 +26,8 @@ def app(request):
     if config is None:
         config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                    request.config.getoption("--config"))
-        with open(config_file) as f:
-            config = json.load(f)
+        with open(config_file) as config_f:
+            config = json.load(config_f)
     if fixture is None or not fixture.is_valid():
         fixture = Application(browser=browser, base_url=config["baseURL"])
     fixture.session.ensure_login(config["username"], config["password"])
@@ -49,24 +50,34 @@ def pytest_addoption(parser):
     parser.addoption("--config", action="store", default="config.json")
 
 
-def load_and_call(full_path):
+def load_and_call_used_getattr(full_path):
     """Load and call any module, class, method according full_path (elements
-    have to separated by dot).
+    have to separated by dot) used getattr method.
        Example:
        load_and_call("module.class.method")
     """
     components = full_path.split('.')
     mod = __import__(components[0])
-    print mod
     for comp in components[1:]:
         mod = getattr(mod, comp)
     return mod
 
+def decode_json(full_path_to_file):
+    """Load data from JSON file.
+    (Deserialize from JSON dicts items to objects attributes).
+    """
+    with open(full_path_to_file) as json_f:
+        return jsonpickle.decode(json_f.read())
+
 
 def pytest_generate_tests(metafunc):
-    """"Dynamic test generation according fixture's name."""
+    """"Injecting test data to the fixture.
+    Custom dynamic parametrization scheme.
+    """
+    print metafunc.fixturenames
     for fixture in metafunc.fixturenames:
         if fixture.startswith("generator_entities_"):
+        # Encode objects attributes to JSON file
             fixturename_parts = fixture.split("_", 4)
             if len(fixturename_parts) == 5:
                 _module = "generator.entities_factory"
@@ -74,10 +85,21 @@ def pytest_generate_tests(metafunc):
                 _method_generate = fixturename_parts[3]
                 _method_create = fixturename_parts[4]
                 _factory = _module + "." + _cls
-                print _factory
-                list_created_objs = load_and_call(
+                list_created_objs = load_and_call_used_getattr(
                     _factory + "." + _method_create)()
-                test_data = load_and_call(
-                    _factory + "." + _method_generate)(list_created_objs)
-                metafunc.parametrize(
-                    fixture, test_data, ids=[str(x) for x in test_data])
+                test_data = [load_and_call_used_getattr(
+                    _factory + "." + _method_generate)(list_created_objs)]
+                metafunc.parametrize(fixture, test_data,
+                                     ids=[str(x) for x in test_data])
+        elif fixture.startswith("generator_templates_"):
+        # Decode JSON file to objects attributes
+            fixturename_parts = fixture.split("_")
+            if len(fixturename_parts) == 3:
+                _dir = fixturename_parts[0] + "/" + fixturename_parts[1]
+                _file = fixturename_parts[2]
+                _json_file = os.path.join(
+                    os.path.dirname(os.path.abspath(__file__)),
+                    "../{d}/{f}.json".format(d=_dir, f=_file))
+                test_data = decode_json(full_path_to_file=_json_file)
+                metafunc.parametrize(fixture, test_data,
+                                     ids=[str(x) for x in test_data])

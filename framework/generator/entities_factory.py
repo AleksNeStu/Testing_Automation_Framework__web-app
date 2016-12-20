@@ -4,7 +4,7 @@
 __author__ = 'AleksNeStu'
 __copyright__ = "The GNU General Public License v3.0"
 
-import json
+import jsonpickle
 import random
 from optparse import OptionParser
 
@@ -34,12 +34,18 @@ class EntitiesFactory(object):
     """Common factory class for entities."""
 
     @classmethod
-    def generate_json(cls, test_data, file):
+    def encode_json(cls, test_data, file):
+        """Generate JSON file according 'test data' - list of objects and
+        their attributes to templates dir with name 'file'.
+        (Serialize from objects attributes to from JSON dicts items).
+        """
         obj_file = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                 "templates/" + file)
         with open(obj_file, "w") as obj_f:
-            obj_f.write(json.dumps(test_data, default=lambda x: x.__dict__,
-                                   indent=2))
+            jsonpickle.set_encoder_options("json", indent=2)
+            obj_f.write(jsonpickle.encode(test_data))
+            # obj_f.write(
+            #     json.dumps(test_data, default=lambda x: x.__dict__, indent=2))
 
 
 class ContactFactory(EntitiesFactory):
@@ -107,12 +113,10 @@ class ContactFactory(EntitiesFactory):
 
     @classmethod
     def generate(cls, list_created_objs):
-        """Generate according the 'list_created_objs' dynamic 'contact.json'
-        file in JSON format than contain the Contact entities and return the
-        list of Contact entities.
+        """Generate according the 'list_created_objs' dynamic 'contacts.json'
+        file in JSON format than contain the Contact entities.
          """
-        cls.generate_json(test_data=list_created_objs, file="contact.json")
-        return list_created_objs
+        cls.encode_json(test_data=list_created_objs, file="contacts.json")
 
 
 class GroupFactory(EntitiesFactory):
@@ -145,9 +149,7 @@ class GroupFactory(EntitiesFactory):
 
     @classmethod
     def generate(cls, list_created_objs):
-        """Generate according the 'list_created_objs' dynamic 'group.json'
-        file in JSON format than contain the Group entities and return the
-        list of Group entities.
+        """Generate according the 'list_created_objs' dynamic 'groups.json'
+        file in JSON format than contain the Group entities.
          """
-        cls.generate_json(test_data=list_created_objs, file="group.json")
-        return list_created_objs
+        cls.encode_json(test_data=list_created_objs, file="groups.json")

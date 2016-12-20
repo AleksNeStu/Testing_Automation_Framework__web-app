@@ -14,11 +14,12 @@ from model.group import Group
 
 @pytest.mark.smoke_tests
 def test_modify_some_group(
-        app, generator_entities_GroupFactory_generate_create_mixed):
+        app, generator_entities_GroupFactory_generate_create_mixed,
+        generator_templates_groups):
     """Check of a possibility to modify exist group used random attributes of
     new object 'new_group'.
     """
-    new_group = generator_entities_GroupFactory_generate_create_mixed
+    new_group = generator_templates_groups
     if app.group.count_of_groups_groups() == 0:
         app.group.create_group_groups(Group())
     first_groups = app.group.list_of_groups_groups()

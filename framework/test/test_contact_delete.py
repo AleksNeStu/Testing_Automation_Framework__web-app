@@ -13,11 +13,12 @@ from constants import messages
 
 @pytest.mark.smoke_tests
 def test_del_some_contact(
-        app, generator_entities_ContactFactory_generate_create_empty):
+        app, generator_entities_ContactFactory_generate_create_empty,
+        generator_templates_contacts):
     """Check of a possibility to delete random contact via home (contacts)
     page.
     """
-    contact = generator_entities_ContactFactory_generate_create_empty
+    contact = generator_templates_contacts
     if app.contact.count_of_contacts_home() == 0:
         app.contact.create_contact_add(contact)
     first_contacts = app.contact.list_of_contacts_home()
@@ -33,11 +34,12 @@ def test_del_some_contact(
 
 @pytest.mark.smoke_tests
 def test_del_all_contacts(
-        app, generator_entities_ContactFactory_generate_create_empty):
+        app, generator_entities_ContactFactory_generate_create_empty,
+        generator_templates_contacts):
     """Check of a  possibility to delete all contacts via home (contacts)
     page.
     """
-    contact = generator_entities_ContactFactory_generate_create_empty
+    contact = generator_templates_contacts
     if app.contact.count_of_contacts_home() == 0:
         [app.contact.create_contact_add(contact) for _ in xrange(3)]
     app.contact.delete_all_contacts_home()

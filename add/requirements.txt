@@ -1,2 +1,16 @@
-selenium==2.53.6
-pytest
+configparser == 3.5.0
+dolmen.builtins == 0.3.1
+enum34 == 1.1.6
+flake8 == 3.2.1
+flake8-builtins == 0.2
+jsonpickle == 0.9.3
+mccabe == 0.5.2
+pip == 9.0.1
+py == 1.4.31
+pycodestyle == 2.2.0
+pyflakes == 1.3.0
+pytest == 2.9.2
+selenium == 2.53.6
+setuptools == 31.0.0
+wheel == 0.30.0a0
+zope.interface == 4.3.2

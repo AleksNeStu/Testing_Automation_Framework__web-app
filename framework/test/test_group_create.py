@@ -12,9 +12,10 @@ from model.group import Group
 
 @pytest.mark.smoke_tests
 def test_add_some_group(
-        app, generator_entities_GroupFactory_generate_create_mixed):
+        app, generator_entities_GroupFactory_generate_create_mixed,
+        generator_templates_groups):
     """Check of a possibility to create new random group via groups page."""
-    group = generator_entities_GroupFactory_generate_create_mixed
+    group = generator_templates_groups
     first_groups = app.group.list_of_groups_groups()
     app.group.create_group_groups(group)
     assert len(first_groups) + 1 == app.group.count_of_groups_groups()

@@ -14,9 +14,10 @@ from utils import strings
 
 @pytest.mark.smoke_tests
 def test_compare_contact_info_via_home_and_edit(
-        app, generator_entities_ContactFactory_generate_create_empty):
+        app, generator_entities_ContactFactory_generate_create_empty,
+        generator_templates_contacts):
     """Comparison contact's full info via home (contacts) page and edit form."""
-    contact = generator_entities_ContactFactory_generate_create_empty
+    contact = generator_templates_contacts
     if app.contact.count_of_contacts_home() == 0:
         app.contact.create_contact_add(contact)
     contacts_home = app.contact.list_of_contacts_home()
@@ -42,10 +43,11 @@ def test_compare_contact_info_via_home_and_edit(
 
 @pytest.mark.smoke_tests
 def test_compare_contact_phones_via_home_and_details(
-        app, generator_entities_ContactFactory_generate_create_empty):
+        app, generator_entities_ContactFactory_generate_create_empty,
+        generator_templates_contacts):
     """Comparison contact's full info via home (contacts) page and
     details form."""
-    contact = generator_entities_ContactFactory_generate_create_empty
+    contact = generator_templates_contacts
     if app.contact.count_of_contacts_home() == 0:
         app.contact.create_contact_add(contact)
     contacts_home = app.contact.list_of_contacts_home()

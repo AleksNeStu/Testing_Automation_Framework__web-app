@@ -14,9 +14,10 @@ from model.group import Group
 
 @pytest.mark.smoke_tests
 def test_del_some_group(
-        app, generator_entities_GroupFactory_generate_create_empty):
+        app, generator_entities_GroupFactory_generate_create_empty,
+        generator_templates_groups):
     """Check of a possibility to delete random group via groups page."""
-    group = generator_entities_GroupFactory_generate_create_empty
+    group = generator_templates_groups
     if app.group.count_of_groups_groups() == 0:
         app.group.create_group_groups(group)
     first_groups = app.group.list_of_groups_groups()
@@ -31,9 +32,10 @@ def test_del_some_group(
 
 @pytest.mark.smoke_tests
 def test_del_all_groups(
-        app, generator_entities_GroupFactory_generate_create_empty):
+        app, generator_entities_GroupFactory_generate_create_empty,
+        generator_templates_groups):
     """Check of a possibility to delete all groups via groups page."""
-    group = generator_entities_GroupFactory_generate_create_empty
+    group = generator_templates_groups
     if app.group.count_of_groups_groups() == 0:
         [app.group.create_group_groups(group) for _ in
          xrange(repeat.CREATE_OBJS)]

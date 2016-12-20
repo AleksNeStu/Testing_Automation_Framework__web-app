@@ -1,0 +1,37 @@
+[
+  {
+    "py/object": "model.group.Group", 
+    "header": "", 
+    "id": null, 
+    "name": "", 
+    "footer": "Group_footer_,-I~"
+  }, 
+  {
+    "py/object": "model.group.Group", 
+    "header": "", 
+    "id": null, 
+    "name": "", 
+    "footer": ""
+  }, 
+  {
+    "py/object": "model.group.Group", 
+    "header": "Group_header_;", 
+    "id": null, 
+    "name": "Group_name_n2DW5UP", 
+    "footer": "Group_footer_@+3gWU"
+  }, 
+  {
+    "py/object": "model.group.Group", 
+    "header": "Group_header_I%", 
+    "id": null, 
+    "name": "", 
+    "footer": ""
+  }, 
+  {
+    "py/object": "model.group.Group", 
+    "header": "", 
+    "id": null, 
+    "name": "Group_name_n2DW5UP", 
+    "footer": ""
+  }
+]
