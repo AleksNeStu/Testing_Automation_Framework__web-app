@@ -21,5 +21,11 @@ deactivate
 
 Setting IDE (assign this virt env /pysel)
 
+3) MySQL Connector:<br />
+sudo yum install mysql-connector-python
+
+https://pypi.python.org/pypi/mysql-connector-python/2.0.4
+
+***Object-relational mapping (ORM, O/RM, and O/R mapping tool) in computer science is a programming technique for converting data between incompatible type systems in object-oriented programming languages. This creates, in effect, a "virtual object database" that can be used from within the programming language.
 
 
