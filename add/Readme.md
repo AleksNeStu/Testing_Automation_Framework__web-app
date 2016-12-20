@@ -23,11 +23,21 @@ Setting IDE (assign this virt env /pysel)
 
 3) MySQL Connector:<br />
 
-- Download the actual version of the connector from https://pypi.python.org/pypi/mysql-connector-python/:
- *mysql-connector-python-2.0.4.zip
-- unzip it and install MySQL Connector/Python via shell>
- python ./setup.py install
+source /pyweb/bin/activate <br />
+pip install http://cdn.mysql.com/Downloads/Connector-Python/mysql-connector-python-2.0.4.zip\#md5\=3df394d89300db95163f17c843ef49df<br />
+deactivate<br />
 
-***Object-relational mapping (ORM, O/RM, and O/R mapping tool) in computer science is a programming technique for converting data between incompatible type systems in object-oriented programming languages. This creates, in effect, a "virtual object database" that can be used from within the programming language.
+*** https://pypi.python.org/pypi/mysql-connector-python/<br />
+
+
+Addition info:
+- Download the actual version of the connector from https://pypi.python.org/pypi/mysql-connector-python/:<br />
+ *mysql-connector-python-2.0.4.zip<br />
+- unzip it and install MySQL Connector/Python via shell><br />
+ python ./setup.py install<br />
+
+***Object-relational mapping (ORM, O/RM, and O/R mapping tool) in computer science is a programming technique for converting data between incompatible type systems in object-oriented programming languages. This creates, in effect, a "virtual object database" that can be used from within the programming language.<br />
+
+
 
 
