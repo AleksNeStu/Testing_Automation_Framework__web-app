@@ -7,7 +7,6 @@ __copyright__ = "The GNU General Public License v3.0"
 import mysql.connector
 import pytest
 
-
 from constants import db
 
 

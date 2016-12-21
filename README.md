@@ -1,7 +1,7 @@
 # Testing automation framework for web-app "Address book"<br />
 # Technologies stack: docker, pytest, python, selenium<br />
 
-# [Open test-cases](https://github.com/AleksNeStu/Test_Automation_Framework_WEB-APP/tree/master/tests/test) <br />
+# [Open test-cases](https://github.com/AleksNeStu/Test_Automation_Framework_WEB-APP/tree/master/framework/test) <br />
 
 # Structure:<br />
 /add - pre-requirements
