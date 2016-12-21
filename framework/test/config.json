@@ -1,9 +1,9 @@
 {
-  "server_name": "",
   "app_url": "http://localhost/addressbook/",
   "ui_username": "admin",
   "ui_password": "secret",
+  "db_server": "172.18.0.2",
   "db_username": "root",
   "db_password": "",
-  "db_name": "addressbook"
+  "db_name": "test"
 }

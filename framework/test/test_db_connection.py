@@ -7,6 +7,7 @@ __copyright__ = "The GNU General Public License v3.0"
 import mysql.connector
 import pytest
 
+
 from constants import db
 
 
@@ -15,4 +16,10 @@ def test_add_contact():
     connection = mysql.connector.connect(
         host=db.DB_SERVER, database=db.DB_NAME, user=db.DB_USER,
         password=db.DB_PASSWORD)
+    try:
+        cursor = connection.cursor()
+        cursor.execute("SHOW DATABASES;")
+        print cursor.fetchall()
+    finally:
+        connection.close()
     assert 1 == 1

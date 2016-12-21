@@ -12,6 +12,7 @@ import pytest
 from fixtures.application import Application
 import generator.entities_factory
 import jsonpickle
+import subprocess
 
 fixture = None
 config = None
@@ -36,11 +37,18 @@ def app(request):
 @pytest.fixture(scope="function", autouse=True)
 def stop(request):
     """Destroy fixture."""
+    global fixture
     def fin():
-        fixture.session.ensure_logout()
-        fixture.destroy()
+        if fixture is not None:
+            fixture.session.ensure_logout()
+            fixture.destroy()
     request.addfinalizer(fin)
     return fixture
+
+
+def get_bash_output(command):
+    """Run bash command with arguments and return its output as a string."""
+    return subprocess.check_output(["bash", "-c", command]).strip("\n")
 
 
 def pytest_addoption(parser):
@@ -61,6 +69,7 @@ def load_and_call_used_getattr(full_path):
         mod = getattr(mod, comp)
     return mod
 
+
 def load_json(full_path_to_file):
     """Load data from JSON file (load from JSON dicts items)."""
     with open(full_path_to_file) as json_f:
@@ -79,7 +88,6 @@ def pytest_generate_tests(metafunc):
     """"Injecting test data to the fixture.
     Custom dynamic parametrization scheme.
     """
-    print metafunc.fixturenames
     for fixture in metafunc.fixturenames:
         if fixture.startswith("generator_entities_"):
         # Encode objects attributes to JSON file
