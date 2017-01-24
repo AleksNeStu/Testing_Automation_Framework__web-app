@@ -9,6 +9,11 @@ http://127.0.0.1/index.php<br />
 user<br />
 bitnami<br />
 
+http://127.0.0.1/phpmyadmin
+server: "maria_db"
+user: "root"
+password: ""
+
 2) Database:<br />
 mysql -u root -h 172.18.0.2<br />
 MariaDB [(none)]> CREATE DATABASE test;<br />
