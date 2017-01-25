@@ -22,8 +22,7 @@ class Group:
             id=self.id, name=self.name, header=self.header, footer=self.footer)
 
     def __eq__(self, other):
-        return (self.id == other.id and self.name == other.name and
-                self.header == other.header, self.footer == other.footer)
+        return (self.id == other.id and self.name == other.name)
 
     @staticmethod
     def id_or_max(group):
