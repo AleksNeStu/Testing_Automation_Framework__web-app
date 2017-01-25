@@ -13,37 +13,71 @@ from fixtures.application import Application
 import generator.entities_factory
 import jsonpickle
 import subprocess
+from fixtures.db import DbFixture
 
-fixture = None
+
+app_fixture = None
 config = None
 
 
 @pytest.fixture()
 def app(request):
-    """Init fixture with validation."""
-    global fixture
-    global config
+    """Core fixture to initialization TAF."""
+    global app_fixture
+    web_config = load_config(request.config.getoption("--config"))["web"]
     browser = request.config.getoption("--browser")
+    if app_fixture is None or not app_fixture.is_valid():
+        app_fixture = Application(browser=browser,
+                                  base_url=web_config["app_url"])
+    app_fixture.session.ensure_login(web_config["ui_username"],
+                                     web_config["ui_password"])
+    return app_fixture
+
+
+@pytest.fixture(scope="session")
+def db(request):
+    """Data base fixture."""
+    db_config = load_config(request.config.getoption("--config"))["db"]
+    db_server_ip = get_ip_of_docker_container(db_config["db_container"])
+    DB_SERVER = db_config["db_server_ip"] if \
+        db_server_ip == str(db_config["db_server_ip"]) else db_server_ip
+    DB_NAME = db_config["db_name"]
+    DB_USER = db_config["db_username"]
+    DB_PASSWORD = db_config["db_password"]
+    db_fixture = DbFixture(host=DB_SERVER, database=DB_NAME, user=DB_USER,
+                           password=DB_PASSWORD)
+    def fin():
+        db_fixture.destroy()
+    request.addfinalizer(fin)
+    return db_fixture
+
+
+def pytest_addoption(parser):
+    """Dynamically adding command line options."""
+    parser.addoption("--browser", action="store", default="firefox")
+    parser.addoption("--config", action="store", default="config.json")
+
+
+def load_config(file):
+    """Load a file with JSON format according to the it placement."""
+    global config
     if config is None:
-        config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                   request.config.getoption("--config"))
+        config_file = os.path.join(
+            os.path.dirname(os.path.abspath(__file__)), file)
         config = load_json(config_file)
-    if fixture is None or not fixture.is_valid():
-        fixture = Application(browser=browser, base_url=config["app_url"])
-    fixture.session.ensure_login(config["ui_username"], config["ui_password"])
-    return fixture
+    return config
 
 
 @pytest.fixture(scope="function", autouse=True)
 def stop(request):
     """Destroy fixture."""
-    global fixture
+    global app_fixture
     def fin():
-        if fixture is not None:
-            fixture.session.ensure_logout()
-            fixture.destroy()
+        if app_fixture is not None:
+            app_fixture.session.ensure_logout()
+            app_fixture.destroy()
     request.addfinalizer(fin)
-    return fixture
+    return app_fixture
 
 
 def get_bash_output(command):
@@ -51,10 +85,14 @@ def get_bash_output(command):
     return subprocess.check_output(["bash", "-c", command]).strip("\n")
 
 
-def pytest_addoption(parser):
-    """Dynamically adding command line options."""
-    parser.addoption("--browser", action="store", default="firefox")
-    parser.addoption("--config", action="store", default="config.json")
+def get_ip_of_docker_container(container_name):
+    """Get IP address of the container according to container_name.
+    Return IP (str).
+    """
+    db_server_ip_cmd = "docker inspect -f '{{range .NetworkSettings.Networks}}" \
+                       "{{.IPAddress}}{{end}}' " + container_name
+    db_server_ip = get_bash_output(db_server_ip_cmd)
+    return db_server_ip
 
 
 def load_and_call_used_getattr(full_path):
